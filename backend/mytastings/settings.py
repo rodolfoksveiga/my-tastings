@@ -15,7 +15,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
-    'mytastings.herokuapp.com',
+    'mytastings.herokuapp.com'
 ]
 
 # Application definition
@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'pages',
     'tastings',
     'categories',
     'producers'
