@@ -1,0 +1,19 @@
+{% extends 'base.html' %} {% block content %}
+<h2>Tasting: {{ obj.name }}</h2>
+<a href="update/">Update Tasting</a> - <a href="delete/">Delete Tasting</a>
+<h3>Properties</h3>
+<b>Category</b>: {{ obj.category.name }}
+<br />
+<b>Producer</b>: {{ obj.producer.name }}
+<br />
+<b>Wine Rating</b>: {{ obj.rating }}
+<br />
+<b>Wine Color</b>: {{ obj.color }}
+<br />
+<b>Wine Appearance</b>: {{ obj.appearance }}
+<br />
+<b>Wine Aroma</b>: {{ obj.aroma }}
+<br />
+<b>Wine Finish</b>: {{ obj.finish }}
+<br />
+<b>Price</b>: {{ obj.price }} {% endblock %}

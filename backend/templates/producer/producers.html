@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% block content %}
+<h1>Producers</h1>
+<a href="create/">Create producer</a>
+<br />
+<ul>
+  {% for obj in obj_list %}
+  <li><a href="{{ obj.id }}">{{ obj.name }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}
