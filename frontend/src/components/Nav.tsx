@@ -5,7 +5,9 @@ export default function Nav() {
         <nav>
             Logo
             <Link to='/'>Home</Link>
-            <Link to='/tastings'>Tastings</Link>
+            <Link to='/tastings/'>Tastings</Link>
+            <Link to='/about/'>About</Link>
+            <Link to='/login/'>Login</Link>
             User
         </nav>
     )
