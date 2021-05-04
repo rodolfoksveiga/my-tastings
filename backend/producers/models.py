@@ -7,3 +7,6 @@ class Producer(models.Model):
         'Producer Name',
         max_length=100
     )
+
+    def __str__(self):
+        return self.name

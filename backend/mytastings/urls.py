@@ -27,7 +27,7 @@ urlpatterns = [
     path('', home_view, name='home'),
     path('about/', about_view, name='about'),
     path('login/', login_view, name='login'),
-    path('tastings/', include('tastings.urls')),
-    path('categories/', include('categories.urls')),
-    path('producers/', include('producers.urls')),
+    path('api/tastings/', include('tastings.urls')),
+    path('api/categories/', include('categories.urls')),
+    path('api/producers/', include('producers.urls')),
 ]
