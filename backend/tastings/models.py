@@ -12,13 +12,11 @@ class Tasting(models.Model):
     )
     category = models.ForeignKey(
         Category,
-        blank=True,
         null=True,
         on_delete=models.SET_NULL
     )
     producer = models.ForeignKey(
         Producer,
-        blank=True,
         null=True,
         on_delete=models.SET_NULL
     )
@@ -50,3 +48,6 @@ class Tasting(models.Model):
         max_length=100
     )
     price = models.DecimalField(max_digits=6, decimal_places=2)
+
+    def __str__(self):
+        return self.name

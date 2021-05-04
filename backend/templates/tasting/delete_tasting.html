@@ -1,9 +1,0 @@
-{% extends 'base.html' %} {% block content %}
-<h2>Delete Tasting</h2>
-<form method="POST">
-  {% csrf_token %}
-  <h3>Are you sure you want to delete the tasting "{{ obj.name }}"?</h3>
-  <input type="submit" value="Yes" />
-  <a href="../">Cancel</a>
-</form>
-{% endblock %}
