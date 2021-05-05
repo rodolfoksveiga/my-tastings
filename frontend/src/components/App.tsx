@@ -14,7 +14,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Nav />
-      <main className='container'>
+      <main>
         <Switch>
           <Route path='/' exact component={Home}/>
           <Route path='/tastings/' exact component={Tastings}/>
