@@ -21,3 +21,64 @@ form {
   width: 25%;
   margin: 0 auto;
 }
+
+.session-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 500px;
+  height: 300px;
+  background: #f1f1f1;
+  margin: 100px auto 0;
+  word-break: break-all;
+  border: 1px solid rgba(0, 0, 0, 0.274);
+}
+
+.session-tabs-header {
+  display: flex;
+}
+
+.session-tab {
+  padding: 15px;
+  text-align: center;
+  width: 50%;
+  background: rgba(128, 128, 128, 0.075);
+  cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.274);
+  box-sizing: content-box;
+  position: relative;
+  outline: none;
+}
+
+.session-active-tab {
+  background: white;
+  border-bottom: 1px solid transparent;
+}
+
+.session-active-tab::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% + 2px);
+  height: 5px;
+  background: rgb(88, 147, 241);
+}
+
+.session-tabs-content {
+  flex-grow: 1;
+}
+
+.session-content {
+  background: white;
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
+.session-active-content {
+  display: block;
+}
