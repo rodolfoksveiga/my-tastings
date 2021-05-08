@@ -24,8 +24,8 @@ const Tastings: React.FunctionComponent<ITastingsProps> = (props) => {
   const [tastings, setTastings] = useState<ITasting[]>([]);
 
   const getTastings = async () => {
-    let r = await fetch("http://127.0.0.1/api/tastings/");
-    let tastings = await r.json();
+    let response = await fetch("http://127.0.0.1/api/tastings/");
+    let tastings = await response.json();
     console.log(tastings);
     setTastings(tastings);
   };

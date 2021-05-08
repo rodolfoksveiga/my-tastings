@@ -1,5 +1,7 @@
 from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.contrib.auth.models import User
+
 from categories.models import Category
 from producers.models import Producer
 
@@ -13,27 +15,47 @@ class Tasting(models.Model):
     category = models.ForeignKey(
         Category,
         null=True,
-        on_delete=models.SET_NULL
+        on_delete=models.PROTECT
     )
     producer = models.ForeignKey(
         Producer,
         null=True,
-        on_delete=models.SET_NULL
+        on_delete=models.PROTECT
+    )
+    rating_choices = (
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5),
+        (6, 6),
+        (7, 7),
+        (8, 8),
+        (9, 9),
+        (10, 10)
     )
     rating = models.IntegerField(
         'Wine Rating',
-        default=1,
-        validators=[MinValueValidator(1), MaxValueValidator(5)]
+        choices=rating_choices
     )
-    # Colors of red wine
-    # Pinot Noir - Ruby, Tempranillo - Garnet, Shiraz - Violet/Deep Purple, Cabernet Sauvignon - Deep Ruby
-    # Shades of white wine
-    # Pinot Grigio - Pale Yellow, Sauvignon Blanc - Pale Gold/Light Yellow, Chardonnay - Gold, Semillon - Deep Gold
-    # Shades of rose wine
-    # Merlot - Pale Blush, Shiraz - Blush, Tempranillo - Salmon, Petite Verdot - Deep Salmon
+    color_choices = (
+        ('ruby', 'Pinot Noir - Ruby'),
+        ('garnet', 'Tempranillo - Garnet'),
+        ('violet', 'Shiraz - Violet/Deep Purple'),
+        ('deep_ruby', 'Cabernet Sauvignon - Deep Ruby'),
+        ('pale_yellow', 'Pinot Grigio - Pale Yellow'),
+        ('pale_gold', 'Sauvignon Blanc - Pale Gold/Light Yellow'),
+        ('gold', 'Chardonnay - Gold'),
+        ('deep_gold', 'Semillon - Deep Gold'),
+        ('pale_blush', 'Merlot - Pale Blush'),
+        ('blush', 'Shiraz - Blush'),
+        ('salmon', 'Tempranillo - Salmon'),
+        ('deep_salmon', 'Petite Verdot - Deep Salmon')
+    )
     color = models.CharField(
         'Wine Color',
-        max_length=100
+        max_length=100,
+        choices=color_choices
     )
     appearance = models.CharField(
         'Wine Appearance',
@@ -47,7 +69,15 @@ class Tasting(models.Model):
         'Wine Finish',
         max_length=100
     )
-    price = models.DecimalField(max_digits=6, decimal_places=2)
+    price = models.DecimalField(
+        max_digits=6,
+        decimal_places=2
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='tastings'
+    )
 
     def __str__(self):
         return self.name

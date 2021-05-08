@@ -6,4 +6,15 @@ from .models import Tasting
 class TastingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tasting
-        fields = '__all__'
+        fields = [
+            'name',
+            'category',
+            'producer',
+            'rating',
+            'color',
+            'appearance',
+            'aroma',
+            'finish',
+            'price',
+            'user'
+        ]
