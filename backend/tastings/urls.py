@@ -1,11 +1,9 @@
-from django.conf.urls import include, url
-from rest_framework.routers import SimpleRouter
+from django.urls import path
 
-from .views import TastingViewSet
+from .views import TastingsList, TastingDetail
 
-router = SimpleRouter()
-router.register('', TastingViewSet, basename='tastings')
 
 urlpatterns = [
-    url('', include(router.urls))
+    path('', TastingsList.as_view()),
+    path('<int:pk>/', TastingDetail.as_view())
 ]

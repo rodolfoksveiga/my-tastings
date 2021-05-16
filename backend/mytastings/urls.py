@@ -7,4 +7,5 @@ urlpatterns = [
     path('api/tastings/', include('tastings.urls')),
     path('api/categories/', include('categories.urls')),
     path('api/producers/', include('producers.urls')),
+    path('api-auth/', include('rest_framework.urls'))
 ]
