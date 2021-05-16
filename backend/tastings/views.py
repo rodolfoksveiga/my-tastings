@@ -6,35 +6,27 @@ from .serializers import TastingSerializer
 
 
 class TastingUserWritePermission(BasePermission):
-    message = 'Editing a tasting is restricted to the tasting owner only.'
+    message = 'Tastings access permission is restricted to the tasting owner only.'
 
     def has_object_permission(self, request, view, obj):
-        if request.method in SAFE_METHODS:
-            return True
         return obj.user == request.user or request.user.is_superuser
 
 
 class TastingsList(ListCreateAPIView):
-    queryset = Tasting.objects.all()
     serializer_class = TastingSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_superuser:
+            return Tasting.objects.all()
+        return Tasting.objects.filter(user=user)
 
 
 class TastingDetail(RetrieveUpdateDestroyAPIView, TastingUserWritePermission):
     permission_classes = [IsAuthenticated, TastingUserWritePermission]
+    serializer_class = TastingSerializer
     queryset = Tasting.objects.all()
-    serializer_class = TastingSerializer
 
-
-'''
-class TastingViewSet(viewsets.ModelViewSet, TastingUserWritePermission):
-    # permission_classes = [TastingUserWritePermission]
-    # permission_classes = [IsAdminUser]
-    serializer_class = TastingSerializer
-
-    def get_queryset(self):
-        queryset = Tasting.objects.all()
-        return queryset
-'''
 
 ''' Concrete View Classes
     # CreateAPIView
