@@ -1,5 +1,13 @@
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import SAFE_METHODS, IsAuthenticated, BasePermission, DjangoModelPermissions
+from rest_framework.generics import (
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView
+)
+from rest_framework.permissions import (
+    SAFE_METHODS,
+    IsAuthenticated,
+    BasePermission,
+    DjangoModelPermissions
+)
 
 from .models import Tasting
 from .serializers import TastingSerializer

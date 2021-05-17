@@ -1,10 +1,18 @@
-from django.db import models
+from django.utils.translation import gettext_lazy as _
+from django.db.models import (
+    Model,
+    DateTimeField,
+    CharField
+)
 
 
-class Category(models.Model):
-    added = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(
-        'Category Name',
+class Category(Model):
+    created_at = DateTimeField(
+        _('Created at'),
+        auto_now_add=True
+    )
+    name = CharField(
+        _('Name'),
         max_length=100
     )
 

@@ -1,26 +1,38 @@
-from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator
-from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
+from django.db.models import (
+    PROTECT,
+    CASCADE,
+    Model,
+    DateTimeField,
+    CharField,
+    IntegerField,
+    DecimalField,
+    ForeignKey
+)
 
+from users.models import User
 from categories.models import Category
 from producers.models import Producer
 
 
-class Tasting(models.Model):
-    added = models.DateTimeField(auto_now_add=True)
-    name = models.CharField(
-        'Wine Name',
+class Tasting(Model):
+    created_at = DateTimeField(
+        _('Created at'),
+        auto_now_add=True
+    )
+    name = CharField(
+        _('Name'),
         max_length=100
     )
-    category = models.ForeignKey(
+    category = ForeignKey(
         Category,
         null=True,
-        on_delete=models.PROTECT
+        on_delete=PROTECT
     )
-    producer = models.ForeignKey(
+    producer = ForeignKey(
         Producer,
         null=True,
-        on_delete=models.PROTECT
+        on_delete=PROTECT
     )
     rating_choices = (
         (1, 1),
@@ -34,8 +46,8 @@ class Tasting(models.Model):
         (9, 9),
         (10, 10)
     )
-    rating = models.IntegerField(
-        'Wine Rating',
+    rating = IntegerField(
+        _('Rating'),
         choices=rating_choices
     )
     color_choices = (
@@ -52,30 +64,31 @@ class Tasting(models.Model):
         ('salmon', 'Tempranillo - Salmon'),
         ('deep_salmon', 'Petite Verdot - Deep Salmon')
     )
-    color = models.CharField(
-        'Wine Color',
+    color = CharField(
+        _('Color'),
         max_length=100,
         choices=color_choices
     )
-    appearance = models.CharField(
-        'Wine Appearance',
+    appearance = CharField(
+        _('Appearance'),
         max_length=100
     )
-    aroma = models.CharField(
-        'Wine Aroma',
+    aroma = CharField(
+        _('Aroma'),
         max_length=100
     )
-    finish = models.CharField(
-        'Wine Finish',
+    finish = CharField(
+        _('Finish'),
         max_length=100
     )
-    price = models.DecimalField(
+    price = DecimalField(
+        _('Price'),
         max_digits=6,
         decimal_places=2
     )
-    user = models.ForeignKey(
+    user = ForeignKey(
         User,
-        on_delete=models.CASCADE,
+        on_delete=CASCADE,
         related_name='tastings'
     )
 

@@ -1,6 +1,9 @@
 from django.urls import path
 
-from .views import TastingsList, TastingDetail
+from .views import (
+    TastingsList,
+    TastingDetail
+)
 
 
 urlpatterns = [
