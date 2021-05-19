@@ -1,29 +1,49 @@
+// Import components, functions, types, variables, and styles
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import '../App.css'
 
 import Nav from './Nav'
-import Home from '../pages/home/Home'
-import Tastings from '../pages/tastings/Tastings'
-import Tasting from '../pages/tastings/Tasting'
-import About from '../pages/about/About'
-import Login from '../pages/login/Login'
+import Home from './Home'
+import Tastings from './Tastings'
+import CreateTasting from './CreateTasting'
+import Tasting from './Tasting'
+import UpdateTasting from './UpdateTasting'
+import DeleteTasting from './DeleteTasting'
+import About from './About'
+import Login from './Login'
+import Logout from './Logout'
+import Register from './Register'
 
-// Component
+// Main component
 export default function App() {
-  return (
-    <BrowserRouter>
-      <Nav />
-      <main>
-        <Switch>
-          <Route path='/' exact component={Home}/>
-          <Route path='/tastings/' exact component={Tastings}/>
-          <Route path='/tastings/:id/' exact component={Tasting}/>
-          <Route path='/about/' exact component={About}/>
-          <Route path='/login/' exact component={Login}/>
-        </Switch>
-      </main>
-      
-    </BrowserRouter>
+    return (
+        <BrowserRouter>
+            <Nav />
+            <Switch>
+                <Route path='/' exact component={Home} />
+                <Route path='/tastings/' exact component={Tastings} />
+                <Route
+                    path='/tastings/create/'
+                    exact
+                    component={CreateTasting}
+                />
+                <Route path='/tastings/:id/' exact component={Tasting} />
+                <Route
+                    path='/tastings/:id/update/'
+                    exact
+                    component={UpdateTasting}
+                />
+                <Route
+                    path='/tastings/:id/delete/'
+                    exact
+                    component={DeleteTasting}
+                />
+                <Route path='/about/' exact component={About} />
+                <Route path='/login/' exact component={Login} />
+                <Route path='/logout/' exact component={Logout} />
+                <Route path='/register/' exact component={Register} />
+            </Switch>
+        </BrowserRouter>
     )
 }
