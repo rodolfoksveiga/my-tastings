@@ -6,45 +6,40 @@ import { Link, useHistory } from 'react-router-dom'
 import DeleteTasting from './DeleteTasting'
 
 // Types and interfaces
-type THistory = string
+export type THistory = string
 
 export type TErrorMessage = string
 
-export type TIsLoading = boolean
-
-type TId = string
+export type TId = string
 
 type TSearch = string
-/*
-export interface ITasting {
-  id: number
-  added: string
-  name: string
-  category: string
-  producer: string
-  rating: number
-  color: string
-  appearance: string
-  aroma: string
-  finish: string
-  price: number
-}
-*/
+
+type TTriggerReload = boolean
+
 export interface ITasting {
     id: TId
-    userId: string
-    title: string
-    body: string
+    created_at: string
+    name: string
+    category: number
+    producer: number
+    rating: number
+    color: string
+    appearance: string
+    aroma: string
+    finish: string
+    price: number
+    user: number
 }
 
 // Global variables
-export const URL = 'https://jsonplaceholder.typicode.com/posts/'
+export const URL = 'http://localhost:8000/api/tastings/'
+// export const URL = 'http://127.0.0.1/api/tastings/'
 
 // Main component
 export default function Tastings() {
     const history = useHistory<THistory>()
+    const [triggerReload, setTriggerReload] = useState<TTriggerReload>(false)
     const [tastings, setTastings] = useState<ITasting[]>([])
-    const [isLoading, setIsLoading] = useState<TIsLoading>(true)
     const [errorMessage, setErrorMessage] = useState<TErrorMessage>('')
     const [search, setSearch] = useState<TSearch>('')
 
@@ -52,8 +47,8 @@ export default function Tastings() {
         axios
             .get(URL)
             .then((response) => {
+                console.log(response)
                 setTastings(response.data)
-                setIsLoading(false)
             })
             .catch((error) => {
                 console.log(error)
@@ -65,7 +60,7 @@ export default function Tastings() {
 
     useEffect(() => {
         getTastings()
-    }, [])
+    }, [triggerReload])
 
     function handleFilter(event: ChangeEvent<HTMLInputElement>) {
         event.preventDefault()
@@ -73,19 +68,24 @@ export default function Tastings() {
     }
 
     const filteredTastings = tastings.filter((tasting: ITasting) => {
-        return tasting.title.toLowerCase().includes(search.toLowerCase())
+        return tasting.name.toLowerCase().includes(search.toLowerCase())
     })
 
-    if (isLoading) {
-        return <h3>Loading data...</h3>
+    function updateTriggerReload() {
+        setTriggerReload(!triggerReload)
+        console.log(triggerReload)
     }
 
     return (
         <div>
             <h2>List of Tastings</h2>
-            <h3>
-                <Link to={'/tastings/create/'}>Create new Tasting</Link>
-            </h3>
+            <button
+                onClick={() => {
+                    history.push(`/tastings/create/`)
+                }}
+            >
+                Create new Tasting
+            </button>
             <p>
                 <input
                     type='text'
@@ -100,7 +100,7 @@ export default function Tastings() {
                               <li key={tasting.id}>
                                   <h4>
                                       <Link to={`/tastings/${tasting.id}`}>
-                                          {tasting.title}
+                                          {tasting.name}
                                       </Link>
                                       &ensp; - &ensp;
                                       <button
@@ -113,7 +113,7 @@ export default function Tastings() {
                                           Update
                                       </button>
                                       &ensp;&ensp;
-                                      <DeleteTasting tasting={tasting} />
+                                      <DeleteTasting tasting={tasting} updateTriggerReload={updateTriggerReload} />
                                   </h4>
                               </li>
                           )

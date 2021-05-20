@@ -1,24 +1,22 @@
 // Import components, functions, types, variables, and styles
 import axios from 'axios'
 
-import { ITasting } from './Tastings'
+import { URL, ITasting } from './Tastings'
 
-interface IDeleteTasting {
+interface IDeleteTastingProps {
     tasting: ITasting
+    updateTriggerReload: Function
 }
 
 // Main component
-export default function DeleteTasting(props: IDeleteTasting) {
+export default function DeleteTasting(props: IDeleteTastingProps) {
     function handleDelete() {
-        if (window.confirm('Are you sure you want to delete the Tasting?')) {
+        if (window.confirm('Are you sure you want to delete this Tasting?')) {
             axios
-                .delete(
-                    `https://jsonplaceholder.typicode.com/posts/${props.tasting.id}`,
-                    { data: props.tasting }
-                )
-                .then((response) => {
-                    console.log(response)
+                .delete(URL + props.tasting.id, { data: props.tasting })
+                .then(() => {
                     alert('Tasting was deleted!')
+                    props.updateTriggerReload()
                 })
                 .catch((error) => {
                     console.log(error)

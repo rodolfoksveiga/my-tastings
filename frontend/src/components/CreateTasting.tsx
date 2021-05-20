@@ -1,27 +1,41 @@
 // Import components, functions, types, variables, and styles
-import { useState, ChangeEvent, FormEvent } from 'react'
 import axios from 'axios'
+import { useState,  ChangeEvent, FormEvent } from 'react'
+import { useHistory } from 'react-router-dom'
 
-import { TErrorMessage } from './Tastings'
+import { URL, TErrorMessage, THistory } from './Tastings'
 
 // Types and interfaces
-interface ITastingForm {
-    userId: string
-    title: string
-    body: string
+export interface ITastingForm {
+    name: string
+    category: number | null
+    producer: number | null
+    rating: number | null
+    color: string
+    appearance: string
+    aroma: string
+    finish: string
+    price: number | null
+    user: number | null
 }
 
 // Global variables
-export const URL = 'https://jsonplaceholder.typicode.com/posts/'
-
-const initialTastingForm: ITastingForm = Object.freeze({
-    userId: '',
-    title: '',
-    body: '',
+export const initialTastingForm: ITastingForm = Object.freeze({
+    name: '',
+    category: null,
+    producer: null,
+    rating: null,
+    color: '',
+    appearance: '',
+    aroma: '',
+    finish: '',
+    price: null,
+    user: null
 })
 
 // Main component
 export default function CreateTasting() {
+    const history = useHistory<THistory>()
     const [tastingForm, setTastingForm] =
         useState<ITastingForm>(initialTastingForm)
     const [errorMessage, setErrorMessage] = useState<TErrorMessage>('')
@@ -40,6 +54,7 @@ export default function CreateTasting() {
     }
 
     function postTasting() {
+        console.log(tastingForm)
         axios
             .post(URL, tastingForm)
             .then((response) => {
@@ -54,7 +69,7 @@ export default function CreateTasting() {
     function handleSubmit(event: FormEvent) {
         event.preventDefault()
         postTasting()
-        setTastingForm(initialTastingForm)
+        history.push('/tastings/')
     }
 
     return (
@@ -64,11 +79,43 @@ export default function CreateTasting() {
                 <p>
                     <input
                         type='text'
-                        id='text'
-                        name='userId'
-                        placeholder='User Id'
-                        autoComplete='userId'
-                        value={tastingForm.userId}
+                        id='name'
+                        name='name'
+                        placeholder='Name'
+                        size={50}
+                        onChange={handleChange}
+                        required
+                    />
+                </p>
+                <p>
+                    <input
+                        type='number'
+                        id='category'
+                        name='category'
+                        placeholder='Category'
+                        size={20}
+                        onChange={handleChange}
+                        required
+                    />
+                </p>
+                <p>
+                    <input
+                        type='number'
+                        id='producer'
+                        name='producer'
+                        placeholder='Producer'
+                        size={20}
+                        onChange={handleChange}
+                        required
+                    />
+                </p>
+                <p>
+                    <input
+                        type='number'
+                        id='rating'
+                        name='rating'
+                        placeholder='Rating'
+                        size={20}
                         onChange={handleChange}
                         required
                     />
@@ -76,23 +123,68 @@ export default function CreateTasting() {
                 <p>
                     <input
                         type='text'
-                        id='title'
-                        name='title'
-                        placeholder='Title'
-                        autoComplete='title'
-                        value={tastingForm.title}
+                        id='color'
+                        name='color'
+                        placeholder='Color'
+                        size={50}
                         onChange={handleChange}
                         required
                     />
                 </p>
                 <p>
-                    <textarea
-                        name='body'
-                        placeholder='Body'
-                        autoComplete='body'
-                        rows={10}
-                        cols={100}
-                        value={tastingForm.body}
+                    <input
+                        type='text'
+                        id='appearance'
+                        name='appearance'
+                        placeholder='Appearance'
+                        size={50}
+                        onChange={handleChange}
+                        required
+                    />
+                </p>
+                <p>
+                    <input
+                        type='text'
+                        id='aroma'
+                        name='aroma'
+                        placeholder='Aroma'
+                        size={50}
+                        onChange={handleChange}
+                        required
+                    />
+                </p>
+                <p>
+                    <input
+                        type='text'
+                        id='finish'
+                        name='finish'
+                        placeholder='Finish'
+                        size={50}
+                        onChange={handleChange}
+                        required
+                    />
+                </p>
+                <p>
+                    <input
+                        type='number'
+                        id='price'
+                        name='price'
+                        placeholder='Price'
+                        min={0}
+                        max={10000}
+                        step={0.01}
+                        size={20}
+                        onChange={handleChange}
+                        required
+                    />
+                </p>
+                <p>
+                    <input
+                        type='number'
+                        id='user'
+                        name='user'
+                        placeholder='User'
+                        size={20}
                         onChange={handleChange}
                         required
                     />
@@ -101,6 +193,10 @@ export default function CreateTasting() {
                 &ensp;&ensp;
                 <button type='reset'>Clear fields</button>
             </form>
+            <br />
+            <button onClick={() => {
+                history.push('/tastings/')
+            }}>Go back to Tastings List</button>
         </div>
     )
 }

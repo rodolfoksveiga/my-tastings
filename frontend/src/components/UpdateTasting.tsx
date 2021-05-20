@@ -3,16 +3,12 @@ import axios from 'axios'
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
 import { Link, useParams, useHistory } from 'react-router-dom'
 
-import { TErrorMessage, ITasting } from './Tastings'
+import { URL, TId, THistory, TErrorMessage, ITasting } from './Tastings'
 
 // Types and interfaces
 type TTastingParams = {
     id: string
 }
-
-type THistory = string
-
-type TId = string
 
 // Main component
 export default function UpdateTasting() {
@@ -23,8 +19,9 @@ export default function UpdateTasting() {
 
     function getTasting(id: TId) {
         axios
-            .get(`https://jsonplaceholder.typicode.com/posts/${id}`)
+            .get(URL + id)
             .then((response) => {
+                console.log(response)
                 setTasting(response.data)
             })
             .catch((error) => {
@@ -37,7 +34,7 @@ export default function UpdateTasting() {
 
     function putTasting(id: TId) {
         axios
-            .put(`https://jsonplaceholder.typicode.com/posts/${id}`, tasting)
+            .put(URL + id, tasting)
             .then((response) => {
                 console.log(response)
             })
@@ -67,8 +64,7 @@ export default function UpdateTasting() {
     function handleUpdate(event: FormEvent) {
         event.preventDefault()
         putTasting(id)
-        setTasting(tasting)
-        history.push('/tasting/')
+        history.push('/tastings/' + id)
     }
 
     return (
@@ -76,42 +72,147 @@ export default function UpdateTasting() {
             {tasting ? (
                 <div>
                     <form onSubmit={handleUpdate}>
-                        <label htmlFor='userId'>
-                            <b>User Id</b>
-                        </label>
                         <p>
+                            <label htmlFor='name'>
+                                <b>Name</b>
+                            </label>
+                            &ensp;
                             <input
-                                id='userId'
-                                name='userId'
-                                size={5}
-                                value={tasting.userId}
-                                onChange={handleChange}
-                            />
-                        </p>
-                        <br />
-                        <label htmlFor='title'>
-                            <b>Title</b>
-                        </label>
-                        <p>
-                            <input
-                                id='title'
-                                name='title'
+                                type='text'
+                                id='name'
+                                name='name'
                                 size={50}
-                                value={tasting.title}
+                                value={tasting.name}
                                 onChange={handleChange}
                             />
                         </p>
-                        <br />
-                        <label htmlFor='body'>
-                            <b>Body</b>
-                        </label>
                         <p>
-                            <textarea
-                                id='body'
-                                name='body'
-                                rows={10}
-                                cols={100}
-                                value={tasting.body}
+                            <label htmlFor='Category'>
+                                <b>Category</b>
+                            </label>
+                            &ensp;
+                            <input
+                                type='number'
+                                id='category'
+                                name='category'
+                                size={20}
+                                value={tasting.category}
+                                onChange={handleChange}
+                            />
+                        </p>
+                        <p>
+                            <label htmlFor='Producer'>
+                                <b>Producer</b>
+                            </label>
+                            &ensp;
+                            <input
+                                type='number'
+                                id='producer'
+                                name='producer'
+                                size={20}
+                                value={tasting.producer}
+                                onChange={handleChange}
+                            />
+                        </p>
+                        <p>
+                            <label htmlFor='Rating'>
+                                <b>Rating</b>
+                            </label>
+                            &ensp;
+                            <input
+                                type='number'
+                                id='rating'
+                                name='rating'
+                                size={20}
+                                value={tasting.rating}
+                                onChange={handleChange}
+                            />
+                        </p>
+                        <p>
+                            <label htmlFor='Color'>
+                                <b>Color</b>
+                            </label>
+                            &ensp;
+                            <input
+                                type='text'
+                                id='color'
+                                name='color'
+                                size={50}
+                                value={tasting.color}
+                                onChange={handleChange}
+                            />
+                        </p>
+                        <p>
+                            <label htmlFor='Appearance'>
+                                <b>Appearance</b>
+                            </label>
+                            &ensp;
+                            <input
+                                type='text'
+                                id='appearance'
+                                name='appearance'
+                                size={50}
+                                value={tasting.appearance}
+                                onChange={handleChange}
+                            />
+                        </p>
+                        <p>
+                            <label htmlFor='Aroma'>
+                                <b>Aroma</b>
+                            </label>
+                            &ensp;
+                            <input
+                                type='text'
+                                id='aroma'
+                                name='aroma'
+                                size={50}
+                                value={tasting.aroma}
+                                onChange={handleChange}
+                            />
+                        </p>
+                        <p>
+                            <label htmlFor='Finish'>
+                                <b>Finish</b>
+                            </label>
+                            &ensp;
+                            <input
+                                type='text'
+                                id='finish'
+                                name='finish'
+                                size={50}
+                                value={tasting.finish}
+                                onChange={handleChange}
+                            />
+                        </p>
+                        <p>
+                            <label htmlFor='Price'>
+                                <b>Price</b>
+                            </label>
+                            &ensp;
+                            <input
+                                type='number'
+                                id='price'
+                                name='price'
+                                placeholder='Price'
+                                size={20}
+                                min={0}
+                                max={10000}
+                                step={0.01}
+                                value={tasting.price}
+                                onChange={handleChange}
+                            />
+                        </p>
+                        <p>
+                            <label htmlFor='User'>
+                                <b>User</b>
+                            </label>
+                            &ensp;
+                            <input
+                                type='number'
+                                id='user'
+                                name='user'
+                                size={20}
+                                value={tasting.user}
                                 onChange={handleChange}
                             />
                         </p>
@@ -119,12 +220,16 @@ export default function UpdateTasting() {
                         &ensp;&ensp;
                         <button
                             onClick={() => {
-                                history.push('/tastings/')
+                                history.push(`/tastings/${id}`)
                             }}
                         >
                             Cancel
                         </button>
                     </form>
+                    <br />
+                    <button onClick={() => {
+                        history.push('/tastings/')
+                    }}>Go back to Tastings List</button>
                 </div>
             ) : (
                 <div>
@@ -137,28 +242,3 @@ export default function UpdateTasting() {
         </div>
     )
 }
-/*
-export default Tasting: React.FunctionComponent<ITastingProps> = ({tasting, dispatch}) => {
-    function deleteTasting() {
-        dispatch({ type: 'DELETE_TASTING', payload: {added: tasting.added}})
-    }
-
-    return (
-        <div>
-            <ul>
-                <h3>{tasting.name} - <button onClick={deleteTasting}>Delete</button></h3>
-                <li>Category: {tasting.category}</li>
-                <li>Producer: {tasting.producer}</li>
-                <li>Rating: {tasting.rating}</li>
-                <li>Color: {tasting.color}</li>
-                <li>Appearance: {tasting.appearance}</li>
-                <li>Aroma: {tasting.aroma}</li>
-                <li>Finish: {tasting.finish}</li>
-                <li>Price: {tasting.price}</li>
-                <li>Added: {tasting.added}</li>
-                <br />
-            </ul>
-        </div>
-    )
-}
-*/

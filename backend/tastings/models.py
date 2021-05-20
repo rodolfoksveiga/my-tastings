@@ -83,7 +83,7 @@ class Tasting(Model):
     )
     price = DecimalField(
         _('Price'),
-        max_digits=6,
+        max_digits=7,
         decimal_places=2
     )
     user = ForeignKey(

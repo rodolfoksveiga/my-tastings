@@ -9,11 +9,9 @@ import Tastings from './Tastings'
 import CreateTasting from './CreateTasting'
 import Tasting from './Tasting'
 import UpdateTasting from './UpdateTasting'
-import DeleteTasting from './DeleteTasting'
 import About from './About'
 import Login from './Login'
 import Logout from './Logout'
-import Register from './Register'
 
 // Main component
 export default function App() {
@@ -34,15 +32,9 @@ export default function App() {
                     exact
                     component={UpdateTasting}
                 />
-                <Route
-                    path='/tastings/:id/delete/'
-                    exact
-                    component={DeleteTasting}
-                />
                 <Route path='/about/' exact component={About} />
                 <Route path='/login/' exact component={Login} />
                 <Route path='/logout/' exact component={Logout} />
-                <Route path='/register/' exact component={Register} />
             </Switch>
         </BrowserRouter>
     )

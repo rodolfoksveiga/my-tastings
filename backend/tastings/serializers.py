@@ -7,6 +7,8 @@ class TastingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tasting
         fields = [
+            'created_at',
+            'id',
             'name',
             'category',
             'producer',
