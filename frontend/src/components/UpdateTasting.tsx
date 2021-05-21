@@ -10,6 +10,8 @@ type TTastingParams = {
     id: string
 }
 
+
+
 // Main component
 export default function UpdateTasting() {
     const { id } = useParams<TTastingParams>()
@@ -19,7 +21,7 @@ export default function UpdateTasting() {
 
     function getTasting(id: TId) {
         axios
-            .get(URL + id)
+            .get(URL + id + '/')
             .then((response) => {
                 console.log(response)
                 setTasting(response.data)
@@ -34,7 +36,7 @@ export default function UpdateTasting() {
 
     function putTasting(id: TId) {
         axios
-            .put(URL + id, tasting)
+            .put(URL + id + '/', tasting)
             .then((response) => {
                 console.log(response)
             })
@@ -64,7 +66,7 @@ export default function UpdateTasting() {
     function handleUpdate(event: FormEvent) {
         event.preventDefault()
         putTasting(id)
-        history.push('/tastings/' + id)
+        history.push('/tastings/' + id + '/')
     }
 
     return (
@@ -87,7 +89,7 @@ export default function UpdateTasting() {
                             />
                         </p>
                         <p>
-                            <label htmlFor='Category'>
+                            <label htmlFor='category'>
                                 <b>Category</b>
                             </label>
                             &ensp;
@@ -101,7 +103,7 @@ export default function UpdateTasting() {
                             />
                         </p>
                         <p>
-                            <label htmlFor='Producer'>
+                            <label htmlFor='producer'>
                                 <b>Producer</b>
                             </label>
                             &ensp;
@@ -115,7 +117,7 @@ export default function UpdateTasting() {
                             />
                         </p>
                         <p>
-                            <label htmlFor='Rating'>
+                            <label htmlFor='rating'>
                                 <b>Rating</b>
                             </label>
                             &ensp;
@@ -129,7 +131,7 @@ export default function UpdateTasting() {
                             />
                         </p>
                         <p>
-                            <label htmlFor='Color'>
+                            <label htmlFor='color'>
                                 <b>Color</b>
                             </label>
                             &ensp;
@@ -143,7 +145,7 @@ export default function UpdateTasting() {
                             />
                         </p>
                         <p>
-                            <label htmlFor='Appearance'>
+                            <label htmlFor='appearance'>
                                 <b>Appearance</b>
                             </label>
                             &ensp;
@@ -157,7 +159,7 @@ export default function UpdateTasting() {
                             />
                         </p>
                         <p>
-                            <label htmlFor='Aroma'>
+                            <label htmlFor='aroma'>
                                 <b>Aroma</b>
                             </label>
                             &ensp;
@@ -171,7 +173,7 @@ export default function UpdateTasting() {
                             />
                         </p>
                         <p>
-                            <label htmlFor='Finish'>
+                            <label htmlFor='finish'>
                                 <b>Finish</b>
                             </label>
                             &ensp;
@@ -185,7 +187,7 @@ export default function UpdateTasting() {
                             />
                         </p>
                         <p>
-                            <label htmlFor='Price'>
+                            <label htmlFor='price'>
                                 <b>Price</b>
                             </label>
                             &ensp;
@@ -193,7 +195,6 @@ export default function UpdateTasting() {
                                 type='number'
                                 id='price'
                                 name='price'
-                                placeholder='Price'
                                 size={20}
                                 min={0}
                                 max={10000}
@@ -203,7 +204,7 @@ export default function UpdateTasting() {
                             />
                         </p>
                         <p>
-                            <label htmlFor='User'>
+                            <label htmlFor='user'>
                                 <b>User</b>
                             </label>
                             &ensp;
@@ -220,7 +221,7 @@ export default function UpdateTasting() {
                         &ensp;&ensp;
                         <button
                             onClick={() => {
-                                history.push(`/tastings/${id}`)
+                                history.push('/tastings/' + id + '/')
                             }}
                         >
                             Cancel

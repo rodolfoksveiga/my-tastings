@@ -21,7 +21,7 @@ export default function Tasting() {
 
     function getTasting(id: TId) {
         axios
-        .get(URL + id)
+        .get(URL + id + '/')
         .then((response) => {
             console.log(response)
             setTasting(response.data)
@@ -55,7 +55,7 @@ export default function Tasting() {
                     <h4>Price: {tasting.price}</h4>
                     <br />
                     <button onClick={() => {
-                        history.push(`/tastings/${id}/update/`)
+                        history.push('/tastings/' + id + '/update/')
                     }}>Update Tasting</button>
                     <br />
                     <br />

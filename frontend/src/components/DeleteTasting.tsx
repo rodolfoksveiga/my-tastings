@@ -13,7 +13,7 @@ export default function DeleteTasting(props: IDeleteTastingProps) {
     function handleDelete() {
         if (window.confirm('Are you sure you want to delete this Tasting?')) {
             axios
-                .delete(URL + props.tasting.id, { data: props.tasting })
+                .delete(URL + props.tasting.id + '/', { data: props.tasting })
                 .then(() => {
                     alert('Tasting was deleted!')
                     props.updateTriggerReload()

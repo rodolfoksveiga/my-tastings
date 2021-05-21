@@ -99,14 +99,14 @@ export default function Tastings() {
                           return (
                               <li key={tasting.id}>
                                   <h4>
-                                      <Link to={`/tastings/${tasting.id}`}>
+                                      <Link to={'/tastings/' + tasting.id + '/'}>
                                           {tasting.name}
                                       </Link>
                                       &ensp; - &ensp;
                                       <button
                                           onClick={() => {
                                               history.push(
-                                                  `/tastings/${tasting.id}/update/`
+                                                  '/tastings/' + tasting.id + '/update/'
                                               )
                                           }}
                                       >
