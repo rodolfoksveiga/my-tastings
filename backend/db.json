@@ -1,0 +1,239 @@
+[
+{
+    "model": "users.user",
+    "fields": {
+        "password": "pbkdf2_sha256$260000$EUn12SyRM8BdZtdhpZR3KJ$Y+lNvopQK0t1GRCovPmZ4aWsV5UJpbrJzHGkOi+Sqdc=",
+        "last_login": "2021-05-24T09:52:35.539Z",
+        "is_superuser": true,
+        "created_at": "2021-05-24T09:44:38.274Z",
+        "username": "admin",
+        "email": "admin@mail.com",
+        "first_name": "",
+        "last_name": "",
+        "about": "",
+        "is_active": true,
+        "is_staff": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "fields": {
+        "password": "pbkdf2_sha256$260000$x3SyzL1SJZAGnkO5E8Ggpb$QFhIvRadBbih4BksDRcU1Q/UZX79wADnaa7GqHh4Vos=",
+        "last_login": "2021-05-24T15:39:00.937Z",
+        "is_superuser": true,
+        "created_at": "2021-05-24T09:55:05.824Z",
+        "username": "rodox",
+        "email": "rodox@mail.com",
+        "first_name": "",
+        "last_name": "",
+        "about": "",
+        "is_active": true,
+        "is_staff": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "fields": {
+        "password": "pbkdf2_sha256$260000$qYf7gYDXfms1IyqNxxyORq$pplq/mFE2owulbG6hmQ67gl+27uFeYt38M3rbnLY+20=",
+        "last_login": null,
+        "is_superuser": true,
+        "created_at": "2021-05-24T09:55:42.706Z",
+        "username": "micha",
+        "email": "micha@mail.com",
+        "first_name": "",
+        "last_name": "",
+        "about": "",
+        "is_active": true,
+        "is_staff": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "beverages.beverage",
+    "pk": 1,
+    "fields": {
+        "modified_at": "2021-05-24T09:50:01.739Z",
+        "name": "Beverage1",
+        "category": 1,
+        "producer": 1,
+        "user": [
+            "admin"
+        ],
+        "classification": "Classification1",
+        "base": "Base1",
+        "year": "2000-01-01",
+        "degree": "20.00",
+        "volume": 1000,
+        "price": "100.00",
+        "tags": []
+    }
+},
+{
+    "model": "beverages.beverage",
+    "pk": 2,
+    "fields": {
+        "modified_at": "2021-05-24T15:43:48.508Z",
+        "name": "Beverage2",
+        "category": 1,
+        "producer": 2,
+        "user": [
+            "admin"
+        ],
+        "classification": "Classification2",
+        "base": "Base2",
+        "year": "2000-01-01",
+        "degree": "20.00",
+        "volume": 1000,
+        "price": "100.00",
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "beverages.beverage",
+    "pk": 3,
+    "fields": {
+        "modified_at": "2021-05-24T15:43:53.299Z",
+        "name": "Beverage3",
+        "category": 1,
+        "producer": 3,
+        "user": [
+            "admin"
+        ],
+        "classification": "Classification3",
+        "base": "Base3",
+        "year": "2010-01-01",
+        "degree": "10.00",
+        "volume": 1000,
+        "price": "10.00",
+        "tags": [
+            2
+        ]
+    }
+},
+{
+    "model": "beverages.beverage",
+    "pk": 4,
+    "fields": {
+        "modified_at": "2021-05-24T15:44:02.046Z",
+        "name": "Beverage4",
+        "category": 1,
+        "producer": 4,
+        "user": [
+            "admin"
+        ],
+        "classification": "Classification4",
+        "base": "Base4",
+        "year": "2010-01-01",
+        "degree": "10.00",
+        "volume": 1000,
+        "price": "10.00",
+        "tags": [
+            1,
+            2
+        ]
+    }
+},
+{
+    "model": "categories.category",
+    "pk": 1,
+    "fields": {
+        "modified_at": "2021-05-24T09:46:39.404Z",
+        "name": "Category",
+        "user": [
+            "admin"
+        ]
+    }
+},
+{
+    "model": "producers.producer",
+    "pk": 1,
+    "fields": {
+        "modified_at": "2021-05-24T09:47:06.412Z",
+        "name": "Producer1",
+        "user": [
+            "admin"
+        ],
+        "country": "Germany",
+        "region": "Hessen",
+        "tags": []
+    }
+},
+{
+    "model": "producers.producer",
+    "pk": 2,
+    "fields": {
+        "modified_at": "2021-05-24T15:40:22.108Z",
+        "name": "Producer2",
+        "user": [
+            "admin"
+        ],
+        "country": "Germany",
+        "region": "Bavaria",
+        "tags": [
+            1
+        ]
+    }
+},
+{
+    "model": "producers.producer",
+    "pk": 3,
+    "fields": {
+        "modified_at": "2021-05-24T15:40:28.604Z",
+        "name": "Producer3",
+        "user": [
+            "admin"
+        ],
+        "country": "Brazil",
+        "region": "Santa Catarina",
+        "tags": [
+            2
+        ]
+    }
+},
+{
+    "model": "producers.producer",
+    "pk": 4,
+    "fields": {
+        "modified_at": "2021-05-24T15:40:32.366Z",
+        "name": "Producer4",
+        "user": [
+            "admin"
+        ],
+        "country": "Brazil",
+        "region": "Minas Gerais",
+        "tags": [
+            1,
+            2
+        ]
+    }
+},
+{
+    "model": "tags.tag",
+    "pk": 1,
+    "fields": {
+        "modified_at": "2021-05-24T15:39:21.361Z",
+        "name": "Organic",
+        "user": [
+            "admin"
+        ]
+    }
+},
+{
+    "model": "tags.tag",
+    "pk": 2,
+    "fields": {
+        "modified_at": "2021-05-24T15:39:51.462Z",
+        "name": "Handmade",
+        "user": [
+            "rodox"
+        ]
+    }
+}
+]
