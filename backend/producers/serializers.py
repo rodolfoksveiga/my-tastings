@@ -6,4 +6,12 @@ from .models import Producer
 class ProducerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Producer
-        fields = '__all__'
+        fields = [
+            'id',
+            'modified_at',
+            'name',
+            'user',
+            'country',
+            'region',
+            'tags'
+        ]

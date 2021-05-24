@@ -8,6 +8,8 @@ django = "*"
 gunicorn = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
+django-seed = "*"
+django-taggit = "*"
 
 [dev-packages]
 

@@ -1,15 +1,12 @@
-from django.conf.urls import (
-    include,
-    url
+from django.urls import path
+
+from .views import (
+    ProducersList,
+    ProducerDetail
 )
-from rest_framework.routers import SimpleRouter
 
-from .views import ProducerViewSet
-
-
-router = SimpleRouter()
-router.register('', ProducerViewSet, basename='producers')
 
 urlpatterns = [
-    url('', include(router.urls))
+    path('', ProducersList.as_view()),
+    path('<int:pk>/', ProducerDetail.as_view())
 ]

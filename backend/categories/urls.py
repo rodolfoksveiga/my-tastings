@@ -1,15 +1,12 @@
-from django.conf.urls import (
-    include,
-    url
+from django.urls import path
+
+from .views import (
+    CategoriesList,
+    CategoryDetail
 )
-from rest_framework.routers import SimpleRouter
 
-from .views import CategoryViewSet
-
-
-router = SimpleRouter()
-router.register('', CategoryViewSet, basename='categories')
 
 urlpatterns = [
-    url('', include(router.urls))
+    path('', CategoriesList.as_view()),
+    path('<int:pk>/', CategoryDetail.as_view())
 ]

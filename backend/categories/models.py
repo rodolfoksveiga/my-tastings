@@ -1,19 +1,30 @@
 from django.utils.translation import gettext_lazy as _
 from django.db.models import (
+    CASCADE,
     Model,
     DateTimeField,
-    CharField
+    CharField,
+    ForeignKey
 )
+
+from users.models import User
 
 
 class Category(Model):
-    created_at = DateTimeField(
-        _('Created at'),
-        auto_now_add=True
+    modified_at = DateTimeField(
+        _('Modified at'),
+        auto_now=True
     )
     name = CharField(
         _('Name'),
+        unique=True,
         max_length=100
+    )
+    user = ForeignKey(
+        User,
+        null=True,
+        on_delete=CASCADE,
+        related_name='categories'
     )
 
     def __str__(self):

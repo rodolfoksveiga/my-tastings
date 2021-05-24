@@ -33,8 +33,10 @@ INSTALLED_APPS = [
     'corsheaders',
     'users',
     'tastings',
+    'beverages',
     'categories',
-    'producers'
+    'producers',
+    'tags'
 ]
 
 MIDDLEWARE = [

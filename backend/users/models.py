@@ -33,17 +33,19 @@ class UserAccountManager(BaseUserManager):
 
         if other_fields.get('is_staff') is not True:
             raise ValueError(
-                'Super users must be assigned to "is_staff = True"')
+                _('Super users must be assigned to "is_staff = True"'))
 
         if other_fields.get('is_superuser') is not True:
             raise ValueError(
-                'Super users must be assigned to "is_superuser = True"')
+                _('Super users must be assigned to "is_superuser = True"'))
 
         user = self.create_user(username, email, password, **other_fields)
         return user
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    objects = UserAccountManager()
+
     created_at = DateTimeField(
         _('Created at'),
         auto_now_add=True
@@ -78,8 +80,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = BooleanField(
         default=False
     )
-
-    objects = UserAccountManager()
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
