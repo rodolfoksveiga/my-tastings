@@ -1,62 +1,38 @@
 // Import components, functions, types, variables, and styles
 import axios from 'axios'
-import { useState,  ChangeEvent, FormEvent } from 'react'
+import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import 'fontsource-roboto'
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
+import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
-import { URL, TErrorMessage, THistory } from './Tastings'
+import { URL, TErrorMessage, ITasting } from './Tastings'
+import FormikTasting from './FormikTasting'
 
 // Types and interfaces
-export interface ITastingForm {
-    name: string
-    category: number | null
-    producer: number | null
-    rating: number | null
-    color: string
-    appearance: string
-    aroma: string
-    finish: string
-    price: number | null
-    user: number | null
-}
+type THistory = string
 
 // Global variables
-export const initialTastingForm: ITastingForm = Object.freeze({
-    name: '',
-    category: null,
-    producer: null,
-    rating: null,
+const initialTastingForm: ITasting = {
+    beverage: null,
+    user: null,
     color: '',
     appearance: '',
     aroma: '',
     finish: '',
-    price: null,
-    user: null
-})
+    rating: null
+}
 
 // Main component
 export default function CreateTasting() {
     const history = useHistory<THistory>()
-    const [tastingForm, setTastingForm] =
-        useState<ITastingForm>(initialTastingForm)
     const [errorMessage, setErrorMessage] = useState<TErrorMessage>('')
 
-    function handleChange(
-        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) {
-        setTastingForm({
-            ...tastingForm,
-            [event.target.name]: event.target.value,
-        })
-    }
-
-    function handleReset() {
-        setTastingForm(initialTastingForm)
-    }
-
-    function postTasting() {
-        console.log(tastingForm)
+    function postTasting(form: ITasting) {
+        console.log(form)
         axios
-            .post(URL, tastingForm)
+            .post(URL, form)
             .then((response) => {
                 console.log(response)
             })
@@ -66,137 +42,48 @@ export default function CreateTasting() {
             })
     }
 
-    function handleSubmit(event: FormEvent) {
-        event.preventDefault()
-        postTasting()
+    function handleCreate(form: ITasting) {
+        postTasting(form)
         history.push('/tastings/')
     }
 
     return (
         <div>
-            {errorMessage !== '' ? <h3>{errorMessage}</h3> : null}
-            <form onSubmit={handleSubmit} onReset={handleReset}>
-                <p>
-                    <input
-                        type='text'
-                        id='name'
-                        name='name'
-                        placeholder='Name'
-                        size={50}
-                        onChange={handleChange}
-                        required
-                    />
-                </p>
-                <p>
-                    <input
-                        type='number'
-                        id='category'
-                        name='category'
-                        placeholder='Category'
-                        size={20}
-                        onChange={handleChange}
-                        required
-                    />
-                </p>
-                <p>
-                    <input
-                        type='number'
-                        id='producer'
-                        name='producer'
-                        placeholder='Producer'
-                        size={20}
-                        onChange={handleChange}
-                        required
-                    />
-                </p>
-                <p>
-                    <input
-                        type='number'
-                        id='rating'
-                        name='rating'
-                        placeholder='Rating'
-                        size={20}
-                        onChange={handleChange}
-                        required
-                    />
-                </p>
-                <p>
-                    <input
-                        type='text'
-                        id='color'
-                        name='color'
-                        placeholder='Color'
-                        size={50}
-                        onChange={handleChange}
-                        required
-                    />
-                </p>
-                <p>
-                    <input
-                        type='text'
-                        id='appearance'
-                        name='appearance'
-                        placeholder='Appearance'
-                        size={50}
-                        onChange={handleChange}
-                        required
-                    />
-                </p>
-                <p>
-                    <input
-                        type='text'
-                        id='aroma'
-                        name='aroma'
-                        placeholder='Aroma'
-                        size={50}
-                        onChange={handleChange}
-                        required
-                    />
-                </p>
-                <p>
-                    <input
-                        type='text'
-                        id='finish'
-                        name='finish'
-                        placeholder='Finish'
-                        size={50}
-                        onChange={handleChange}
-                        required
-                    />
-                </p>
-                <p>
-                    <input
-                        type='number'
-                        id='price'
-                        name='price'
-                        placeholder='Price'
-                        min={0}
-                        max={10000}
-                        step={0.01}
-                        size={20}
-                        onChange={handleChange}
-                        required
-                    />
-                </p>
-                <p>
-                    <input
-                        type='number'
-                        id='user'
-                        name='user'
-                        placeholder='User'
-                        size={20}
-                        onChange={handleChange}
-                        required
-                    />
-                </p>
-                <button type='submit'>Save Tasting</button>
-                &ensp;&ensp;
-                <button type='reset'>Clear fields</button>
-            </form>
             <br />
-            <button onClick={() => {
-                history.push('/tastings/')
-            }}>Go back to Tastings List</button>
+            <br />
+            <br />
+            <br />
+            <br />
+            {errorMessage !== '' ? <h3>{errorMessage}</h3> : null}
+            <Grid
+                container
+                direction='column'
+                justify='flex-start'
+                spacing={3}
+                alignItems='center'
+            >
+                <Grid
+                    item
+                >
+                    <h2>Create Tasting</h2>
+                </Grid>
+                <FormikTasting
+                    initialForm={initialTastingForm}
+                    handleSubmit={handleCreate} 
+                />
+                <Grid
+                    item
+                >
+                    <Button
+                        variant='outlined'
+                        href='/tastings/'
+                        startIcon={<ArrowBackOutlinedIcon />}
+                        fullWidth
+                    >
+                        Back to Tastings List
+                    </Button>
+                </Grid>
+            </Grid>
         </div>
     )
 }

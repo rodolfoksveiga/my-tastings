@@ -8,7 +8,7 @@ class TastingSerializer(serializers.ModelSerializer):
         model = Tasting
         fields = [
             'id',
-            'created_at',
+            'modified_at',
             'beverage',
             'user',
             'color',

@@ -1,6 +1,7 @@
 // Import components, functions, types, variables, and styles
 import React from 'react'
 import ReactDOM from 'react-dom'
+import 'fontsource-roboto'
 
 import './index.css'
 

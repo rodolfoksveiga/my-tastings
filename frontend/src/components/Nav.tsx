@@ -1,18 +1,25 @@
 // Import components, functions, types, variables, and styles
-import { Link } from 'react-router-dom'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
 
 // Main component
 export default function Nav() {
     return (
-        <nav>
-            Logo
-            <Link to='/'>Home</Link>
-            <Link to='/tastings/'>Tastings</Link>
-            <Link to='/about/'>About</Link>
-            <Link to='/login/'>Login</Link>
-            <Link to='/logout/'>Logout</Link>
-            <Link to='/register/'>Register</Link>
-            User
-        </nav>
+        <AppBar>
+            <Toolbar>
+                <Typography variant='h6'>
+                    MyTastings
+                </Typography>
+                <Button href='/'>Home</Button>
+                <Button href='/tastings/'>Tastings</Button>
+                <Button href='/about/'>About</Button>
+                <Button href='/login/'>Login</Button>
+                <Button href='/logout/'>Logout</Button>
+                <Button href='/register/'>Register</Button>
+            </Toolbar>
+            
+        </AppBar>
     )
 }

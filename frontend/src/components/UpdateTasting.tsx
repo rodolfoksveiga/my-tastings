@@ -1,20 +1,47 @@
 // Import components, functions, types, variables, and styles
 import axios from 'axios'
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
-import { Link, useParams, useHistory } from 'react-router-dom'
+import * as Yup from 'yup'
+import { useState, useEffect } from 'react'
+import { useParams, useHistory } from 'react-router-dom'
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
+import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
-import { URL, TId, THistory, TErrorMessage, ITasting } from './Tastings'
+import { URL, TId, TErrorMessage, ITasting } from './Tastings'
+import FormikTasting from './FormikTasting'
 
 // Types and interfaces
-type TTastingParams = {
+type THistory = string
+
+interface ITastingParams {
     id: string
 }
 
 
 
+const FormSchema = Yup.object().shape({
+    color: Yup.string()
+        .min(1, 'Too short!')
+        .required('Required'),
+    appearance: Yup.string()
+        .min(1, 'Too short!')
+        .required('Required'),
+    aroma: Yup.string()
+        .min(1, 'Too short!')
+        .required('Required'),
+    finish: Yup.string()
+        .min(1, 'Too short!')
+        .required('Required'),
+    rating: Yup.string()
+        .min(1, 'Too short!')
+        .required('Required')
+})
+
+
+
 // Main component
 export default function UpdateTasting() {
-    const { id } = useParams<TTastingParams>()
+    const { id } = useParams<ITastingParams>()
     const history = useHistory<THistory>()
     const [tasting, setTasting] = useState<ITasting | null>()
     const [errorMessage, setErrorMessage] = useState<TErrorMessage>('')
@@ -34,9 +61,9 @@ export default function UpdateTasting() {
             })
     }
 
-    function putTasting(id: TId) {
+    function putTasting(formValues: ITasting, id: TId) {
         axios
-            .put(URL + id + '/', tasting)
+            .put(URL + id + '/', formValues)
             .then((response) => {
                 console.log(response)
             })
@@ -52,194 +79,53 @@ export default function UpdateTasting() {
         getTasting(id)
     }, [id])
 
-    function handleChange(
-        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) {
-        if (tasting) {
-            setTasting({
-                ...tasting,
-                [event.target.name]: event.target.value,
-            })
-        }
-    }
-
-    function handleUpdate(event: FormEvent) {
-        event.preventDefault()
-        putTasting(id)
+    function handleUpdate(formValues: ITasting) {
+        putTasting(formValues, id)
         history.push('/tastings/' + id + '/')
     }
 
     return (
         <div>
-            {tasting ? (
-                <div>
-                    <form onSubmit={handleUpdate}>
-                        <p>
-                            <label htmlFor='name'>
-                                <b>Name</b>
-                            </label>
-                            &ensp;
-                            <input
-                                type='text'
-                                id='name'
-                                name='name'
-                                size={50}
-                                value={tasting.name}
-                                onChange={handleChange}
-                            />
-                        </p>
-                        <p>
-                            <label htmlFor='category'>
-                                <b>Category</b>
-                            </label>
-                            &ensp;
-                            <input
-                                type='number'
-                                id='category'
-                                name='category'
-                                size={20}
-                                value={tasting.category}
-                                onChange={handleChange}
-                            />
-                        </p>
-                        <p>
-                            <label htmlFor='producer'>
-                                <b>Producer</b>
-                            </label>
-                            &ensp;
-                            <input
-                                type='number'
-                                id='producer'
-                                name='producer'
-                                size={20}
-                                value={tasting.producer}
-                                onChange={handleChange}
-                            />
-                        </p>
-                        <p>
-                            <label htmlFor='rating'>
-                                <b>Rating</b>
-                            </label>
-                            &ensp;
-                            <input
-                                type='number'
-                                id='rating'
-                                name='rating'
-                                size={20}
-                                value={tasting.rating}
-                                onChange={handleChange}
-                            />
-                        </p>
-                        <p>
-                            <label htmlFor='color'>
-                                <b>Color</b>
-                            </label>
-                            &ensp;
-                            <input
-                                type='text'
-                                id='color'
-                                name='color'
-                                size={50}
-                                value={tasting.color}
-                                onChange={handleChange}
-                            />
-                        </p>
-                        <p>
-                            <label htmlFor='appearance'>
-                                <b>Appearance</b>
-                            </label>
-                            &ensp;
-                            <input
-                                type='text'
-                                id='appearance'
-                                name='appearance'
-                                size={50}
-                                value={tasting.appearance}
-                                onChange={handleChange}
-                            />
-                        </p>
-                        <p>
-                            <label htmlFor='aroma'>
-                                <b>Aroma</b>
-                            </label>
-                            &ensp;
-                            <input
-                                type='text'
-                                id='aroma'
-                                name='aroma'
-                                size={50}
-                                value={tasting.aroma}
-                                onChange={handleChange}
-                            />
-                        </p>
-                        <p>
-                            <label htmlFor='finish'>
-                                <b>Finish</b>
-                            </label>
-                            &ensp;
-                            <input
-                                type='text'
-                                id='finish'
-                                name='finish'
-                                size={50}
-                                value={tasting.finish}
-                                onChange={handleChange}
-                            />
-                        </p>
-                        <p>
-                            <label htmlFor='price'>
-                                <b>Price</b>
-                            </label>
-                            &ensp;
-                            <input
-                                type='number'
-                                id='price'
-                                name='price'
-                                size={20}
-                                min={0}
-                                max={10000}
-                                step={0.01}
-                                value={tasting.price}
-                                onChange={handleChange}
-                            />
-                        </p>
-                        <p>
-                            <label htmlFor='user'>
-                                <b>User</b>
-                            </label>
-                            &ensp;
-                            <input
-                                type='number'
-                                id='user'
-                                name='user'
-                                size={20}
-                                value={tasting.user}
-                                onChange={handleChange}
-                            />
-                        </p>
-                        <button type='submit'>Update Tasting</button>
-                        &ensp;&ensp;
-                        <button
-                            onClick={() => {
-                                history.push('/tastings/' + id + '/')
-                            }}
-                        >
-                            Cancel
-                        </button>
-                    </form>
-                    <br />
-                    <button onClick={() => {
-                        history.push('/tastings/')
-                    }}>Go back to Tastings List</button>
-                </div>
-            ) : (
-                <div>
-                    <h3>{errorMessage}</h3>
-                    <h4>
-                        <Link to={'/tastings/'}>Back to List of Tastings</Link>
-                    </h4>
-                </div>
-            )}
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            {errorMessage !== '' ? <h3>{errorMessage}</h3> : null}
+            <Grid
+                container
+                direction='column'
+                justify='flex-start'
+                spacing={3}
+                alignItems='center'
+            >
+                <Grid
+                    item
+                >
+                    <h2>Update Tasting</h2>
+                </Grid>
+                {tasting
+                ? 
+                (
+                    <FormikTasting
+                        initialForm={tasting}
+                        handleSubmit={handleUpdate} 
+                    />
+                )
+                : null}
+                <Grid
+                    item
+                >
+                    <Button
+                        variant='outlined'
+                        href='/tastings/'
+                        startIcon={<ArrowBackOutlinedIcon />}
+                        fullWidth
+                    >
+                        Back to Tastings List
+                    </Button>
+                </Grid>
+            </Grid>
         </div>
     )
 }

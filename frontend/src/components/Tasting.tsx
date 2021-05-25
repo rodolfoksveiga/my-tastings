@@ -1,13 +1,15 @@
 // Import components, functions, types, variables, and styles
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { Link, useParams, useHistory } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
+import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
 import { URL, TId, TErrorMessage, ITasting } from './Tastings'
 
 // Types and interfaces
-type THistory = string
-
 interface ITastingParams {
     id: string
 }
@@ -15,7 +17,6 @@ interface ITastingParams {
 // Main component
 export default function Tasting() {
     const { id } = useParams<ITastingParams>()
-    const history = useHistory<THistory>()
     const [tasting, setTasting] = useState<ITasting | null>(null)
     const [errorMessage, setErrorMessage] = useState<TErrorMessage>('')
 
@@ -40,35 +41,65 @@ export default function Tasting() {
 
     return (
         <div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             {errorMessage !== '' ? <h3>{errorMessage}</h3> : null}
-            {tasting ? (
+            <Grid
+                container
+                direction='column'
+                justify='flex-start'
+                spacing={3}
+                alignItems='center'
+            >
+                <Grid
+                    item
+                >
+                    <h2>Tasting Details</h2>
+                </Grid>
+            {tasting
+            ? (
                 <div>
-                    <h3>{tasting.name}</h3>
-                    <h4>Created at: {tasting.created_at}</h4>
-                    <h4>Category: {tasting.category}</h4>
-                    <h4>Producer: {tasting.producer}</h4>
-                    <h4>Rating: {tasting.rating}</h4>
-                    <h4>Color: {tasting.color}</h4>
-                    <h4>Appearance: {tasting.appearance}</h4>
-                    <h4>Arroma: {tasting.aroma}</h4>
-                    <h4>Finish: {tasting.finish}</h4>
-                    <h4>Price: {tasting.price}</h4>
-                    <br />
-                    <button onClick={() => {
-                        history.push('/tastings/' + id + '/update/')
-                    }}>Update Tasting</button>
-                    <br />
-                    <br />
-                    <button onClick={() => {
-                        history.push('/tastings/')
-                    }}>Go back to Tastings List</button>
+                    <Grid
+                        item
+                    >
+                        <h3>Beverage: {tasting.beverage}</h3>
+                        <h4>Modified at: {tasting.modified_at}</h4>
+                        <h4>Color: {tasting.color}</h4>
+                        <h4>Appearance: {tasting.appearance}</h4>
+                        <h4>Arroma: {tasting.aroma}</h4>
+                        <h4>Finish: {tasting.finish}</h4>
+                        <h4>Rating: {tasting.rating}</h4>
+                    </Grid>
+                    <Grid>
+                        <Button
+                            variant='outlined'
+                            href={'/tastings/' + id + '/update/'}
+                            color='primary'
+                            startIcon={<EditOutlinedIcon />}
+                            fullWidth
+                        >
+                            Update Tasting
+                        </Button>
+                    </Grid>
+                    <Grid
+                        item
+                    >
+                        <Button
+                            variant='outlined'
+                            href='/tastings/'
+                            startIcon={<ArrowBackOutlinedIcon />}
+                            fullWidth
+                        >
+                            Back to Tastings List
+                        </Button>
+                    </Grid>
                 </div>
-            ) : (
-                <div>
-                    <br />
-                    <Link to={'/tastings/'}>Back to List of Tastings</Link>
-                </div>
-            )}
+            )
+            : null}
+            </Grid>
         </div>
     )
 }

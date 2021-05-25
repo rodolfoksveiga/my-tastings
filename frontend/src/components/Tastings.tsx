@@ -1,34 +1,30 @@
 // Import components, functions, types, variables, and styles
 import axios from 'axios'
-import { useState, useEffect, ChangeEvent } from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
+import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
+import List from '@material-ui/core/List'
 
-import DeleteTasting from './DeleteTasting'
+import ListTastingItem from './ListTastingItem'
 
 // Types and interfaces
-export type THistory = string
-
 export type TErrorMessage = string
 
 export type TId = string
 
-type TSearch = string
-
-type TTriggerReload = boolean
+export type TTriggerReload = boolean
 
 export interface ITasting {
-    id: TId
-    created_at: string
-    name: string
-    category: number
-    producer: number
-    rating: number
+    id?: TId
+    modified_at?: string
+    beverage: number | null
+    user: number | null
     color: string
     appearance: string
     aroma: string
     finish: string
-    price: number
-    user: number
+    rating: number | null
 }
 
 // Global variables
@@ -37,11 +33,9 @@ export const URL = 'http://localhost:8000/api/tastings/'
 
 // Main component
 export default function Tastings() {
-    const history = useHistory<THistory>()
     const [triggerReload, setTriggerReload] = useState<TTriggerReload>(false)
     const [tastings, setTastings] = useState<ITasting[]>([])
     const [errorMessage, setErrorMessage] = useState<TErrorMessage>('')
-    const [search, setSearch] = useState<TSearch>('')
 
     function getTastings() {
         axios
@@ -62,15 +56,6 @@ export default function Tastings() {
         getTastings()
     }, [triggerReload])
 
-    function handleFilter(event: ChangeEvent<HTMLInputElement>) {
-        event.preventDefault()
-        setSearch(event.target.value)
-    }
-
-    const filteredTastings = tastings.filter((tasting: ITasting) => {
-        return tasting.name.toLowerCase().includes(search.toLowerCase())
-    })
-
     function updateTriggerReload() {
         setTriggerReload(!triggerReload)
         console.log(triggerReload)
@@ -78,49 +63,55 @@ export default function Tastings() {
 
     return (
         <div>
-            <h2>List of Tastings</h2>
-            <button
-                onClick={() => {
-                    history.push(`/tastings/create/`)
-                }}
-            >
-                Create new Tasting
-            </button>
-            <p>
-                <input
-                    type='text'
-                    placeholder='Search'
-                    onChange={handleFilter}
-                />
-            </p>
-            <ul>
-                {filteredTastings.length
-                    ? filteredTastings.map((tasting) => {
-                          return (
-                              <li key={tasting.id}>
-                                  <h4>
-                                      <Link to={'/tastings/' + tasting.id + '/'}>
-                                          {tasting.name}
-                                      </Link>
-                                      &ensp; - &ensp;
-                                      <button
-                                          onClick={() => {
-                                              history.push(
-                                                  '/tastings/' + tasting.id + '/update/'
-                                              )
-                                          }}
-                                      >
-                                          Update
-                                      </button>
-                                      &ensp;&ensp;
-                                      <DeleteTasting tasting={tasting} updateTriggerReload={updateTriggerReload} />
-                                  </h4>
-                              </li>
-                          )
-                      })
-                    : null}
-            </ul>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
             {errorMessage !== '' ? <h3>{errorMessage}</h3> : null}
+            <Grid
+                container
+                direction='column'
+                justify='flex-start'
+                spacing={3}
+                alignItems='center'
+            >
+                <Grid
+                    item
+                >
+                    <h2>List of Tastings</h2>
+                </Grid>
+                <Grid
+                    item
+                >
+                    <Button
+                        variant='outlined'
+                        href='/tastings/create/'
+                        color='primary'
+                        startIcon={<AddOutlinedIcon />}
+                        fullWidth
+                    >
+                        Create new Tasting
+                    </Button>
+                </Grid>
+                <Grid
+                    item
+                >
+                    <List>
+                        {tastings.length
+                        ? tastings.map((tasting) => {
+                                return (
+                                    <ListTastingItem
+                                        tasting={tasting}
+                                        updateTriggerReload={updateTriggerReload}
+                                    />
+                                )
+                        }
+                        )
+                        : null}
+                    </List>
+                </Grid>
+            </Grid>
         </div>
     )
 }

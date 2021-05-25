@@ -1,5 +1,5 @@
 // Main component
-export default function About() {
+export default function Register() {
     return (
         <div>
             <br />
@@ -7,7 +7,7 @@ export default function About() {
             <br />
             <br />
             <br />
-            <h2>About</h2>
+            <h2>Register</h2>
         </div>
     )
 }

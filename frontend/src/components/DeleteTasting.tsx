@@ -1,5 +1,7 @@
 // Import components, functions, types, variables, and styles
 import axios from 'axios'
+import IconButton from '@material-ui/core/IconButton'
+import DeleteOutlined from '@material-ui/icons/DeleteOutlined'
 
 import { URL, ITasting } from './Tastings'
 
@@ -9,14 +11,14 @@ interface IDeleteTastingProps {
 }
 
 // Main component
-export default function DeleteTasting(props: IDeleteTastingProps) {
+export default function DeleteTasting({tasting, updateTriggerReload}: IDeleteTastingProps) {
     function handleDelete() {
         if (window.confirm('Are you sure you want to delete this Tasting?')) {
             axios
-                .delete(URL + props.tasting.id + '/', { data: props.tasting })
+                .delete(URL + tasting.id + '/', { data: tasting })
                 .then(() => {
                     alert('Tasting was deleted!')
-                    props.updateTriggerReload()
+                    updateTriggerReload()
                 })
                 .catch((error) => {
                     console.log(error)
@@ -25,5 +27,9 @@ export default function DeleteTasting(props: IDeleteTastingProps) {
         }
     }
 
-    return <button onClick={handleDelete}>Delete Tasting</button>
+    return (
+        <IconButton onClick={handleDelete}>
+            <DeleteOutlined />
+        </IconButton>
+    )
 }

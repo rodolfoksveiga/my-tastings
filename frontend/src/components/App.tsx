@@ -1,8 +1,6 @@
 // Import components, functions, types, variables, and styles
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-import '../App.css'
-
 import Nav from './Nav'
 import Home from './Home'
 import Tastings from './Tastings'
@@ -12,6 +10,7 @@ import UpdateTasting from './UpdateTasting'
 import About from './About'
 import Login from './Login'
 import Logout from './Logout'
+import Register from './Register'
 
 // Main component
 export default function App() {
@@ -35,6 +34,7 @@ export default function App() {
                 <Route path='/about/' exact component={About} />
                 <Route path='/login/' exact component={Login} />
                 <Route path='/logout/' exact component={Logout} />
+                <Route path='/register/' exact component={Register} />
             </Switch>
         </BrowserRouter>
     )
