@@ -9,7 +9,7 @@ import ClearAllOutlinedIcon from '@material-ui/icons/ClearAllOutlined'
 import HistoryOutlinedIcon from '@material-ui/icons/HistoryOutlined'
 
 import InputField from './InputField'
-import { ITastingFormik } from '../types'
+import { ITastingFormik } from './types'
 
 // Types and interfaces
 

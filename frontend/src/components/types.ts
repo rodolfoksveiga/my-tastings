@@ -51,12 +51,6 @@ interface IInputFieldProps {
     type?: string
 }
 
-type TTastingsState = ITasting[]
-
-interface ITastingsAction {
-    type: 'CREATE_TASTING'
-    payload: ITasting
-}
 
 // Export all
 export type {
@@ -70,7 +64,5 @@ export type {
     IListTastingItemProps,
     ITastingFormik,
     IDeleteTastingProps,
-    IInputFieldProps,
-    TTastingsState,
-    ITastingsAction
+    IInputFieldProps
 }

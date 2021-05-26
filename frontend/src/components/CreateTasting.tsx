@@ -9,7 +9,7 @@ import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
 import { URL } from './Tastings'
 import FormikTasting from './FormikTasting'
-import { THistory, TErrorMessage, ITastingForm } from '../types'
+import { THistory, TErrorMessage, ITastingForm } from './types'
 
 
 // Global variables

@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
 
 import DeleteTasting from './DeleteTasting'
-import { IListTastingItemProps } from '../types'
+import { IListTastingItemProps } from './types'
 
 // Component
 export default function ListTastingItem({ tasting, updateTriggerReload }: IListTastingItemProps) {

@@ -7,7 +7,7 @@ import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import List from '@material-ui/core/List'
 
 import ListTastingItem from './ListTastingItem'
-import { TTriggerReload, ITasting, TErrorMessage } from '../types'
+import { TTriggerReload, ITasting, TErrorMessage } from './types'
 
 
 // Global variables

@@ -1,41 +1,25 @@
-// Import components, functions, types, variables, and styles
-import axios from 'axios'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { TRoot } from '../reducers/types'
+import { getTasting } from '../requests/tastingRequests'
 import { useParams } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
-import { URL } from './Tastings'
-import { TId, TErrorMessage, ITasting, ITastingParams } from './types'
+import { ITastingParams } from './types'
 
 
-// Main component
-export default function Tasting() {
+export default function Test() {
     const { id } = useParams<ITastingParams>()
-    const [tasting, setTasting] = useState<ITasting | null>(null)
-    const [errorMessage, setErrorMessage] = useState<TErrorMessage>('')
-
-    function getTasting(id: TId) {
-        axios
-        .get(URL + id + '/')
-        .then((response) => {
-            console.log(response)
-            setTasting(response.data)
-        })
-        .catch((error) => {
-            console.log(error)
-            setErrorMessage(
-                'Error while retrieving the data. Reload the page.'
-            )
-        })
-    }
+    const tastingState = useSelector((state: TRoot) => state.tasting)
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        getTasting(id)
-    }, [id])
-
+        dispatch(getTasting(id))
+    }, [dispatch, id])
+    
     return (
         <div>
             <br />
@@ -43,7 +27,6 @@ export default function Tasting() {
             <br />
             <br />
             <br />
-            {errorMessage !== '' ? <h3>{errorMessage}</h3> : null}
             <Grid
                 container
                 direction='column'
@@ -56,19 +39,25 @@ export default function Tasting() {
                 >
                     <h2>Tasting Details</h2>
                 </Grid>
-            {tasting
-            ? (
+                <Grid
+                    item
+                >
+                    {tastingState.error && (
+                        <h3>{tastingState.error}</h3>
+                    )}
+                </Grid>
+                {tastingState.tasting && (
                 <div>
                     <Grid
                         item
                     >
-                        <h3>Beverage: {tasting.beverage}</h3>
-                        <h4>Modified at: {tasting.modified_at}</h4>
-                        <h4>Color: {tasting.color}</h4>
-                        <h4>Appearance: {tasting.appearance}</h4>
-                        <h4>Arroma: {tasting.aroma}</h4>
-                        <h4>Finish: {tasting.finish}</h4>
-                        <h4>Rating: {tasting.rating}</h4>
+                        <h3>Beverage: {tastingState.tasting.beverage}</h3>
+                        <h4>Modified at: {tastingState.tasting.modified_at}</h4>
+                        <h4>Color: {tastingState.tasting.color}</h4>
+                        <h4>Appearance: {tastingState.tasting.appearance}</h4>
+                        <h4>Arroma: {tastingState.tasting.aroma}</h4>
+                        <h4>Finish: {tastingState.tasting.finish}</h4>
+                        <h4>Rating: {tastingState.tasting.rating}</h4>
                     </Grid>
                     <Grid>
                         <Button
@@ -94,8 +83,7 @@ export default function Tasting() {
                         </Button>
                     </Grid>
                 </div>
-            )
-            : null}
+            )}
             </Grid>
         </div>
     )

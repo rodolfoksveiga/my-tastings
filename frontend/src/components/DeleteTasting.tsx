@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton'
 import DeleteOutlined from '@material-ui/icons/DeleteOutlined'
 
 import { URL } from './Tastings'
-import { IDeleteTastingProps } from '../types'
+import { IDeleteTastingProps } from './types'
 
 
 // Main component

@@ -8,7 +8,7 @@ import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
 import { URL } from './Tastings'
 import FormikTasting from './FormikTasting'
-import { THistory, TId, TErrorMessage, ITasting, ITastingForm, ITastingParams } from '../types'
+import { THistory, TId, TErrorMessage, ITasting, ITastingForm, ITastingParams } from './types'
 
 
 // Main component

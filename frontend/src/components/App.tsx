@@ -11,6 +11,7 @@ import About from './About'
 import Login from './Login'
 import Logout from './Logout'
 import Register from './Register'
+import Test from './Test'
 
 // Main component
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
                 <Route path='/login/' exact component={Login} />
                 <Route path='/logout/' exact component={Logout} />
                 <Route path='/register/' exact component={Register} />
+                <Route path='/test/:id/' exact component={Test} />
             </Switch>
         </BrowserRouter>
     )
