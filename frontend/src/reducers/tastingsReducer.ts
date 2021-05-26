@@ -1,7 +1,7 @@
 // Import components, functions, types, variables, and styles
-import { ITastingState } from './types'
-import { TASTING_LOADING, TASTING_FAIL, TASTING_SUCCESS } from '../actions/tastingActions'
-import { TTastingDispatch } from '../actions/types'
+import { ITastingsState } from './types'
+import { TASTINGS_LOADING, TASTINGS_FAIL, TASTINGS_SUCCESS } from '../actions/tastingsActions'
+import { TTastingsDispatch } from '../actions/types'
 
 
 // Global variables
@@ -11,21 +11,21 @@ const defaultState = {
 
 
 // Reducer
-export function tastingReducer(state: ITastingState = defaultState, action: TTastingDispatch) {
+export function tastingsReducer(state: ITastingsState = defaultState, action: TTastingsDispatch) {
     switch (action.type) {
-        case TASTING_FAIL:
+        case TASTINGS_FAIL:
             return {
                 isLoading: false,
                 error: action.payload
             }
-        case TASTING_LOADING:
+        case TASTINGS_LOADING:
             return {
                 isLoading: true
             }
-        case TASTING_SUCCESS:
+        case TASTINGS_SUCCESS:
             return {
                 isLoading: false,
-                tasting: action.payload
+                tastings: action.payload
             }
         default:
             return state

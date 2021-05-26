@@ -22,6 +22,8 @@ interface ITasting extends ITastingEssentials {
     modified_at: string
 }
 
+type TTastings = ITasting[]
+
 interface ITastingForm extends ITastingEssentials {
     id?: TId
     modified_at?: string
@@ -59,6 +61,7 @@ export type {
     TId,
     TTriggerReload,
     ITasting,
+    TTastings,
     ITastingForm,
     ITastingParams,
     IListTastingItemProps,

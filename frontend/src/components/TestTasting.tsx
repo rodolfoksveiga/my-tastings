@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { TRoot } from '../reducers/types'
-import { getTasting } from '../requests/tastingRequests'
+import { TRootState } from '../reducers/types'
+import { getTasting } from '../actions/tastingActions'
 import { useParams } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
@@ -11,9 +11,9 @@ import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 import { ITastingParams } from './types'
 
 
-export default function Test() {
+export default function TestTasting() {
     const { id } = useParams<ITastingParams>()
-    const tastingState = useSelector((state: TRoot) => state.tasting)
+    const tastingState = useSelector((state: TRootState) => state.tasting)
     const dispatch = useDispatch()
 
     useEffect(() => {

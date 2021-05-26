@@ -2,12 +2,14 @@
 import axios from 'axios'
 import { Dispatch } from 'redux'
 
-import { TASTING_LOADING, TASTING_FAIL, TASTING_SUCCESS } from './ACTIONS'
 import { TTastingDispatch } from './types'
 
 
-// Variables
+// VGlobal vriables
 const URL = 'http://localhost:8000/api/tastings/'
+export const TASTING_LOADING = 'TASTING_LOADING'
+export const TASTING_FAIL = 'TASTING_FAIL'
+export const TASTING_SUCCESS = 'TASTING_SUCCESS'
 
 
 // Requests
