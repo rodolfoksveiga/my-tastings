@@ -7,12 +7,9 @@ import Button from '@material-ui/core/Button'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
-import { URL, TId, TErrorMessage, ITasting } from './Tastings'
+import { URL } from './Tastings'
+import { TId, TErrorMessage, ITasting, ITastingParams } from '../types'
 
-// Types and interfaces
-interface ITastingParams {
-    id: string
-}
 
 // Main component
 export default function Tasting() {

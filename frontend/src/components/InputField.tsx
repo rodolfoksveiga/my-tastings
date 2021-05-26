@@ -2,11 +2,8 @@
 import TextField from '@material-ui/core/TextField'
 import { Field, ErrorMessage } from 'formik'
 
-// Types and interfaces
-interface IInputFieldProps {
-    input: string
-    type?: string
-}
+import { IInputFieldProps } from '../types'
+
 
 // Component
 export default function InputField({ input, type='text' }: IInputFieldProps) {

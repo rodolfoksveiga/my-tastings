@@ -1,18 +1,20 @@
 // Import components, functions, types, variables, and styles
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
 import 'fontsource-roboto'
 
-import './index.css'
-
 import * as serviceWorker from './serviceWorker'
-
+import './index.css'
 import App from './components/App'
+import { store } from './store'
 
 // DOM
 ReactDOM.render(
     <React.StrictMode>
-        <App />
+        <Provider store={store}>
+            <App />
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root')
 )

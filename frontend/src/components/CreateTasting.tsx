@@ -7,14 +7,13 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
-import { URL, TErrorMessage, ITasting } from './Tastings'
+import { URL } from './Tastings'
 import FormikTasting from './FormikTasting'
+import { THistory, TErrorMessage, ITastingForm } from '../types'
 
-// Types and interfaces
-type THistory = string
 
 // Global variables
-const initialTastingForm: ITasting = {
+const initialTastingForm: ITastingForm = {
     beverage: null,
     user: null,
     color: '',
@@ -24,12 +23,13 @@ const initialTastingForm: ITasting = {
     rating: null
 }
 
+
 // Main component
 export default function CreateTasting() {
     const history = useHistory<THistory>()
     const [errorMessage, setErrorMessage] = useState<TErrorMessage>('')
 
-    function postTasting(form: ITasting) {
+    function postTasting(form: ITastingForm) {
         console.log(form)
         axios
             .post(URL, form)
@@ -42,7 +42,7 @@ export default function CreateTasting() {
             })
     }
 
-    function handleCreate(form: ITasting) {
+    function handleCreate(form: ITastingForm) {
         postTasting(form)
         history.push('/tastings/')
     }

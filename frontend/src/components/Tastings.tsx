@@ -7,29 +7,13 @@ import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import List from '@material-ui/core/List'
 
 import ListTastingItem from './ListTastingItem'
+import { TTriggerReload, ITasting, TErrorMessage } from '../types'
 
-// Types and interfaces
-export type TErrorMessage = string
-
-export type TId = string
-
-export type TTriggerReload = boolean
-
-export interface ITasting {
-    id?: TId
-    modified_at?: string
-    beverage: number | null
-    user: number | null
-    color: string
-    appearance: string
-    aroma: string
-    finish: string
-    rating: number | null
-}
 
 // Global variables
 export const URL = 'http://localhost:8000/api/tastings/'
 // export const URL = 'http://127.0.0.1/api/tastings/'
+
 
 // Main component
 export default function Tastings() {

@@ -7,14 +7,8 @@ import ListIconSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import IconButton from '@material-ui/core/IconButton'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
 
-import { ITasting } from './Tastings'
 import DeleteTasting from './DeleteTasting'
-
-// Types and interfaces
-interface IListTastingItemProps {
-    tasting: ITasting
-    updateTriggerReload: Function
-}
+import { IListTastingItemProps } from '../types'
 
 // Component
 export default function ListTastingItem({ tasting, updateTriggerReload }: IListTastingItemProps) {

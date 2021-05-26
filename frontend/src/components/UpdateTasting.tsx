@@ -1,42 +1,14 @@
 // Import components, functions, types, variables, and styles
 import axios from 'axios'
-import * as Yup from 'yup'
 import { useState, useEffect } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
-import { URL, TId, TErrorMessage, ITasting } from './Tastings'
+import { URL } from './Tastings'
 import FormikTasting from './FormikTasting'
-
-// Types and interfaces
-type THistory = string
-
-interface ITastingParams {
-    id: string
-}
-
-
-
-const FormSchema = Yup.object().shape({
-    color: Yup.string()
-        .min(1, 'Too short!')
-        .required('Required'),
-    appearance: Yup.string()
-        .min(1, 'Too short!')
-        .required('Required'),
-    aroma: Yup.string()
-        .min(1, 'Too short!')
-        .required('Required'),
-    finish: Yup.string()
-        .min(1, 'Too short!')
-        .required('Required'),
-    rating: Yup.string()
-        .min(1, 'Too short!')
-        .required('Required')
-})
-
+import { THistory, TId, TErrorMessage, ITasting, ITastingForm, ITastingParams } from '../types'
 
 
 // Main component
@@ -61,9 +33,9 @@ export default function UpdateTasting() {
             })
     }
 
-    function putTasting(formValues: ITasting, id: TId) {
+    function putTasting(form: ITastingForm, id: TId) {
         axios
-            .put(URL + id + '/', formValues)
+            .put(URL + id + '/', form)
             .then((response) => {
                 console.log(response)
             })
@@ -79,8 +51,8 @@ export default function UpdateTasting() {
         getTasting(id)
     }, [id])
 
-    function handleUpdate(formValues: ITasting) {
-        putTasting(formValues, id)
+    function handleUpdate(form: ITastingForm) {
+        putTasting(form, id)
         history.push('/tastings/' + id + '/')
     }
 
