@@ -1,15 +1,16 @@
 // Import components, functions, types, variables, and styles
-import axios from 'axios'
-import { useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+
 import 'fontsource-roboto'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
-import { URL } from './Tastings'
+import { createTasting } from '../actions/createTasting'
+import { TRootState } from '../reducers/rootReducer'
 import FormikTasting from './FormikTasting'
-import { THistory, TErrorMessage, ITastingForm } from './types'
+import { THistory, ITastingForm } from './types'
 
 
 // Global variables
@@ -27,23 +28,11 @@ const initialTastingForm: ITastingForm = {
 // Main component
 export default function CreateTasting() {
     const history = useHistory<THistory>()
-    const [errorMessage, setErrorMessage] = useState<TErrorMessage>('')
-
-    function postTasting(form: ITastingForm) {
-        console.log(form)
-        axios
-            .post(URL, form)
-            .then((response) => {
-                console.log(response)
-            })
-            .catch((error) => {
-                console.log(error)
-                setErrorMessage('Error while sending the data. Try again!')
-            })
-    }
+    const state = useSelector((state: TRootState) => state.createTasting)
+    const dispatch = useDispatch()
 
     function handleCreate(form: ITastingForm) {
-        postTasting(form)
+        dispatch(createTasting(form))
         history.push('/tastings/')
     }
 
@@ -54,7 +43,6 @@ export default function CreateTasting() {
             <br />
             <br />
             <br />
-            {errorMessage !== '' ? <h3>{errorMessage}</h3> : null}
             <Grid
                 container
                 direction='column'

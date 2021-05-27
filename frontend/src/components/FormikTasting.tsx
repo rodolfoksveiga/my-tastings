@@ -1,6 +1,7 @@
 // Import components, functions, types, variables, and styles
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
+
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
@@ -10,8 +11,6 @@ import HistoryOutlinedIcon from '@material-ui/icons/HistoryOutlined'
 
 import InputField from './InputField'
 import { ITastingFormik } from './types'
-
-// Types and interfaces
 
 
 // Validation schema

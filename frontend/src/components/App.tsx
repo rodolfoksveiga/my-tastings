@@ -13,10 +13,6 @@ import Logout from './Logout'
 import Register from './Register'
 
 
-import TestTastings from './TestTastings'
-import TestTasting from './TestTasting'
-
-
 // Main component
 export default function App() {
     return (
@@ -40,9 +36,6 @@ export default function App() {
                 <Route path='/login/' exact component={Login} />
                 <Route path='/logout/' exact component={Logout} />
                 <Route path='/register/' exact component={Register} />
-
-                <Route path='/testtastings/' exact component={TestTastings} />
-                <Route path='/testtastings/:id/' exact component={TestTasting} />
 
             </Switch>
         </BrowserRouter>

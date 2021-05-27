@@ -1,26 +1,29 @@
 // Import components, functions, types, variables, and styles
-import axios from 'axios'
+import { useSelector, useDispatch } from 'react-redux'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteOutlined from '@material-ui/icons/DeleteOutlined'
 
-import { URL } from './Tastings'
-import { IDeleteTastingProps } from './types'
+import { deleteTasting } from '../actions/deleteTasting'
+import { TId } from './types'
+import { TRootState } from '../reducers/rootReducer'
+
+
+// Types and interfaces
+interface IDeleteTastingProps {
+    id: TId,
+    updateTriggerReload: Function
+}
 
 
 // Main component
-export default function DeleteTasting({tasting, updateTriggerReload}: IDeleteTastingProps) {
+export default function DeleteTasting({id, updateTriggerReload}: IDeleteTastingProps) {
+    const state = useSelector((state: TRootState) => state.deleteTasting)
+    const dispatch = useDispatch()
+
     function handleDelete() {
         if (window.confirm('Are you sure you want to delete this Tasting?')) {
-            axios
-                .delete(URL + tasting.id + '/', { data: tasting })
-                .then(() => {
-                    alert('Tasting was deleted!')
-                    updateTriggerReload()
-                })
-                .catch((error) => {
-                    console.log(error)
-                    alert('Error while deleting the Tasting.')
-                })
+            dispatch(deleteTasting(id))
+            updateTriggerReload()
         }
     }
 

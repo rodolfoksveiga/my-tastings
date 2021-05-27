@@ -1,58 +1,32 @@
 // Import components, functions, types, variables, and styles
-import axios from 'axios'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
+
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
-import { URL } from './Tastings'
+import { fetchTastingDetails } from '../actions/fetchTastingDetails'
+import { updateTasting } from '../actions/updateTasting'
+import { TRootState } from '../reducers/rootReducer'
 import FormikTasting from './FormikTasting'
-import { THistory, TId, TErrorMessage, ITasting, ITastingForm, ITastingParams } from './types'
+import { THistory, ITastingForm, ITastingParams } from './types'
 
 
 // Main component
 export default function UpdateTasting() {
     const { id } = useParams<ITastingParams>()
     const history = useHistory<THistory>()
-    const [tasting, setTasting] = useState<ITasting | null>()
-    const [errorMessage, setErrorMessage] = useState<TErrorMessage>('')
-
-    function getTasting(id: TId) {
-        axios
-            .get(URL + id + '/')
-            .then((response) => {
-                console.log(response)
-                setTasting(response.data)
-            })
-            .catch((error) => {
-                console.log(error)
-                setErrorMessage(
-                    'Error while retrieving the data. Check the Id!'
-                )
-            })
-    }
-
-    function putTasting(form: ITastingForm, id: TId) {
-        axios
-            .put(URL + id + '/', form)
-            .then((response) => {
-                console.log(response)
-            })
-            .catch((error) => {
-                console.log(error)
-                setErrorMessage(
-                    'Error while sending the data. Try again later!'
-                )
-            })
-    }
+    const state = useSelector((state: TRootState) => state.fetchTastingDetails)
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        getTasting(id)
-    }, [id])
+        dispatch(fetchTastingDetails(id))
+    }, [dispatch, id])
 
     function handleUpdate(form: ITastingForm) {
-        putTasting(form, id)
+        dispatch(updateTasting(id, form))
         history.push('/tastings/' + id + '/')
     }
 
@@ -63,7 +37,6 @@ export default function UpdateTasting() {
             <br />
             <br />
             <br />
-            {errorMessage !== '' ? <h3>{errorMessage}</h3> : null}
             <Grid
                 container
                 direction='column'
@@ -76,15 +49,12 @@ export default function UpdateTasting() {
                 >
                     <h2>Update Tasting</h2>
                 </Grid>
-                {tasting
-                ? 
-                (
+                {state.tasting && (
                     <FormikTasting
-                        initialForm={tasting}
+                        initialForm={state.tasting}
                         handleSubmit={handleUpdate} 
                     />
-                )
-                : null}
+                )}
                 <Grid
                     item
                 >

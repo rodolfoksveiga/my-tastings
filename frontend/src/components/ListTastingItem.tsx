@@ -10,6 +10,8 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
 import DeleteTasting from './DeleteTasting'
 import { IListTastingItemProps } from './types'
 
+
+
 // Component
 export default function ListTastingItem({ tasting, updateTriggerReload }: IListTastingItemProps) {
     return (
@@ -32,7 +34,7 @@ export default function ListTastingItem({ tasting, updateTriggerReload }: IListT
                         <EditOutlinedIcon />
                     </IconButton>
                     <DeleteTasting
-                        tasting={tasting}
+                        id={tasting.id}
                         updateTriggerReload={updateTriggerReload}
                     />
                 </ListIconSecondaryAction>
