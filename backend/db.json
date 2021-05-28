@@ -21,7 +21,7 @@
     "model": "users.user",
     "fields": {
         "password": "pbkdf2_sha256$260000$x3SyzL1SJZAGnkO5E8Ggpb$QFhIvRadBbih4BksDRcU1Q/UZX79wADnaa7GqHh4Vos=",
-        "last_login": "2021-05-24T15:39:00.937Z",
+        "last_login": "2021-05-27T15:21:02.827Z",
         "is_superuser": true,
         "created_at": "2021-05-24T09:55:05.824Z",
         "username": "rodox",
@@ -51,6 +51,178 @@
         "is_staff": true,
         "groups": [],
         "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "fields": {
+        "password": "pbkdf2_sha256$260000$BaWx8YwSsIIY6CmT9Np5lH$WnImZFgvUg9/ZArOC5JbNmWyn4J4sm4VqTjo6MxoLtk=",
+        "last_login": null,
+        "is_superuser": false,
+        "created_at": "2021-05-27T15:21:21.883Z",
+        "username": "franca",
+        "email": "franca@gmail.com",
+        "first_name": "",
+        "last_name": "",
+        "about": "",
+        "is_active": true,
+        "is_staff": false,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.user",
+    "fields": {
+        "password": "pbkdf2_sha256$260000$dg3fOnOZJWUSmt5KdCPcEP$fhF97yTR0ssSwEE9sCSqzOLSEfzm8uvuoILvgq5Vfzk=",
+        "last_login": null,
+        "is_superuser": false,
+        "created_at": "2021-05-27T15:21:44.177Z",
+        "username": "tex",
+        "email": "tex@gmail.com",
+        "first_name": "",
+        "last_name": "",
+        "about": "",
+        "is_active": true,
+        "is_staff": false,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "tastings.tasting",
+    "pk": 1,
+    "fields": {
+        "modified_at": "2021-05-27T15:22:14.917Z",
+        "name": "Tasting1",
+        "beverage": 1,
+        "user": [
+            "franca"
+        ],
+        "color": "Color1",
+        "appearance": "Appearance1",
+        "aroma": "Aroma1",
+        "finish": "Finish1",
+        "rating": 10
+    }
+},
+{
+    "model": "tastings.tasting",
+    "pk": 2,
+    "fields": {
+        "modified_at": "2021-05-27T15:22:39.925Z",
+        "name": "Tasting2",
+        "beverage": 2,
+        "user": [
+            "franca"
+        ],
+        "color": "Color2",
+        "appearance": "Appearance2",
+        "aroma": "Aroma2",
+        "finish": "Finish2",
+        "rating": 10
+    }
+},
+{
+    "model": "tastings.tasting",
+    "pk": 3,
+    "fields": {
+        "modified_at": "2021-05-27T15:23:05.598Z",
+        "name": "Tasting3",
+        "beverage": 3,
+        "user": [
+            "franca"
+        ],
+        "color": "Color3",
+        "appearance": "Appearance3",
+        "aroma": "Aroma3",
+        "finish": "Finish3",
+        "rating": 10
+    }
+},
+{
+    "model": "tastings.tasting",
+    "pk": 4,
+    "fields": {
+        "modified_at": "2021-05-27T15:23:25.031Z",
+        "name": "Tasting4",
+        "beverage": 4,
+        "user": [
+            "franca"
+        ],
+        "color": "Color4",
+        "appearance": "Appearance4",
+        "aroma": "Aroma4",
+        "finish": "Finish4",
+        "rating": 10
+    }
+},
+{
+    "model": "tastings.tasting",
+    "pk": 5,
+    "fields": {
+        "modified_at": "2021-05-27T15:23:48.519Z",
+        "name": "Tasting1",
+        "beverage": 1,
+        "user": [
+            "tex"
+        ],
+        "color": "Color1",
+        "appearance": "Appearance1",
+        "aroma": "Aroma1",
+        "finish": "Finish1",
+        "rating": 1
+    }
+},
+{
+    "model": "tastings.tasting",
+    "pk": 6,
+    "fields": {
+        "modified_at": "2021-05-27T15:24:15.720Z",
+        "name": "Tasting2",
+        "beverage": 2,
+        "user": [
+            "tex"
+        ],
+        "color": "Color2",
+        "appearance": "Appearance2",
+        "aroma": "Aroma2",
+        "finish": "Finish2",
+        "rating": 1
+    }
+},
+{
+    "model": "tastings.tasting",
+    "pk": 7,
+    "fields": {
+        "modified_at": "2021-05-27T15:24:32.239Z",
+        "name": "Tasting3",
+        "beverage": 3,
+        "user": [
+            "tex"
+        ],
+        "color": "Color3",
+        "appearance": "Appearance3",
+        "aroma": "Aroma3",
+        "finish": "Finish3",
+        "rating": 1
+    }
+},
+{
+    "model": "tastings.tasting",
+    "pk": 8,
+    "fields": {
+        "modified_at": "2021-05-27T15:24:49.771Z",
+        "name": "Tasting4",
+        "beverage": 4,
+        "user": [
+            "tex"
+        ],
+        "color": "Color4",
+        "appearance": "Appearance4",
+        "aroma": "Aroma4",
+        "finish": "Finish4",
+        "rating": 1
     }
 },
 {
@@ -145,7 +317,40 @@
     "pk": 1,
     "fields": {
         "modified_at": "2021-05-24T09:46:39.404Z",
-        "name": "Category",
+        "name": "Category1",
+        "user": [
+            "admin"
+        ]
+    }
+},
+{
+    "model": "categories.category",
+    "pk": 2,
+    "fields": {
+        "modified_at": "2021-05-24T09:47:39.404Z",
+        "name": "Category2",
+        "user": [
+            "admin"
+        ]
+    }
+},
+{
+    "model": "categories.category",
+    "pk": 3,
+    "fields": {
+        "modified_at": "2021-05-24T09:48:39.404Z",
+        "name": "Category3",
+        "user": [
+            "admin"
+        ]
+    }
+},
+{
+    "model": "categories.category",
+    "pk": 4,
+    "fields": {
+        "modified_at": "2021-05-24T09:49:39.404Z",
+        "name": "Category4",
         "user": [
             "admin"
         ]

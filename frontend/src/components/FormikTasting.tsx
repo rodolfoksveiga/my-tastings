@@ -15,6 +15,9 @@ import { ITastingFormik } from './types'
 
 // Validation schema
 const FormSchema = Yup.object().shape({
+    name: Yup.string()
+        .min(1, 'Too short!')
+        .required('Required'),
     color: Yup.string()
         .min(1, 'Too short!')
         .required('Required'),
@@ -44,6 +47,7 @@ export default function FormikTasting({initialForm, handleSubmit}: ITastingFormi
                 {({dirty, isValid}) => {
                     return(
                         <Form>
+                            <InputField input='name' />
                             <InputField input='beverage' type='let' />
                             <InputField input='user' type='let'/>
                             <InputField input='color' />

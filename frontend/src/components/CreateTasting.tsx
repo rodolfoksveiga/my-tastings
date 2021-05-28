@@ -15,6 +15,7 @@ import { THistory, ITastingForm } from './types'
 
 // Global variables
 const initialTastingForm: ITastingForm = {
+    name: '',
     beverage: null,
     user: null,
     color: '',

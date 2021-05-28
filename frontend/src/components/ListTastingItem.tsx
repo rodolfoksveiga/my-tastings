@@ -24,7 +24,7 @@ export default function ListTastingItem({ tasting, updateTriggerReload }: IListT
             >
                 <InsertDriveFileOutlinedIcon />
                 <ListItemText
-                    primary={tasting.beverage}
+                    primary={tasting.name}
                     secondary={tasting.modified_at}
                 />
                 <ListIconSecondaryAction>

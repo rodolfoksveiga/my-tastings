@@ -1,5 +1,5 @@
 // Main component
-export default function About() {
+export default function Activate() {
     return (
         <div>
             <br />
@@ -7,7 +7,7 @@ export default function About() {
             <br />
             <br />
             <br />
-            <h2>About</h2>
+            <h2>Activate</h2>
         </div>
     )
 }

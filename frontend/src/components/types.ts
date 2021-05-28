@@ -8,6 +8,7 @@ type TId = string
 type TTriggerReload = boolean
 
 interface ITastingEssentials {
+    name: string
     beverage: number | null
     user: number | null
     color: string

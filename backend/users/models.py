@@ -14,7 +14,7 @@ from django.contrib.auth.models import (
 
 
 class UserAccountManager(BaseUserManager):
-    def create_user(self, username, email, password, **other_fields):
+    def create_user(self, username, email, password=None, **other_fields):
         if not username:
             raise ValueError(_('Users must provide an username.'))
 
@@ -22,12 +22,14 @@ class UserAccountManager(BaseUserManager):
             raise ValueError(_('Users must provide an email address.'))
 
         email = self.normalize_email(email)
+
         user = self.model(username=username, email=email, **other_fields)
         user.set_password(password)
         user.save()
+
         return user
 
-    def create_superuser(self, username, email, password, **other_fields):
+    def create_superuser(self, username, email, password=None, **other_fields):
         other_fields.setdefault('is_staff', True)
         other_fields.setdefault('is_superuser', True)
 
@@ -52,11 +54,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     username = CharField(
         _('Username'),
-        max_length=150,
+        max_length=200,
         unique=True
     )
     email = EmailField(
         _('Email'),
+        max_length=200,
         unique=True
     )
     first_name = CharField(

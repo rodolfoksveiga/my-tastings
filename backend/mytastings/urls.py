@@ -17,7 +17,8 @@ urlpatterns = [
     path('api/producers/', include('producers.urls')),
     path('api/beverages/', include('beverages.urls')),
     path('api/tags/', include('tags.urls')),
-    path('api-auth/', include('rest_framework.urls')),
+    # path('api-auth/', include('rest_framework.urls')),
+    path('api/auth/', include('auth.urls')),
     path('api/token/', TokenObtainPairView.as_view()),
     path('api/token/refresh/', TokenRefreshView.as_view())
 ]

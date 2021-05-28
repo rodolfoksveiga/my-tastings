@@ -1,5 +1,4 @@
 // Import components, functions, types, variables, and styles
-import { initialState } from './rootReducer'
 import {
     FETCH_TASTINGS_LIST_LOADING,
     FETCH_TASTINGS_LIST_SUCCESS,
@@ -12,8 +11,16 @@ import { TTastings } from '../components/types'
 // Types and interfaces
 interface IFetchTastingsListState {
     isLoading: boolean,
-    tastings?: TTastings,
-    error?: string
+    tastings: TTastings | null,
+    error: string | null
+}
+
+
+// Variables
+const initialState = {
+    isLoading: false,
+    tastings: null,
+    error: null
 }
 
 
@@ -29,7 +36,8 @@ export function fetchTastingsListReducer(state: IFetchTastingsListState = initia
             return {
                 ...state,
                 isLoading: false,
-                tastings: action.payload
+                tastings: action.payload,
+                error: null
             }
         case FETCH_TASTINGS_LIST_FAIL:
             return {

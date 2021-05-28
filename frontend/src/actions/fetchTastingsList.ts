@@ -33,12 +33,18 @@ export const FETCH_TASTINGS_LIST_FAIL = 'FETCH_TASTINGS_LIST_FAIL'
 // Action
 export function fetchTastingsList() {
     return async (dispatch: Dispatch<TDispatchFetchTastingsList>) => {
+        const config = {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('access')
+            }
+        }
+
         try {
             dispatch({
                 type: FETCH_TASTINGS_LIST_LOADING
             })
 
-            const response = await axios.get(URL)
+            const response = await axios.get(URL, config)
 
             dispatch({
                 type: FETCH_TASTINGS_LIST_SUCCESS,
@@ -53,6 +59,7 @@ export function fetchTastingsList() {
 
             console.log(error)
         }
+
     }
 }
 

@@ -50,7 +50,8 @@ export default function Tasting() {
                         <Grid
                             item
                         >
-                            <h3>Beverage: {state.tasting.beverage}</h3>
+                            <h3>Name: {state.tasting.name}</h3>
+                            <h4>Beverage: {state.tasting.beverage}</h4>
                             <h4>Modified at: {state.tasting.modified_at}</h4>
                             <h4>Color: {state.tasting.color}</h4>
                             <h4>Appearance: {state.tasting.appearance}</h4>

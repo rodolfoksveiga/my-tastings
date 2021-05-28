@@ -1,11 +1,26 @@
 // Import components, functions, types, variables, and styles
+import { connect } from 'react-redux'
+
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 
+import logoutUser from '../actions/logoutUser'
+import { TRootState } from '../reducers/rootReducer'
+import GuestLinks from './GuestLinks'
+import UserLinks from './UserLinks'
+
+
+// Types and interfaces
+interface INavProps {
+    isAuthenticated: boolean | null
+    logoutUser: Function
+}
+
+
 // Main component
-export default function Nav() {
+export function Nav({ isAuthenticated, logoutUser }: INavProps) {
     return (
         <AppBar>
             <Toolbar>
@@ -13,13 +28,19 @@ export default function Nav() {
                     MyTastings
                 </Typography>
                 <Button href='/'>Home</Button>
-                <Button href='/tastings/'>Tastings</Button>
-                <Button href='/about/'>About</Button>
-                <Button href='/login/'>Login</Button>
-                <Button href='/logout/'>Logout</Button>
-                <Button href='/register/'>Register</Button>
+                {isAuthenticated
+                    ? <UserLinks handleLogout={logoutUser} />
+                    : <GuestLinks />
+
+                }
             </Toolbar>
             
         </AppBar>
     )
 }
+
+const mapStateToProps = (state: TRootState) => ({
+    isAuthenticated: state.authUser.isAuthenticated
+})
+
+export default connect(mapStateToProps, { logoutUser })(Nav)

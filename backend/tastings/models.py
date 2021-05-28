@@ -23,6 +23,10 @@ class Tasting(Model):
         _('Modified at'),
         auto_now=True
     )
+    name = CharField(
+        _('Name'),
+        max_length=100
+    )
     beverage = ForeignKey(
         Beverage,
         on_delete=PROTECT

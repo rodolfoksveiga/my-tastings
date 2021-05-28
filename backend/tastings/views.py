@@ -12,26 +12,23 @@ from rest_framework.permissions import (
 from .models import Tasting
 from .serializers import TastingSerializer
 
-'''
-class TastingUserWritePermission(BasePermission): # Mudei aqui (TastingSerializer)
+
+class TastingUserWritePermission(BasePermission):
     message = 'Tastings access permission is restricted to the tasting owner only.'
 
     def has_object_permission(self, request, view, obj):
         return obj.user == request.user or request.user.is_superuser
-'''
 
 
 class TastingsList(ListCreateAPIView):
     serializer_class = TastingSerializer
     queryset = Tasting.objects.all()
 
-    '''
     def get_queryset(self):
         user = self.request.user
         if user.is_superuser:
             return Tasting.objects.all()
         return Tasting.objects.filter(user=user)
-    '''
 
 
 class TastingDetail(RetrieveUpdateDestroyAPIView):

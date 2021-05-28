@@ -1,6 +1,7 @@
 // Import components, functions, types, variables, and styles
 import { combineReducers } from 'redux'
 
+import { authUserReducer } from './authUserReducer'
 import { fetchTastingsListReducer } from './fetchTastingsListReducer'
 import { fetchTastingDetailsReducer } from './fetchTastingDetailsReducer'
 import { createTastingReducer } from './createTastingReducer'
@@ -20,6 +21,7 @@ export const initialState = {
 
 // Reducer
 export const rootReducer = combineReducers({
+    authUser: authUserReducer,
     fetchTastingsList: fetchTastingsListReducer,
     fetchTastingDetails: fetchTastingDetailsReducer,
     createTasting: createTastingReducer,
