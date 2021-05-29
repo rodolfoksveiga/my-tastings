@@ -32,7 +32,12 @@ export default function confirmResetPassword(userId: string, token: string, newP
             }
         }
 
-        const body = JSON.stringify({ userId, token, newPassword, repeatNewPassword })
+        const body = JSON.stringify({
+            'uid': userId,
+            'token': token,
+            'new_password': newPassword,
+            're_new_password': repeatNewPassword
+        })
 
         try {
             await axios.post(URL + 'users/reset_password_confirm/', body, config)

@@ -1,6 +1,6 @@
 // Import components, functions, types, variables, and styles
 import { Link, Redirect } from 'react-router-dom'
-import { connect, useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
 import Container from '@material-ui/core/Container'
@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 
 import FormikLogin from './FormikLogin'
-import { loginUser } from '../actions/loginUser'
+import loginUser from '../actions/loginUser'
 import { TRootState } from '../reducers/rootReducer'
 
 
@@ -19,7 +19,7 @@ interface IFormData {
 }
 
 interface ILoginUserProps {
-    isAuthenticated: boolean | null,
+    isAuthenticated: boolean,
     loginUser: Function
 }
 
@@ -40,10 +40,9 @@ const initialFormData: IFormData = {
 // Main component
 export function Login({ isAuthenticated, loginUser }: ILoginUserProps) {
     const classes = useStyles()
-    const dispatch = useDispatch()
 
     function handleLogin(formData: IFormData) {
-        dispatch(loginUser(formData.username, formData.password))
+        loginUser(formData.username, formData.password)
     }
 
     if (isAuthenticated) {
@@ -68,7 +67,6 @@ export function Login({ isAuthenticated, loginUser }: ILoginUserProps) {
                         <Button
                             href='/register/'
                             variant='outlined'
-                            color='secondary'
                             fullWidth
                         >
                             Register
@@ -84,6 +82,8 @@ export function Login({ isAuthenticated, loginUser }: ILoginUserProps) {
     )
 }
 
+
+// Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
     isAuthenticated: state.authUser.isAuthenticated
 })

@@ -7,14 +7,14 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 
 import logoutUser from '../actions/logoutUser'
-import { TRootState } from '../reducers/rootReducer'
 import GuestLinks from './GuestLinks'
 import UserLinks from './UserLinks'
+import { TRootState } from '../reducers/rootReducer'
 
 
 // Types and interfaces
 interface INavProps {
-    isAuthenticated: boolean | null
+    isAuthenticated: boolean
     logoutUser: Function
 }
 

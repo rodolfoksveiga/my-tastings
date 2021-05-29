@@ -47,14 +47,14 @@ export default function FormikTasting({initialForm, handleSubmit}: ITastingFormi
                 {({dirty, isValid}) => {
                     return(
                         <Form>
-                            <InputField input='name' />
-                            <InputField input='beverage' type='let' />
-                            <InputField input='user' type='let'/>
-                            <InputField input='color' />
-                            <InputField input='appearance' />
-                            <InputField input='aroma' />
-                            <InputField input='finish' />
-                            <InputField input='rating' type='let' />
+                            <InputField input='name' inputLabel='Name' />
+                            <InputField input='beverage' inputLabel='Beverage' type='let' />
+                            <InputField input='user' inputLabel='User' type='let'/>
+                            <InputField input='color' inputLabel='Color' />
+                            <InputField input='appearance' inputLabel='Appearance' />
+                            <InputField input='aroma' inputLabel='Aroma' />
+                            <InputField input='finish' inputLabel='Finish' />
+                            <InputField input='rating' inputLabel='Rating' type='let' />
                             <Grid
                                 item
                             >

@@ -7,22 +7,23 @@ import Button from '@material-ui/core/Button'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import List from '@material-ui/core/List'
 
-import { fetchTastingsList } from '../actions/fetchTastingsList'
-import { TRootState } from '../reducers/rootReducer'
 import ListTastingItem from './ListTastingItem'
+import fetchTastingsList from '../actions/fetchTastingsList'
+import { TRootState } from '../reducers/rootReducer'
 import { TTastings, TTriggerReload } from './types'
 
 
 // Types and interfaces
 interface ITastingsListProps {
-    isAuthenticated: boolean | null,
+    isAuthenticated: boolean,
     tastings: TTastings | null,
+    error: string | null,
     fetchTastingsList: Function
 }
 
 
 // Component
-export function TastingsList({ isAuthenticated, tastings, fetchTastingsList }: ITastingsListProps) {
+export function TastingsList({ isAuthenticated, tastings, error, fetchTastingsList }: ITastingsListProps) {
     const [triggerReload, setTriggerReload] = useState<TTriggerReload>(false)
 
     useEffect(() => {
@@ -71,22 +72,31 @@ export function TastingsList({ isAuthenticated, tastings, fetchTastingsList }: I
                         Create new Tasting
                     </Button>
                 </Grid>
-                <Grid
-                    item
-                >
-                    <List>
-                        {tastings && (
-                            tastings.map((tasting) => {
-                                return (
-                                    <ListTastingItem
-                                        tasting={tasting}
-                                        updateTriggerReload={updateTriggerReload}
-                                    />
-                                )
-                            })
-                        )}
-                    </List>
-                </Grid>
+                {error ? (
+                    <Grid
+                        item
+                    >
+                        <h3>{error}</h3>
+                    </Grid>
+                ) : (
+                    <Grid
+                        item
+                    >
+                        <List>
+                            {tastings && (
+                                tastings.map((tasting) => {
+                                    return (
+                                        <ListTastingItem
+                                            tasting={tasting}
+                                            updateTriggerReload={updateTriggerReload}
+                                        />
+                                    )
+                                })
+                            )}
+                        </List>
+                    </Grid>
+                )}
+                
             </Grid>
         </div>
     )
@@ -95,8 +105,9 @@ export function TastingsList({ isAuthenticated, tastings, fetchTastingsList }: I
 
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
+    isAuthenticated: state.authUser.isAuthenticated,
     tastings: state.fetchTastingsList.tastings,
-    isAuthenticated: state.authUser.isAuthenticated
+    error: state.fetchTastingsList.error    
 })
 
 export default connect(mapStateToProps, { fetchTastingsList })(TastingsList)

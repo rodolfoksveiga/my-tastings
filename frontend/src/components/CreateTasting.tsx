@@ -7,10 +7,10 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
-import { createTasting } from '../actions/createTasting'
-import { TRootState } from '../reducers/rootReducer'
 import FormikTasting from './FormikTasting'
-import { THistory, ITastingForm } from './types'
+import createTasting from '../actions/createTasting'
+import { TRootState } from '../reducers/rootReducer'
+import { ITastingForm } from './types'
 
 
 // Global variables
@@ -28,7 +28,7 @@ const initialTastingForm: ITastingForm = {
 
 // Main component
 export default function CreateTasting() {
-    const history = useHistory<THistory>()
+    const history = useHistory()
     const state = useSelector((state: TRootState) => state.createTasting)
     const dispatch = useDispatch()
 

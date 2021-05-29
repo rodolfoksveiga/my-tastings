@@ -7,7 +7,7 @@ import Nav from './Nav'
 import Home from './Home'
 import TastingsList from './TastingsList'
 import CreateTasting from './CreateTasting'
-import Tasting from './Tasting'
+import Tasting from './TastingDetails'
 import UpdateTasting from './UpdateTasting'
 import Login from './Login'
 import Register from './Register'
@@ -39,9 +39,9 @@ export function App({ checkUserAuth, loadUser }: IAppProps) {
                 <Route exact path='/' component={Home} />
                 <Route path='/register/' exact component={Register} />
                 <Route path='/login/' exact component={Login} />
-                <Route path='/activate/:uid/:token/' exact component={Activate} />
+                <Route path='/activate/:userId/:token/' exact component={Activate} />
                 <Route path='/reset-password/' exact component={ResetPassword} />
-                <Route path='/reset-password-confirm/:uid/:token/' exact component={ConfirmResetPassword} />
+                <Route path='/reset-password-confirm/:userId/:token/' exact component={ConfirmResetPassword} />
                 <Route path='/tastings/' exact component={TastingsList} />
                 <Route exact path='/tastings/create/' component={CreateTasting} />
                 <Route path='/tastings/:id/' exact component={Tasting} />

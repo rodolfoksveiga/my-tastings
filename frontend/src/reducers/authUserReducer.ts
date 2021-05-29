@@ -1,5 +1,15 @@
 // Import components, functions, types, variables, and styles
 import {
+    REGISTER_USER_SUCCESS,
+    REGISTER_USER_FAIL,
+    TDispatchRegisterUser
+} from '../actions/registerUser'
+import {
+    ACTIVATE_USER_SUCCESS,
+    ACTIVATE_USER_FAIL,
+    TDispatchActivateUser
+} from '../actions/activateUser'
+import {
     LOAD_USER_SUCCESS,
     LOAD_USER_FAIL,
     IUser,
@@ -34,14 +44,16 @@ import {
 
 // Types and interfaces
 interface IAuthUserState {
-    access: string | null,
-    refresh: string | null,
-    isAuthenticated: boolean | null,
-    user: IUser | null,
+    isAuthenticated: boolean
+    access: string | null
+    refresh: string | null
+    user: IUser | null
     error: string | null
 }
 
 type TDispatchAuthUser = (
+    TDispatchRegisterUser |
+    TDispatchActivateUser |
     TDispatchLoadUser |
     TDispatchLoginUser |
     TDispatchCheckUserAuth |
@@ -64,6 +76,27 @@ const initialState = {
 // Reducer
 export function authUserReducer(state: IAuthUserState = initialState, action: TDispatchAuthUser) {
     switch (action.type) {
+        case REGISTER_USER_SUCCESS:
+            return {
+                ...state,
+                isAuthenticated: false,
+                error: null
+            }
+        case REGISTER_USER_FAIL:
+            return {
+                ...state,
+                error: action.payload
+            }
+        case ACTIVATE_USER_SUCCESS:
+            return {
+                ...state,
+                error: null
+            }
+        case ACTIVATE_USER_FAIL:
+            return {
+                ...state,
+                error: action.payload
+            }
         case CHECK_USER_AUTH_SUCCESS:
             return {
                 ...state,
@@ -135,7 +168,8 @@ export function authUserReducer(state: IAuthUserState = initialState, action: TD
             }
         case CONFIRM_RESET_PASSWORD_SUCCESS:
             return {
-                ...state
+                ...state,
+                error: null
             }
         case CONFIRM_RESET_PASSWORD_FAIL:
             return {

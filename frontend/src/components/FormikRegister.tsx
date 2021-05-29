@@ -9,7 +9,7 @@ import InputField from './InputField'
 
 
 // Types and interfaces
-interface ILoginFormik {
+interface IRegisterFormik {
     initialFormData: {
         username: string
         password: string
@@ -23,13 +23,18 @@ const FormSchema = Yup.object().shape({
     username: Yup.string()
         .min(3, 'Your username is at least 3 characters long.')
         .required('Required'),
+    email: Yup.string()
+        .email('Invalid email.')
+        .required('Required field.'),
     password: Yup.string()
         .min(6, 'Your password must have at least 6 characters.')
-        .required('Required')
+        .required('Required'),
+    repeatPassword: Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Passwords must match.')
 })
 
 // Main component
-export default function FormikLogin({initialFormData, handleSubmit}: ILoginFormik) {
+export default function FormikRegister({initialFormData, handleSubmit}: IRegisterFormik) {
     return (
         <div>
             <Formik
@@ -47,7 +52,13 @@ export default function FormikLogin({initialFormData, handleSubmit}: ILoginFormi
                                             <InputField input='username' inputLabel='Username' />
                                         </Grid>
                                         <Grid item xs={12}>
+                                            <InputField input='email' inputLabel='Email' />
+                                        </Grid>
+                                        <Grid item xs={12}>
                                             <InputField input='password' inputLabel='Password' type='password' />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <InputField input='repeatPassword' inputLabel='Repeat password' type='password' />
                                         </Grid>
                                     </Grid>
                                 </Grid>
@@ -59,7 +70,7 @@ export default function FormikLogin({initialFormData, handleSubmit}: ILoginFormi
                                         disabled={!dirty || !isValid}
                                         fullWidth
                                     >
-                                        Login
+                                        Register
                                     </Button>
                                 </Grid>
                             </Grid>

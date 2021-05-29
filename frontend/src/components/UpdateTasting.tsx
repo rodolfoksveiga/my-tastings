@@ -7,17 +7,17 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
-import { fetchTastingDetails } from '../actions/fetchTastingDetails'
-import { updateTasting } from '../actions/updateTasting'
-import { TRootState } from '../reducers/rootReducer'
 import FormikTasting from './FormikTasting'
-import { THistory, ITastingForm, ITastingParams } from './types'
+import fetchTastingDetails from '../actions/fetchTastingDetails'
+import updateTasting from '../actions/updateTasting'
+import { TRootState } from '../reducers/rootReducer'
+import { ITastingForm, ITastingParams } from './types'
 
 
 // Main component
 export default function UpdateTasting() {
     const { id } = useParams<ITastingParams>()
-    const history = useHistory<THistory>()
+    const history = useHistory()
     const state = useSelector((state: TRootState) => state.fetchTastingDetails)
     const dispatch = useDispatch()
 

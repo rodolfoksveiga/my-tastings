@@ -31,7 +31,7 @@ export const FETCH_TASTINGS_LIST_FAIL = 'FETCH_TASTINGS_LIST_FAIL'
 
 
 // Action
-export function fetchTastingsList() {
+export default function fetchTastingsList() {
     return async (dispatch: Dispatch<TDispatchFetchTastingsList>) => {
         const config = {
             headers: {
@@ -55,7 +55,7 @@ export function fetchTastingsList() {
         } catch (error) {
             dispatch({
                 type: FETCH_TASTINGS_LIST_FAIL,
-                payload: 'Error while loading the data. Reload the page.'
+                payload: 'Error while loading the Tastings List. Reload the page.'
             })
 
             console.log(error)

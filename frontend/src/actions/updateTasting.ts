@@ -25,7 +25,7 @@ export const UPDATE_TASTING_FAIL = 'UPDATE_TASTING_FAIL'
 
 
 // Action
-export function updateTasting(id: TId, body: ITastingForm) {
+export default function updateTasting(id: TId, body: ITastingForm) {
     return async (dispatch: Dispatch<TDispatchUpdateTasting>) => {
         const config = {
             headers: {

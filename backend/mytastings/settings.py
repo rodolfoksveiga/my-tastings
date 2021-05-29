@@ -1,6 +1,8 @@
 from pathlib import Path
 from datetime import timedelta
 
+from safe import SECRET_KEY, EMAIL_HOST_PASSWORD
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -9,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure'
+SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -144,12 +146,15 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'my.tastings.app@gmail.com'
-EMAIL_HOST_PASSWORD = 'mjfppcjztuuuqvfm'
+EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
 EMAIL_USE_TLS = True
 
 LOGIN_REDIRECT_URL = '/api/tastings'
 
 AUTH_USER_MODEL = 'users.User'
+
+DOMAIN = ('localhost:3000')
+SITE_NAME = ('My Tastings')
 
 DJOSER = {
     'LOGIN_FIELD': 'username',
@@ -158,6 +163,7 @@ DJOSER = {
     'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
     'SEND_CONFIRMATION_EMAIL': True,
     'SET_PASSWORD_RETYPE': True,
+    'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'USERNAME_RESET_CONFIRM_URL': 'reset-username-confirm/{uid}/{token}',
     'PASSWORD_RESET_CONFIRM_URL': 'reset-password-confirm/{uid}/{token}',
     'ACTIVATION_URL': 'activate/{uid}/{token}',

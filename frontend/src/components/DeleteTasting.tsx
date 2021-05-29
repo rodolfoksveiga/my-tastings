@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteOutlined from '@material-ui/icons/DeleteOutlined'
 
-import { deleteTasting } from '../actions/deleteTasting'
+import deleteTasting from '../actions/deleteTasting'
 import { TId } from './types'
 import { TRootState } from '../reducers/rootReducer'
 

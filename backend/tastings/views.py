@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView
@@ -11,6 +12,7 @@ from rest_framework.permissions import (
 
 from .models import Tasting
 from .serializers import TastingSerializer
+from users.models import User
 
 
 class TastingUserWritePermission(BasePermission):
@@ -28,6 +30,7 @@ class TastingsList(ListCreateAPIView):
         user = self.request.user
         if user.is_superuser:
             return Tasting.objects.all()
+        admin = User.objects.filter(username='admin')
         return Tasting.objects.filter(user=user)
 
 

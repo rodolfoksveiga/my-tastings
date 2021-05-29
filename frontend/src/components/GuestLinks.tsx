@@ -8,6 +8,7 @@ export default function GuestLinks() {
     return(
         <Fragment>
             <Button href='/login/'>Login</Button>
+            <Button href='/register/'>Register</Button>
         </Fragment>
     )
 }

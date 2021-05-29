@@ -29,7 +29,7 @@ export const LOGIN_USER_FAIL = 'LOGIN_USER_FAIL'
 
 
 // Actions
-export function loginUser(username: string, password: string) {
+export default function loginUser(username: string, password: string) {
     return async (dispatch: Dispatch<TDispatchLoginUser>) => {
         const config = {
             headers: {

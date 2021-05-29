@@ -24,7 +24,7 @@ export const DELETE_TASTING_FAIL = 'DELETE_TASTING_FAIL'
 
 
 // Action
-export function deleteTasting(id: string) {
+export default function deleteTasting(id: string) {
     return async (dispatch: Dispatch<TDispatchDeleteTasting>) => {
         try {
             const config = {

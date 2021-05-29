@@ -26,7 +26,7 @@ export const CREATE_TASTING_FAIL = 'CREATE_TASTING_FAIL'
 
 
 // Action
-export function createTasting(body: ITastingForm) {
+export default function createTasting(body: ITastingForm) {
     return async (dispatch: Dispatch<TDispatchCreateTasting>) => {
         try {
             const config = {

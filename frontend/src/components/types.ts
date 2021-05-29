@@ -1,6 +1,4 @@
 // Types and interfaces
-type THistory = string
-
 type TErrorMessage = string
 
 type TId = string
@@ -49,15 +47,9 @@ interface IDeleteTastingProps {
     updateTriggerReload: Function
 }
 
-interface IInputFieldProps {
-    input: string
-    type?: string
-}
-
 
 // Export all
 export type {
-    THistory,
     TErrorMessage,
     TId,
     TTriggerReload,
@@ -67,6 +59,5 @@ export type {
     ITastingParams,
     IListTastingItemProps,
     ITastingFormik,
-    IDeleteTastingProps,
-    IInputFieldProps
+    IDeleteTastingProps
 }

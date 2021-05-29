@@ -2,13 +2,17 @@
 import TextField from '@material-ui/core/TextField'
 import { Field, ErrorMessage } from 'formik'
 
-import { IInputFieldProps } from './types'
+
+// Types and interfaces
+interface IInputFieldProps {
+    input: string
+    inputLabel: string
+    type?: string
+}
 
 
 // Component
-export default function InputField({ input, type='text' }: IInputFieldProps) {
-    const capitalizedInput = input.replace(/^\w/, w => w.toUpperCase())
-
+export default function InputField({ input, inputLabel, type='text' }: IInputFieldProps) {
     return (
         <div>
             <Field
@@ -16,7 +20,7 @@ export default function InputField({ input, type='text' }: IInputFieldProps) {
                 type={type}
                 name={input}
                 id={input}
-                label={capitalizedInput}
+                label={inputLabel}
                 variant='outlined'
                 color='primary'
                 fullWidth
