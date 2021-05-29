@@ -6,10 +6,6 @@ import loadUser from './loadUser'
 
 
 // Types and interfaces
-interface IAuthLoginUserProcessing {
-    type: typeof LOGIN_USER_PROCESSING
-}
-
 interface IAuthLoginUserSuccess {
     type: typeof LOGIN_USER_SUCCESS
     payload: {
@@ -23,12 +19,11 @@ interface IAuthLoginUserFail {
     payload: string
 }
 
-export type TDispatchLoginUser = IAuthLoginUserProcessing | IAuthLoginUserSuccess | IAuthLoginUserFail
+export type TDispatchLoginUser = IAuthLoginUserSuccess | IAuthLoginUserFail
 
 
 // Action types
 const URL = 'http://localhost:8000/api/auth/'
-export const LOGIN_USER_PROCESSING = 'LOGIN_USER_PROCESSING'
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS'
 export const LOGIN_USER_FAIL = 'LOGIN_USER_FAIL'
 
@@ -48,10 +43,6 @@ export function loginUser(username: string, password: string) {
         })
 
         try {
-            dispatch({
-                type: LOGIN_USER_PROCESSING
-            })
-
             const response = await axios.post(URL + 'jwt/create/', body, config)
 
             dispatch({

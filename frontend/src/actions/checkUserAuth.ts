@@ -4,10 +4,6 @@ import { Dispatch } from 'redux'
 
 
 // Types and interfaces
-interface ICheckUserAuthProcessing {
-    type: typeof CHECK_USER_AUTH_PROCESSING
-}
-
 interface ICheckUserAuthSuccess {
     type: typeof CHECK_USER_AUTH_SUCCESS
 }
@@ -18,12 +14,11 @@ interface ICheckUserAuthFail {
 }
 
 
-export type TDispatchCheckUserAuth = ICheckUserAuthProcessing | ICheckUserAuthSuccess | ICheckUserAuthFail
+export type TDispatchCheckUserAuth = ICheckUserAuthSuccess | ICheckUserAuthFail
 
 
 // Action types
 const URL = 'http://localhost:8000/api/auth/'
-export const CHECK_USER_AUTH_PROCESSING = 'CHECK_USER_AUTH_PROCESSING'
 export const CHECK_USER_AUTH_SUCCESS = 'CHECK_USER_AUTH_SUCCESS'
 export const CHECK_USER_AUTH_FAIL = 'CHECK_USER_AUTH_FAIL'
 
@@ -44,10 +39,6 @@ export default function checkAuthentication() {
             })
 
             try {
-                dispatch({
-                    type: CHECK_USER_AUTH_PROCESSING
-                })
-
                 const response = await axios.post(URL + 'jwt/verify/', body, config)
 
                 if (response.data.code !== 'token_not_valid') {

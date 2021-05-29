@@ -2,17 +2,11 @@
 import axios from 'axios'
 import { Dispatch } from 'redux'
 
-import { TId } from '../components/types'
-
 
 // Types and interfaces
-interface IDeleteTastingProcessing {
-    type: typeof DELETE_TASTING_PROCESSING
-}
-
 interface IDeleteTastingSuccess {
     type: typeof DELETE_TASTING_SUCCESS,
-    payload: TId
+    payload: string
 }
 
 interface IDeleteTastingFail {
@@ -20,25 +14,27 @@ interface IDeleteTastingFail {
     payload: string
 }
 
-export type TDispatchDeleteTasting = IDeleteTastingProcessing | IDeleteTastingSuccess | IDeleteTastingFail
+export type TDispatchDeleteTasting = IDeleteTastingSuccess | IDeleteTastingFail
 
 
 // Action types
 const URL = 'http://localhost:8000/api/tastings/'
-export const DELETE_TASTING_PROCESSING = 'DELETE_TASTING_PROCESSING'
 export const DELETE_TASTING_SUCCESS = 'DELETE_TASTING_SUCESS'
 export const DELETE_TASTING_FAIL = 'DELETE_TASTING_FAIL'
 
 
 // Action
-export function deleteTasting(id: TId) {
+export function deleteTasting(id: string) {
     return async (dispatch: Dispatch<TDispatchDeleteTasting>) => {
         try {
-            dispatch({
-                type: DELETE_TASTING_PROCESSING
-            })
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access')
+                }
+            }
 
-            await axios.delete(URL + id + '/')
+            await axios.delete(URL + id + '/', config)
 
             alert('The data was deleted!')
 

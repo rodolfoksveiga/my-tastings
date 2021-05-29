@@ -170,5 +170,7 @@ DJOSER = {
 }
 
 SIMPLE_JWT = {
-    'LOGIN_FIELD': 'username'
+    'LOGIN_FIELD': 'username',
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1)
 }

@@ -6,10 +6,6 @@ import { ITasting, ITastingForm } from '../components/types'
 
 
 // Types and interfaces
-interface ICreateTastingProcessing {
-    type: typeof CREATE_TASTING_PROCESSING
-}
-
 interface ICreateTastingSuccess {
     type: typeof CREATE_TASTING_SUCCESS,
     payload: ITasting
@@ -20,25 +16,28 @@ interface ICreateTastingFail {
     payload: string
 }
 
-export type TDispatchCreateTasting = ICreateTastingProcessing | ICreateTastingSuccess | ICreateTastingFail
+export type TDispatchCreateTasting = ICreateTastingSuccess | ICreateTastingFail
 
 
 // Action types
 const URL = 'http://localhost:8000/api/tastings/'
-export const CREATE_TASTING_PROCESSING = 'CREATE_TASTING_PROCESSING'
 export const CREATE_TASTING_SUCCESS = 'CREATE_TASTING_SUCESS'
 export const CREATE_TASTING_FAIL = 'CREATE_TASTING_FAIL'
 
 
 // Action
-export function createTasting(form: ITastingForm) {
+export function createTasting(body: ITastingForm) {
     return async (dispatch: Dispatch<TDispatchCreateTasting>) => {
         try {
-            dispatch({
-                type: CREATE_TASTING_PROCESSING
-            })
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('access'),
+                    'Accept': 'application/json'
+                }
+            }
 
-            const response = await axios.post(URL, form)
+            const response = await axios.post(URL, body, config)
 
             dispatch({
                 type: CREATE_TASTING_SUCCESS,

@@ -16,7 +16,7 @@ interface IFetchTastingsListState {
 }
 
 
-// Variables
+// Global variables
 const initialState = {
     isLoading: false,
     tastings: null,

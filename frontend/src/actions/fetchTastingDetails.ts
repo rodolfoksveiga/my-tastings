@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { Dispatch } from 'redux'
 
-import { TId, ITasting } from '../components/types'
+import { ITasting } from '../components/types'
 
 
 // Types and interfaces
@@ -31,14 +31,21 @@ export const FETCH_TASTING_DETAILS_FAIL = 'FETCH_TASTING_DETAILS_FAIL'
 
 
 // Action
-export function fetchTastingDetails(id: TId) {
+export function fetchTastingDetails(id: string) {
     return async (dispatch: Dispatch<TDispatchFetchTastingDetails>) => {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('access')
+            }
+        }
+
         try {
             dispatch({
                 type: FETCH_TASTING_DETAILS_LOADING
             })
 
-            const response = await axios.get(URL + id + '/')
+            const response = await axios.get(URL + id + '/', config)
 
             dispatch({
                 type: FETCH_TASTING_DETAILS_SUCCESS,

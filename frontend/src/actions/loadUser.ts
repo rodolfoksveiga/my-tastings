@@ -4,10 +4,6 @@ import { Dispatch } from 'redux'
 
 
 // Types and interfaces
-interface IAuthLoadUserProcessing {
-    type: typeof LOAD_USER_PROCESSING
-}
-
 export interface IUser {
     id: number
     username: string
@@ -24,12 +20,11 @@ interface IAuthLoadUserFail {
     payload: string
 }
 
-export type TDispatchLoadUser = IAuthLoadUserProcessing | IAuthLoadUserSuccess | IAuthLoadUserFail
+export type TDispatchLoadUser = IAuthLoadUserSuccess | IAuthLoadUserFail
 
 
 // Action types
 const URL = 'http://localhost:8000/api/auth/'
-export const LOAD_USER_PROCESSING = 'LOAD_USER_PROCESSING'
 export const LOAD_USER_SUCCESS = 'LOAD_USER_SUCCESS'
 export const LOAD_USER_FAIL = 'LOAD_USER_FAIL'
 
@@ -47,10 +42,6 @@ export default function loadUser() {
             }
 
             try {
-                dispatch({
-                    type: LOAD_USER_PROCESSING
-                })
-
                 const response = await axios.get(URL + 'users/me/', config)
 
                 dispatch({

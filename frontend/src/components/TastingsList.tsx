@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Redirect } from 'react-router-dom'
+// import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import Grid from '@material-ui/core/Grid'
@@ -27,7 +27,7 @@ export function TastingsList({ isAuthenticated, tastings, fetchTastingsList }: I
 
     useEffect(() => {
         fetchTastingsList()
-    })
+    }, [fetchTastingsList, triggerReload])
 
     function updateTriggerReload() {
         setTriggerReload(!triggerReload)

@@ -32,7 +32,7 @@ class TastingsList(ListCreateAPIView):
 
 
 class TastingDetail(RetrieveUpdateDestroyAPIView):
-    # permission_classes = [IsAuthenticated, TastingUserWritePermission]
+    permission_classes = [IsAuthenticated, TastingUserWritePermission]
     serializer_class = TastingSerializer
     queryset = Tasting.objects.all()
 

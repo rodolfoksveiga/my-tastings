@@ -13,12 +13,6 @@ import { updateTastingReducer } from './updateTastingReducer'
 export type TRootState = ReturnType<typeof rootReducer>
 
 
-// Global variables
-export const initialState = {
-    isLoading: false
-}
-
-
 // Reducer
 export const rootReducer = combineReducers({
     authUser: authUserReducer,

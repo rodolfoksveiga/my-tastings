@@ -6,10 +6,6 @@ import { TId, ITastingForm } from '../components/types'
 
 
 // Types and interfaces
-interface IUpdateTastingProcessing {
-    type: typeof UPDATE_TASTING_PROCESSING
-}
-
 interface IUpdateTastingSuccess {
     type: typeof UPDATE_TASTING_SUCCESS
 }
@@ -19,25 +15,28 @@ interface IUpdateTastingFail {
     payload: string
 }
 
-export type TDispatchUpdateTasting = IUpdateTastingProcessing | IUpdateTastingSuccess | IUpdateTastingFail
+export type TDispatchUpdateTasting = IUpdateTastingSuccess | IUpdateTastingFail
 
 
 // Action types
 const URL = 'http://localhost:8000/api/tastings/'
-export const UPDATE_TASTING_PROCESSING = 'UPDATE_TASTING_PROCESSING'
 export const UPDATE_TASTING_SUCCESS = 'UPDATE_TASTING_SUCESS'
 export const UPDATE_TASTING_FAIL = 'UPDATE_TASTING_FAIL'
 
 
 // Action
-export function updateTasting(id: TId, data: ITastingForm) {
+export function updateTasting(id: TId, body: ITastingForm) {
     return async (dispatch: Dispatch<TDispatchUpdateTasting>) => {
-        try {
-            dispatch({
-                type: UPDATE_TASTING_PROCESSING
-            })
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('access'),
+                'Accept': 'application/json'
+            }
+        }
 
-            await axios.put(URL + id + '/', data)
+        try {
+            await axios.put(URL + id + '/', body, config)
 
             dispatch({
                 type: UPDATE_TASTING_SUCCESS

@@ -35,6 +35,7 @@ export function fetchTastingsList() {
     return async (dispatch: Dispatch<TDispatchFetchTastingsList>) => {
         const config = {
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.getItem('access')
             }
         }

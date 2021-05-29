@@ -3,10 +3,6 @@ import { Dispatch } from 'redux'
 
 
 // Types and interfaces
-interface ILogoutUserProcessing {
-    type: typeof LOGOUT_USER_PROCESSING
-}
-
 interface ILogoutUserSuccess {
     type: typeof LOGOUT_USER_SUCCESS
 }
@@ -17,11 +13,10 @@ interface ILogoutUserFail {
 }
 
 
-export type TDispatchLogoutUser = ILogoutUserProcessing | ILogoutUserSuccess | ILogoutUserFail
+export type TDispatchLogoutUser = ILogoutUserSuccess | ILogoutUserFail
 
 
 // Action types
-export const LOGOUT_USER_PROCESSING = 'LOGOUT_USER_PROCESSING'
 export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS'
 export const LOGOUT_USER_FAIL = 'LOGOUT_USER_FAIL'
 
@@ -30,10 +25,6 @@ export const LOGOUT_USER_FAIL = 'LOGOUT_USER_FAIL'
 export default function logoutUser() {
     return async (dispatch: Dispatch<TDispatchLogoutUser>) => {
         try {
-            dispatch({
-                type: LOGOUT_USER_PROCESSING
-            })
-
             dispatch({
                 type: LOGOUT_USER_SUCCESS
             })

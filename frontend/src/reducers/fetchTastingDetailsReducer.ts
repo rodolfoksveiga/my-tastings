@@ -1,5 +1,4 @@
 // Import components, functions, types, variables, and styles
-import { initialState } from './rootReducer'
 import {
     FETCH_TASTING_DETAILS_LOADING,
     FETCH_TASTING_DETAILS_SUCCESS,
@@ -12,8 +11,15 @@ import { ITasting } from '../components/types'
 // Types and interfaces
 interface IFetchTastingDetailsState {
     isLoading: boolean,
-    tasting?: ITasting,
-    error?: string
+    tasting: ITasting | null,
+    error: string | null
+}
+
+// Global variables
+const initialState = {
+    isLoading: false,
+    tasting: null,
+    error: null
 }
 
 
