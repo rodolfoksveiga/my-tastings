@@ -7,20 +7,16 @@ import Typography from '@material-ui/core/Typography'
 
 // Types and interfaces
 interface IUserLinksProps {
-    username: string
     handleLogout: Function
 }
 
 
 // Component
-export default function UserLinks({ username, handleLogout }: IUserLinksProps) {
+export default function UserLinks({ handleLogout }: IUserLinksProps) {
     return(
         <Fragment>
             <Button href='/tastings/'>Tastings</Button>
             <Button href='/login/' onClick={() => handleLogout()}>Logout</Button>
-            <Typography variant='h5'>
-                User: {username}
-            </Typography>
         </Fragment>
     )
 }
