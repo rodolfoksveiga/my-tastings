@@ -3,16 +3,20 @@ import { useHistory, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
+import Alert from 'react-bootstrap/Alert'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 
 import activateUser from '../actions/activateUser'
+import { TRootState } from '../reducers/rootReducer'
 
 
 // Types and interfaces
 
 interface IActivateUserProps {
+    message: string | null,
+    didSucceed?: boolean,
     activateUser: Function
 }
 
@@ -31,13 +35,16 @@ const useStyles = makeStyles(theme => ({
 
 
 // Main component
-export function Activate({ activateUser }: IActivateUserProps) {
+export function Activate({ didSucceed, message, activateUser }: IActivateUserProps) {
     const { userId, token } = useParams<IActivateUserParams>()
     const classes = useStyles()
     const history = useHistory()
 
     function handleActivateUser() {
         activateUser(userId, token)
+    }
+
+    if (didSucceed === true) {
         history.push('/login/')
     }
 
@@ -49,6 +56,11 @@ export function Activate({ activateUser }: IActivateUserProps) {
             <br />
             <Container className={classes.container} maxWidth="xs" >
                 <Grid container spacing={5} direction='column' alignItems='center'>
+                {didSucceed === false && (
+                        <Grid>
+                            <Alert variant='danger'>{message}</Alert>
+                        </Grid>
+                    )}
                     <Grid item xs={12}>
                         <Button
                             variant='outlined'
@@ -61,12 +73,12 @@ export function Activate({ activateUser }: IActivateUserProps) {
                     </Grid>
                     <Grid item xs={12}>
                         <Button
-                            href='/'
+                            href='/login/'
                             variant='outlined'
-                            onClick={handleActivateUser}
+                            onClick={() => history.push('/')}
                             fullWidth
                         >
-                            Go to the home page
+                            Login
                         </Button>
                     </Grid>
                 </Grid>
@@ -78,4 +90,9 @@ export function Activate({ activateUser }: IActivateUserProps) {
 
 
 // Connect to Redux
-export default connect(null, { activateUser })(Activate)
+const mapStateToProps = (state: TRootState) => ({
+    didSucceed: state.authUser.didSucceed,
+    message: state.authUser.message
+})
+
+export default connect(mapStateToProps, { activateUser })(Activate)

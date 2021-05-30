@@ -1,8 +1,9 @@
 // Import components, functions, types, variables, and styles
-import { Link, Redirect } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
+import Alert from 'react-bootstrap/Alert'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
@@ -19,7 +20,9 @@ interface IFormData {
 }
 
 interface ILoginUserProps {
-    isAuthenticated: boolean,
+    isAuthenticated: boolean
+    didSucceed?: boolean
+    message: string | null
     loginUser: Function
 }
 
@@ -38,15 +41,16 @@ const initialFormData: IFormData = {
 
 
 // Main component
-export function Login({ isAuthenticated, loginUser }: ILoginUserProps) {
+export function Login({ isAuthenticated, didSucceed, message, loginUser }: ILoginUserProps) {
     const classes = useStyles()
+    const history = useHistory()
 
     function handleLogin(formData: IFormData) {
         loginUser(formData.username, formData.password)
     }
 
     if (isAuthenticated) {
-        return <Redirect to='/' />
+        history.push('/')
     }
 
     return (
@@ -57,7 +61,12 @@ export function Login({ isAuthenticated, loginUser }: ILoginUserProps) {
             <br />
             <Container className={classes.container} maxWidth="xs" >
                 <Grid container spacing={5} direction='column' alignItems='center'>
-                    <Grid item >
+                    {message && (
+                        <Grid item>
+                            <Alert variant={didSucceed ? 'success' : 'danger'}>{message}</Alert>
+                        </Grid>
+                    )}
+                    <Grid item>
                         <FormikLogin
                             initialFormData={initialFormData}
                             handleSubmit={handleLogin} 
@@ -85,7 +94,9 @@ export function Login({ isAuthenticated, loginUser }: ILoginUserProps) {
 
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
-    isAuthenticated: state.authUser.isAuthenticated
+    isAuthenticated: state.authUser.isAuthenticated,
+    didSucceed: state.authUser.didSucceed,
+    message: state.authUser.message
 })
 
 export default connect(mapStateToProps, { loginUser })(Login)

@@ -48,7 +48,8 @@ interface IAuthUserState {
     access: string | null
     refresh: string | null
     user: IUser | null
-    error: string | null
+    message: string | null
+    didSucceed?: boolean
 }
 
 type TDispatchAuthUser = (
@@ -69,7 +70,7 @@ const initialState = {
     access: localStorage.getItem('access'),
     refresh: localStorage.getItem('refresh'),
     user: null,
-    error: null
+    message: null
 }
 
 
@@ -80,28 +81,31 @@ export function authUserReducer(state: IAuthUserState = initialState, action: TD
             return {
                 ...state,
                 isAuthenticated: false,
-                error: null
+                didSucceed: true,
+                message: action.payload
             }
         case REGISTER_USER_FAIL:
             return {
                 ...state,
-                error: action.payload
+                didSucceed: false,
+                message: action.payload
             }
         case ACTIVATE_USER_SUCCESS:
             return {
                 ...state,
-                error: null
+                didSucceed: true,
+                message: action.payload
             }
         case ACTIVATE_USER_FAIL:
             return {
                 ...state,
-                error: action.payload
+                didSucceed: false,
+                message: action.payload
             }
         case CHECK_USER_AUTH_SUCCESS:
             return {
                 ...state,
-                isAuthenticated: true,
-                error: null
+                isAuthenticated: true
             }
         case LOGIN_USER_SUCCESS:
             localStorage.setItem('access', action.payload.access)
@@ -110,25 +114,22 @@ export function authUserReducer(state: IAuthUserState = initialState, action: TD
                 isAuthenticated: true,
                 access: action.payload.access,
                 refresh: action.payload.refresh,
-                error: null
+                message: null
             }
         case LOAD_USER_SUCCESS:
             return {
                 ...state,
-                user: action.payload,
-                error: null
+                user: action.payload
             }
         case LOAD_USER_FAIL:
             return {
                 ...state,
-                user: null,
-                error: action.payload
+                user: null
             }
         case CHECK_USER_AUTH_FAIL:
             return {
                 ...state,
-                isAuthenticated: false,
-                error: action.payload
+                isAuthenticated: false
             }
         case LOGIN_USER_FAIL:
             localStorage.removeItem('access')
@@ -136,10 +137,11 @@ export function authUserReducer(state: IAuthUserState = initialState, action: TD
             return {
                 ...state,
                 isAuthenticated: false,
+                didSucceed: false,
                 access: null,
                 refresh: null,
                 user: null,
-                error: action.payload
+                message: action.payload
             }
         case LOGOUT_USER_SUCCESS:
             localStorage.removeItem('access')
@@ -150,31 +152,36 @@ export function authUserReducer(state: IAuthUserState = initialState, action: TD
                 access: null,
                 refresh: null,
                 user: null,
-                error: null
+                message: null
             }
         case LOGOUT_USER_FAIL:
             return {
                 ...state,
-                error: action.payload
+                message: null
             }
         case RESET_PASSWORD_SUCCESS:
             return {
-                ...state
+                ...state,
+                didSucceed: true,
+                message: action.payload
             }
         case RESET_PASSWORD_FAIL:
             return {
                 ...state,
-                error: action.payload
+                didSucceed: false,
+                message: action.payload
             }
         case CONFIRM_RESET_PASSWORD_SUCCESS:
             return {
                 ...state,
-                error: null
+                didSucceed: true,
+                message: action.payload
             }
         case CONFIRM_RESET_PASSWORD_FAIL:
             return {
                 ...state,
-                error: action.payload
+                didSucceed: false,
+                message: action.payload
             }
         default:
             return state

@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
+import Alert from 'react-bootstrap/Alert'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
@@ -22,6 +23,8 @@ interface IFormData {
 
 interface IRegisterUserProps {
     isAuthenticated: boolean,
+    message: string | null,
+    didSucceed?: boolean,
     registerUser: Function
 }
 
@@ -42,14 +45,12 @@ const initialFormData: IFormData = {
 
 
 // Main component
-export function Register({ isAuthenticated, registerUser }: IRegisterUserProps) {
+export function Register({ isAuthenticated, didSucceed, message, registerUser }: IRegisterUserProps) {
     const classes = useStyles()
     const history = useHistory()
 
     function handleRegister(formData: IFormData) {
         registerUser(formData.username, formData.email, formData.password, formData.repeatPassword)
-        history.push('/')
-        
     }
 
     if (isAuthenticated) {
@@ -64,7 +65,12 @@ export function Register({ isAuthenticated, registerUser }: IRegisterUserProps) 
             <br />
             <Container className={classes.container} maxWidth="xs" >
                 <Grid container spacing={5} direction='column' alignItems='center'>
-                    <Grid item >
+                    {message && (
+                        <Grid item>
+                            <Alert variant={didSucceed ? 'success' : 'danger'}>{message}</Alert>
+                        </Grid>
+                    )}
+                    <Grid item>
                         <FormikRegister
                             initialFormData={initialFormData}
                             handleSubmit={handleRegister} 
@@ -72,11 +78,11 @@ export function Register({ isAuthenticated, registerUser }: IRegisterUserProps) 
                     </Grid>
                     <Grid item xs={12}>
                         <Button
-                            href='/login/'
+                            href='/'
                             variant='outlined'
                             fullWidth
                         >
-                            Login
+                            Go back to Home page
                         </Button>
                     </Grid>
                 </Grid>
@@ -89,7 +95,9 @@ export function Register({ isAuthenticated, registerUser }: IRegisterUserProps) 
 
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
-    isAuthenticated: state.authUser.isAuthenticated
+    isAuthenticated: state.authUser.isAuthenticated,
+    didSucceed: state.authUser.didSucceed,
+    message: state.authUser.message
 })
 
 export default connect(mapStateToProps, { registerUser })(Register)

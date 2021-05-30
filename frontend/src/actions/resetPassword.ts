@@ -5,7 +5,8 @@ import { Dispatch } from 'redux'
 
 // Types and interfaces
 interface IResetPasswordSuccess {
-    type: typeof RESET_PASSWORD_SUCCESS
+    type: typeof RESET_PASSWORD_SUCCESS,
+    payload: string
 }
 
 interface IResetPasswordFail {
@@ -38,7 +39,8 @@ export default function resetPassword(email: string) {
             await axios.post(URL + 'users/reset_password/', body, config)
 
             dispatch({
-                type: RESET_PASSWORD_SUCCESS
+                type: RESET_PASSWORD_SUCCESS,
+                payload: 'Password reset requested. Please, check your email to confirm.'
             })
 
         } catch (error) {

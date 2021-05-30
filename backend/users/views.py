@@ -20,13 +20,3 @@ class RegisterUser(APIView):
             if user:
                 return Response(status=HTTP_201_CREATED)
         return Response(form.errors, status=HTTP_400_BAD_REQUEST)
-
-    '''
-    def post(self, request):
-        form = RegisterUserSerializer(data=request.data)
-        if form.is_valid():
-            user = form.save()
-            if user:
-                return Response(status=HTTP_201_CREATED)
-        return Response(form.errors, status=HTTP_400_BAD_REQUEST)
-    '''

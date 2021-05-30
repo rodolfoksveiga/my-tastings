@@ -17,7 +17,6 @@ interface IAuthLoadUserSuccess {
 
 interface IAuthLoadUserFail {
     type: typeof LOAD_USER_FAIL
-    payload: string
 }
 
 export type TDispatchLoadUser = IAuthLoadUserSuccess | IAuthLoadUserFail
@@ -51,16 +50,14 @@ export default function loadUser() {
 
             } catch (error) {
                 dispatch({
-                    type: LOAD_USER_FAIL,
-                    payload: "Couldn't load the user."
+                    type: LOAD_USER_FAIL
                 })
 
                 console.log(error)
             }
         } else {
             dispatch({
-                type: LOAD_USER_FAIL,
-                payload: "Couldn't find the user. Check your username."
+                type: LOAD_USER_FAIL
             })
         }
     }

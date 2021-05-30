@@ -2,7 +2,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import 'fontsource-roboto'
+
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 import * as serviceWorker from './serviceWorker'
 import './index.css'

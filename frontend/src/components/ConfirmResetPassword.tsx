@@ -3,12 +3,14 @@ import { useHistory, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
+import Alert from 'react-bootstrap/Alert'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 
 import FormikConfirmResetPassword from './FormikConfirmResetPassword'
 import confirmResetPassword from '../actions/confirmResetPassword'
+import { TRootState } from '../reducers/rootReducer'
 
 
 // Types and interfaces
@@ -18,6 +20,8 @@ interface IFormData {
 }
 
 interface IResetPasswordProps {
+    didSucceed?: boolean
+    message: string | null
     confirmResetPassword: Function
 }
 
@@ -41,13 +45,16 @@ const initialFormData: IFormData = {
 
 
 // Main component
-export function ConfirmResetPassword({ confirmResetPassword }: IResetPasswordProps) {
+export function ConfirmResetPassword({ didSucceed, message, confirmResetPassword }: IResetPasswordProps) {
     const { userId, token } = useParams<IConfirmResetPasswordParams>()
     const classes = useStyles()
     const history = useHistory()
 
     function handleConfirmResetPassword(formData: IFormData) {
         confirmResetPassword(userId, token, formData.newPassword, formData.repeatNewPassword)
+    }
+
+    if (didSucceed) {
         history.push('/login/')
     }
 
@@ -59,7 +66,12 @@ export function ConfirmResetPassword({ confirmResetPassword }: IResetPasswordPro
             <br />
             <Container className={classes.container} maxWidth="xs" >
                 <Grid container spacing={5} direction='column' alignItems='center'>
-                    <Grid item >
+                    {message && (
+                        <Grid item>
+                            <Alert variant='danger'>{message}</Alert>
+                        </Grid>
+                    )}
+                    <Grid item>
                         <FormikConfirmResetPassword
                             initialFormData={initialFormData}
                             handleSubmit={handleConfirmResetPassword} 
@@ -67,11 +79,11 @@ export function ConfirmResetPassword({ confirmResetPassword }: IResetPasswordPro
                     </Grid>
                     <Grid item xs={12}>
                         <Button
-                            href='/register/'
+                            href='/'
                             variant='outlined'
                             fullWidth
                         >
-                            Go back to login page
+                            Go back to Home page
                         </Button>
                     </Grid>
                 </Grid>
@@ -81,4 +93,11 @@ export function ConfirmResetPassword({ confirmResetPassword }: IResetPasswordPro
     )
 }
 
-export default connect(null, { confirmResetPassword })(ConfirmResetPassword)
+
+// Connect to Redux
+const mapStateToProps = (state: TRootState) => ({
+    didSucceed: state.authUser.didSucceed,
+    message: state.authUser.message
+})
+
+export default connect(mapStateToProps, { confirmResetPassword })(ConfirmResetPassword)

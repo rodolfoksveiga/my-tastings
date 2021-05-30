@@ -36,12 +36,12 @@ export default function deleteTasting(id: string) {
 
             await axios.delete(URL + id + '/', config)
 
-            alert('The data was deleted!')
-
             dispatch({
                 type: DELETE_TASTING_SUCCESS,
                 payload: id
             })
+
+            alert('The data was deleted!')
 
         } catch (error) {
             dispatch({

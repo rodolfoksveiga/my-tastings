@@ -6,6 +6,7 @@ import { Dispatch } from 'redux'
 // Types and interfaces
 interface IConfirmResetPasswordSuccess {
     type: typeof CONFIRM_RESET_PASSWORD_SUCCESS
+    payload: string
 }
 
 interface IConfirmResetPasswordFail {
@@ -43,13 +44,26 @@ export default function confirmResetPassword(userId: string, token: string, newP
             await axios.post(URL + 'users/reset_password_confirm/', body, config)
 
             dispatch({
-                type: CONFIRM_RESET_PASSWORD_SUCCESS
+                type: CONFIRM_RESET_PASSWORD_SUCCESS,
+                payload: 'Password reseted. Please, login.'
             })
 
         } catch (error) {
+            let message = ''
+            const hasUId = error.response.data.hasOwnProperty('uid')
+            const hasToken = error.response.data.hasOwnProperty('token')
+
+            if (hasUId) {
+                message = 'Invalid user identification. Please, check your credentials.'
+            } else if (hasToken) {
+                message = 'Invalid activation token. Please, check your credentials.'
+            } else {
+                message = 'Password is too common. Try a stronger one.'
+            }
+
             dispatch({
                 type: CONFIRM_RESET_PASSWORD_FAIL,
-                payload: 'New password was not confirmed.'
+                payload: message
             })
 
             console.log(error)

@@ -56,7 +56,7 @@ export default function loginUser(username: string, password: string) {
         } catch (error) {
             dispatch({
                 type: LOGIN_USER_FAIL,
-                payload: 'Incorrect username or password.'
+                payload: 'No active account found with the given credentials.'
             })
 
             console.log(error)

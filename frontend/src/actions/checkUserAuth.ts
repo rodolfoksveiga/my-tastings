@@ -10,7 +10,6 @@ interface ICheckUserAuthSuccess {
 
 interface ICheckUserAuthFail {
     type: typeof CHECK_USER_AUTH_FAIL
-    payload: string
 }
 
 
@@ -54,16 +53,14 @@ export default function checkAuthentication() {
 
             } catch (error) {
                 dispatch({
-                    type: CHECK_USER_AUTH_FAIL,
-                    payload: 'Authentication failed.'
+                    type: CHECK_USER_AUTH_FAIL
                 })
 
                 console.log(error)
             }
         } else {
             dispatch({
-                type: CHECK_USER_AUTH_FAIL,
-                payload: "Couldn't find an authentication token."
+                type: CHECK_USER_AUTH_FAIL
             })
         }
     }

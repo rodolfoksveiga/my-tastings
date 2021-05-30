@@ -21,10 +21,14 @@ interface IFormikConfirmResetPasswordProps {
 // Validation schema
 const FormSchema = Yup.object().shape({
     newPassword: Yup.string()
-    .min(6, 'Your password must have at least 6 characters.')
-    .required('Required'),
+        .min(8, 'Password must be at least 8 characters long.')
+        .matches(/\w*[a-z]\w*/,  'Password must have a small letter.')
+        .matches(/\w*[A-Z]\w*/,  'Password must have a capital letter.')
+        .matches(/^\S*$/, 'Password must not have any white space.')
+        .matches(/\d/, 'Password must have a number.')
+        .required('Required'),
     repeatNewPassword: Yup.string()
-     .oneOf([Yup.ref('newPassword'), null], 'Passwords must match.')
+        .oneOf([Yup.ref('newPassword'), null], 'Passwords must match.')
 })
 
 // Main component
@@ -39,19 +43,28 @@ export default function FormikResetPassword({initialFormData, handleSubmit}: IFo
                 {({dirty, isValid}) => {
                     return(
                         <Form>
-                            <InputField input='newPassword' inputLabel='New password' type='password' />
-                            <InputField input='repeatNewPassword' inputLabel='Repeat new password' type='password' />
-                            <Grid
-                                item
-                            >
-                                <Button
-                                    type='submit'
-                                    variant='outlined'
-                                    color='secondary'
-                                    disabled={!dirty || !isValid}
-                                >
-                                    Change Password
-                                </Button>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <Grid container>
+                                        <Grid item xs={12}>
+                                            <InputField input='newPassword' inputLabel='New password' type='password' />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <InputField input='repeatNewPassword' inputLabel='Repeat new password' type='password' />
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Button
+                                        type='submit'
+                                        variant='outlined'
+                                        color='primary'
+                                        disabled={!dirty || !isValid}
+                                        fullWidth
+                                    >
+                                        Change Password
+                                    </Button>
+                                </Grid>
                             </Grid>
                         </Form>
                     )
@@ -60,3 +73,6 @@ export default function FormikResetPassword({initialFormData, handleSubmit}: IFo
         </div>
     )
 }
+
+
+

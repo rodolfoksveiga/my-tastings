@@ -9,9 +9,7 @@ interface ILogoutUserSuccess {
 
 interface ILogoutUserFail {
     type: typeof LOGOUT_USER_FAIL
-    payload: string
 }
-
 
 export type TDispatchLogoutUser = ILogoutUserSuccess | ILogoutUserFail
 
@@ -32,7 +30,6 @@ export default function logoutUser() {
         } catch (error) {
             dispatch({
                 type: LOGOUT_USER_FAIL,
-                payload: "Couldn't remove access and refresh tokens."
             })
 
             console.log(error)

@@ -1,14 +1,15 @@
 // Import components, functions, types, variables, and styles
-import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
+import Alert from 'react-bootstrap/Alert'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 
 import FormikResetPassword from './FormikResetPassword'
 import resetPassword from '../actions/resetPassword'
+import { TRootState } from '../reducers/rootReducer'
 
 
 // Types and interfaces
@@ -17,7 +18,7 @@ interface IFormData {
 }
 
 interface IResetPasswordProps {
-    isAuthenticated: boolean,
+    message: string | null
     resetPassword: Function
 }
 
@@ -35,13 +36,11 @@ const initialFormData: IFormData = {
 
 
 // Main component
-export function ResetPassword({ resetPassword }: IResetPasswordProps) {
+export function ResetPassword({ message, resetPassword }: IResetPasswordProps) {
     const classes = useStyles()
-    const history = useHistory()
 
     function handleResetPassword(formData: IFormData) {
         resetPassword(formData.email)
-        history.push('/')
     }
 
     return (
@@ -52,7 +51,12 @@ export function ResetPassword({ resetPassword }: IResetPasswordProps) {
             <br />
             <Container className={classes.container} maxWidth="xs" >
                 <Grid container spacing={5} direction='column' alignItems='center'>
-                    <Grid item >
+                    {message && (
+                        <Grid item>
+                            <Alert variant='warning'>{message}</Alert>
+                        </Grid>
+                    )}
+                    <Grid item>
                         <FormikResetPassword
                             initialFormData={initialFormData}
                             handleSubmit={handleResetPassword} 
@@ -60,11 +64,11 @@ export function ResetPassword({ resetPassword }: IResetPasswordProps) {
                     </Grid>
                     <Grid item xs={12}>
                         <Button
-                            href='/register/'
+                            href='/'
                             variant='outlined'
                             fullWidth
                         >
-                            Go back to login page
+                            Go back to Home page
                         </Button>
                     </Grid>
                 </Grid>
@@ -74,4 +78,10 @@ export function ResetPassword({ resetPassword }: IResetPasswordProps) {
     )
 }
 
-export default connect(null, { resetPassword })(ResetPassword)
+
+// Connect to Redux
+const mapStateToProps = (state: TRootState) => ({
+    message: state.authUser.message
+})
+
+export default connect(mapStateToProps, { resetPassword })(ResetPassword)

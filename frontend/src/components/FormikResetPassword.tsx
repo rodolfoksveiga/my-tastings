@@ -36,18 +36,25 @@ export default function FormikResetPassword({initialFormData, handleSubmit}: IFo
                 {({dirty, isValid}) => {
                     return(
                         <Form>
-                            <InputField input='email' inputLabel='Email' />
-                            <Grid
-                                item
-                            >
-                                <Button
-                                    type='submit'
-                                    variant='outlined'
-                                    color='secondary'
-                                    disabled={!dirty || !isValid}
-                                >
-                                    Reset Password
-                                </Button>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12}>
+                                    <Grid container>
+                                        <Grid item xs={12}>
+                                            <InputField input='email' inputLabel='Email' />
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Button
+                                        type='submit'
+                                        variant='outlined'
+                                        color='primary'
+                                        disabled={!dirty || !isValid}
+                                        fullWidth
+                                    >
+                                        Reset Password
+                                    </Button>
+                                </Grid>
                             </Grid>
                         </Form>
                     )

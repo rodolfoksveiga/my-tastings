@@ -21,11 +21,17 @@ interface ILoginFormik {
 // Validation schema
 const FormSchema = Yup.object().shape({
     username: Yup.string()
-        .min(3, 'Your username is at least 3 characters long.')
+        .min(3, 'Username must be at least 3 characters long.')
+        .matches(/^[a-zA-Z]/, 'Username must start a letter.')
+        .matches(/^\S*$/, 'Username must not have any white space.')
         .required('Required'),
     password: Yup.string()
-        .min(6, 'Your password must have at least 6 characters.')
-        .required('Required')
+        .min(8, 'Password must be at least 8 characters long.')
+        .matches(/\w*[a-z]\w*/,  'Password must have a small letter.')
+        .matches(/\w*[A-Z]\w*/,  'Password must have a capital letter.')
+        .matches(/^\S*$/, 'Password must not have any white space.')
+        .matches(/\d/, 'Password must have a number.')
+        .required('Required'),
 })
 
 // Main component
@@ -34,7 +40,10 @@ export default function FormikLogin({initialFormData, handleSubmit}: ILoginFormi
         <div>
             <Formik
                 initialValues={initialFormData}
-                onSubmit={formData => handleSubmit(formData)}
+                onSubmit={(formData, {resetForm}) => {
+                    handleSubmit(formData)
+                    resetForm()
+                }}
                 validationSchema={FormSchema}
             >
                 {({dirty, isValid}) => {
