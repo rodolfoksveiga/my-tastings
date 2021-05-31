@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { Dispatch } from 'redux'
 
-import { ITasting } from '../components/types'
+import { ITasting } from '../components/TastingsList'
 
 
 // Types and interfaces

@@ -9,6 +9,7 @@ import TastingsList from './TastingsList'
 import CreateTasting from './CreateTasting'
 import Tasting from './TastingDetails'
 import UpdateTasting from './UpdateTasting'
+import BeveragesList from './BeveragesList'
 import Login from './Login'
 import Register from './Register'
 import Activate from './Activate'
@@ -46,6 +47,7 @@ export function App({ checkUserAuth, loadUser }: IAppProps) {
                 <Route exact path='/tastings/create/' component={CreateTasting} />
                 <Route path='/tastings/:id/' exact component={Tasting} />
                 <Route exact path='/tastings/:id/update/' component={UpdateTasting} />
+                <Route path='/beverages/' exact component={BeveragesList} />
             </Switch>
         </BrowserRouter>
     )

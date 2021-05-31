@@ -5,7 +5,7 @@ import {
     FETCH_TASTINGS_LIST_FAIL,
     TDispatchFetchTastingsList
 } from '../actions/fetchTastingsList'
-import { TTastings } from '../components/types'
+import { TTastings } from '../components/TastingsList'
 
 
 // Types and interfaces

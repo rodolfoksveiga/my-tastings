@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView
@@ -13,30 +14,25 @@ from .models import Beverage
 from .serializers import BeverageSerializer
 
 
-'''
-class BeverageUserWritePermission(BasePermission): # Mudei aqui (BeverageSerializer)
-    message = 'Beverages access permission is restricted to the beverage owner only.'
-
+class BeverageUserWritePermission(BasePermission):
     def has_object_permission(self, request, view, obj):
+        if request.method in SAFE_METHODS:
+            return True
         return obj.user == request.user or request.user.is_superuser
-'''
 
 
 class BeveragesList(ListCreateAPIView):
     serializer_class = BeverageSerializer
-    queryset = Beverage.objects.all()
 
-    '''
     def get_queryset(self):
         user = self.request.user
-        if user.is_superuser:
-            return Beverage.objects.all()
-        return Beverage.objects.filter(user=user)
-    '''
+        if user.is_staff:
+            return Beverage.objects.all().order_by('modified_at').reverse()
+        return Beverage.objects.filter(Q(user=user) | Q(user=1)).order_by('modified_at').reverse()
 
 
-class BeverageDetail(RetrieveUpdateDestroyAPIView):
-    # permission_classes = [IsAuthenticated, BeverageUserWritePermission]
+class BeverageDetails(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated, BeverageUserWritePermission]
     serializer_class = BeverageSerializer
     queryset = Beverage.objects.all()
 

@@ -4,7 +4,7 @@ import {
     CREATE_TASTING_FAIL,
     TDispatchCreateTasting
 } from '../actions/createTasting'
-import { ITasting } from '../components/types'
+import { ITasting } from '../components/TastingsList'
 
 
 // Types and interfaces

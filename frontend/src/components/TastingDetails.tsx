@@ -9,15 +9,13 @@ import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
 import fetchTastingDetails from '../actions/fetchTastingDetails'
 import { TRootState } from '../reducers/rootReducer'
-import { ITasting } from './types'
+import { ITasting } from './TastingsList'
 
 
 // Types and interfaces
-interface ITastingParams {
+export interface ITastingParams {
     id: string
 }
-
-
 
 interface ITastingDetailsProps {
     isAuthenticated: boolean,
@@ -27,7 +25,7 @@ interface ITastingDetailsProps {
 }
 
 
-// Main component
+// Component
 export function TastingDetails({ isAuthenticated, tasting, error, fetchTastingDetails }: ITastingDetailsProps) {
     const { id } = useParams<ITastingParams>()
 
@@ -68,7 +66,7 @@ export function TastingDetails({ isAuthenticated, tasting, error, fetchTastingDe
                                 item
                             >
                                 <h3>Name: {tasting.name}</h3>
-                                <h4>Beverage: {tasting.beverage}</h4>
+                                <h4>Beverage: {tasting.beverageName}</h4>
                                 <h4>Modified at: {tasting.modified_at}</h4>
                                 <h4>Color: {tasting.color}</h4>
                                 <h4>Appearance: {tasting.appearance}</h4>

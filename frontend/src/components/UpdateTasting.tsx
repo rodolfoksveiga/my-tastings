@@ -11,7 +11,8 @@ import FormikTasting from './FormikTasting'
 import fetchTastingDetails from '../actions/fetchTastingDetails'
 import updateTasting from '../actions/updateTasting'
 import { TRootState } from '../reducers/rootReducer'
-import { ITastingForm, ITastingParams } from './types'
+import { ITastingParams } from './TastingDetails'
+import { ITastingForm } from './CreateTasting'
 
 
 // Main component

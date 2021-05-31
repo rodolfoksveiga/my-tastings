@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView
@@ -13,30 +14,25 @@ from .models import Tag
 from .serializers import TagSerializer
 
 
-'''
-class TagUserWritePermission(BasePermission): # Mudei aqui (TagSerializer)
-    message = 'Tags access permission is restricted to the tag owner only.'
-
+class TagUserWritePermission(BasePermission):
     def has_object_permission(self, request, view, obj):
+        if request.method in SAFE_METHODS:
+            return True
         return obj.user == request.user or request.user.is_superuser
-'''
 
 
 class TagsList(ListCreateAPIView):
     serializer_class = TagSerializer
-    queryset = Tag.objects.all()
 
-    '''
     def get_queryset(self):
         user = self.request.user
-        if user.is_superuser:
-            return Tag.objects.all()
-        return Tag.objects.filter(user=user)
-    '''
+        if user.is_staff:
+            return Tag.objects.all().order_by('modified_at').reverse()
+        return Tag.objects.filter(Q(user=user) | Q(user=1)).order_by('modified_at').reverse()
 
 
-class TagDetail(RetrieveUpdateDestroyAPIView):
-    # permission_classes = [IsAuthenticated, TagUserWritePermission]
+class TagDetails(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated, TagUserWritePermission]
     serializer_class = TagSerializer
     queryset = Tag.objects.all()
 

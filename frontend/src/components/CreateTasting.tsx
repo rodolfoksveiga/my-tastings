@@ -9,7 +9,21 @@ import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 import FormikTasting from './FormikTasting'
 import createTasting from '../actions/createTasting'
 import { TRootState } from '../reducers/rootReducer'
-import { ITastingForm } from './types'
+
+
+// Types and interfaces
+export interface ITastingForm {
+    id?: string
+    modified_at?: string
+    name: string
+    beverage: number | null
+    user: number | null
+    color: string
+    appearance: string
+    aroma: string
+    finish: string
+    rating: number | null
+}
 
 
 // Global variables

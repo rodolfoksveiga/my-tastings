@@ -33,7 +33,6 @@ export function Navi({ isAuthenticated, logoutUser }: INavProps) {
                     : <GuestLinks />
                 }
             </Toolbar>
-            
         </AppBar>
     )
 }

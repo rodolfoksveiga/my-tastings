@@ -9,7 +9,7 @@ import InputField from './InputField'
 
 
 // Types and interfaces
-interface ILoginFormik {
+interface ILoginFormikProps {
     initialFormData: {
         username: string
         password: string
@@ -27,15 +27,12 @@ const FormSchema = Yup.object().shape({
         .required('Required'),
     password: Yup.string()
         .min(8, 'Password must be at least 8 characters long.')
-        .matches(/\w*[a-z]\w*/,  'Password must have a small letter.')
-        .matches(/\w*[A-Z]\w*/,  'Password must have a capital letter.')
         .matches(/^\S*$/, 'Password must not have any white space.')
-        .matches(/\d/, 'Password must have a number.')
         .required('Required'),
 })
 
 // Main component
-export default function FormikLogin({initialFormData, handleSubmit}: ILoginFormik) {
+export default function FormikLogin({initialFormData, handleSubmit}: ILoginFormikProps) {
     return (
         <div>
             <Formik

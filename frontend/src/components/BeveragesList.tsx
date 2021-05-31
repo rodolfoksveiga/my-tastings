@@ -7,46 +7,48 @@ import Button from '@material-ui/core/Button'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import List from '@material-ui/core/List'
 
-import ListTastingItem from './ListTastingItem'
-import fetchTastingsList from '../actions/fetchTastingsList'
+import ListBeverageItem from './ListBeverageItem'
+import fetchBeveragesList from '../actions/fetchBeveragesList'
 import { TRootState } from '../reducers/rootReducer'
 
 
 // Types and interfaces
-export interface ITasting {
+type TTriggerReload = boolean
+
+
+export interface IBeverage {
     id: string
     modified_at: string
     name: string
-    beverage: number | null
-    beverageName: string
-    user: number | null
-    userName: string
-    color: string
-    appearance: string
-    aroma: string
-    finish: string
-    rating: number | null
+    category: number
+    producer: number
+    user: number
+    classification: string
+    base: string
+    year: string
+    degree: number
+    volume: number
+    price: number
+    tags: string[]
 }
 
-export type TTastings = ITasting[]
+export type TBeverages = IBeverage[]
 
-type TTriggerReload = boolean
-
-interface ITastingsListProps {
+interface IBeveragesListProps {
     isAuthenticated: boolean,
-    tastings: TTastings | null,
-    error: string | null,
-    fetchTastingsList: Function
+    beverages?: TBeverages
+    message?: string
+    fetchBeveragesList: Function
 }
 
 
 // Component
-export function TastingsList({ isAuthenticated, tastings, error, fetchTastingsList }: ITastingsListProps) {
+export function BeveragesList({ isAuthenticated, beverages, message, fetchBeveragesList }: IBeveragesListProps) {
     const [triggerReload, setTriggerReload] = useState<TTriggerReload>(false)
 
     useEffect(() => {
-        fetchTastingsList()
-    }, [fetchTastingsList, triggerReload])
+        fetchBeveragesList()
+    }, [fetchBeveragesList, triggerReload])
 
     function updateTriggerReload() {
         setTriggerReload(!triggerReload)
@@ -75,7 +77,7 @@ export function TastingsList({ isAuthenticated, tastings, error, fetchTastingsLi
                 <Grid
                     item
                 >
-                    <h2>List of Tastings</h2>
+                    <h2>List of Beverages</h2>
                 </Grid>
                 <Grid
                     item
@@ -87,26 +89,25 @@ export function TastingsList({ isAuthenticated, tastings, error, fetchTastingsLi
                         startIcon={<AddOutlinedIcon />}
                         fullWidth
                     >
-                        Create new Tasting
+                        Create new Beverage
                     </Button>
                 </Grid>
-                {error ? (
+                {message ? (
                     <Grid
                         item
                     >
-                        <h3>{error}</h3>
+                        <h3>{message}</h3>
                     </Grid>
                 ) : (
                     <Grid
                         item
                     >
                         <List>
-                            {tastings && (
-                                tastings.map((tasting) => {
+                            {beverages && (
+                                beverages.map(beverage => {
                                     return (
-                                        <ListTastingItem
-                                            key={tasting.id}
-                                            tasting={tasting}
+                                        <ListBeverageItem
+                                            beverage={beverage}
                                             updateTriggerReload={updateTriggerReload}
                                         />
                                     )
@@ -125,8 +126,8 @@ export function TastingsList({ isAuthenticated, tastings, error, fetchTastingsLi
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
     isAuthenticated: state.authUser.isAuthenticated,
-    tastings: state.fetchTastingsList.tastings,
-    error: state.fetchTastingsList.error    
+    beverages: state.beverages.data,
+    error: state.beverages.message 
 })
 
-export default connect(mapStateToProps, { fetchTastingsList })(TastingsList)
+export default connect(mapStateToProps, { fetchBeveragesList })(BeveragesList)

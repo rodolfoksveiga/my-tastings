@@ -22,7 +22,7 @@
         "fields": {
             "password": "pbkdf2_sha256$260000$x3SyzL1SJZAGnkO5E8Ggpb$QFhIvRadBbih4BksDRcU1Q/UZX79wADnaa7GqHh4Vos=",
             "last_login": "2021-05-27T15:21:02.827Z",
-            "is_superuser": true,
+            "is_superuser": false,
             "created_at": "2021-05-24T09:55:05.824Z",
             "username": "rodox",
             "email": "rodox@mail.com",
@@ -40,7 +40,7 @@
         "fields": {
             "password": "pbkdf2_sha256$260000$qYf7gYDXfms1IyqNxxyORq$pplq/mFE2owulbG6hmQ67gl+27uFeYt38M3rbnLY+20=",
             "last_login": null,
-            "is_superuser": true,
+            "is_superuser": false,
             "created_at": "2021-05-24T09:55:42.706Z",
             "username": "micha",
             "email": "micha@mail.com",

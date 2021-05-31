@@ -10,7 +10,14 @@ import ClearAllOutlinedIcon from '@material-ui/icons/ClearAllOutlined'
 import HistoryOutlinedIcon from '@material-ui/icons/HistoryOutlined'
 
 import InputField from './InputField'
-import { ITastingFormik } from './types'
+import { ITastingForm } from './CreateTasting'
+
+
+// Types and interfaces
+interface ITastingFormikProps {
+    initialForm: ITastingForm
+    handleSubmit: Function
+}
 
 
 // Validation schema
@@ -36,7 +43,7 @@ const FormSchema = Yup.object().shape({
 })
 
 // Main component
-export default function FormikTasting({initialForm, handleSubmit}: ITastingFormik) {
+export default function FormikTasting({initialForm, handleSubmit}: ITastingFormikProps) {
     return (
         <div>
             <Formik
@@ -48,7 +55,7 @@ export default function FormikTasting({initialForm, handleSubmit}: ITastingFormi
                     return(
                         <Form>
                             <InputField input='name' inputLabel='Name' />
-                            <InputField input='beverage' inputLabel='Beverage' type='let' />
+                            <InputField input='beverage' inputLabel='Beverage' />
                             <InputField input='user' inputLabel='User' type='let'/>
                             <InputField input='color' inputLabel='Color' />
                             <InputField input='appearance' inputLabel='Appearance' />

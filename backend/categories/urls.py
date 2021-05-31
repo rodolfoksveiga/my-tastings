@@ -2,11 +2,11 @@ from django.urls import path
 
 from .views import (
     CategoriesList,
-    CategoryDetail
+    CategoryDetails
 )
 
 
 urlpatterns = [
     path('', CategoriesList.as_view()),
-    path('<int:pk>/', CategoryDetail.as_view())
+    path('<int:pk>/', CategoryDetails.as_view())
 ]

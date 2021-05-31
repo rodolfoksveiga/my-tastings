@@ -7,6 +7,7 @@ import { fetchTastingDetailsReducer } from './fetchTastingDetailsReducer'
 import { createTastingReducer } from './createTastingReducer'
 import { deleteTastingReducer } from './deleteTastingReducer'
 import { updateTastingReducer } from './updateTastingReducer'
+import { beveragesReducer } from './beveragesReducer'
 
 
 // Types and interfaces
@@ -20,5 +21,6 @@ export const rootReducer = combineReducers({
     fetchTastingDetails: fetchTastingDetailsReducer,
     createTasting: createTastingReducer,
     deleteTasting: deleteTastingReducer,
-    updateTasting: updateTastingReducer
+    updateTasting: updateTastingReducer,
+    beverages: beveragesReducer
 })

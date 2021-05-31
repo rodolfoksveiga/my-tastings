@@ -9,7 +9,7 @@ import InputField from './InputField'
 
 
 // Types and interfaces
-interface IRegisterFormik {
+interface IRegisterFormikProps {
     initialFormData: {
         username: string
         password: string
@@ -40,7 +40,7 @@ const FormSchema = Yup.object().shape({
 })
 
 // Main component
-export default function FormikRegister({initialFormData, handleSubmit}: IRegisterFormik) {
+export default function FormikRegister({initialFormData, handleSubmit}: IRegisterFormikProps) {
     return (
         <div>
             <Formik

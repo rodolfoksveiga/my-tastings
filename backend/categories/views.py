@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView
@@ -12,30 +13,26 @@ from rest_framework.permissions import (
 from .models import Category
 from .serializers import CategorySerializer
 
-'''
-class CategoryUserWritePermission(BasePermission): # Mudei aqui (CategorySerializer)
-    message = 'Categorys access permission is restricted to the category owner only.'
 
+class CategoryUserWritePermission(BasePermission):
     def has_object_permission(self, request, view, obj):
+        if request.method in SAFE_METHODS:
+            return True
         return obj.user == request.user or request.user.is_superuser
-'''
 
 
 class CategoriesList(ListCreateAPIView):
     serializer_class = CategorySerializer
-    queryset = Category.objects.all()
 
-    '''
     def get_queryset(self):
         user = self.request.user
-        if user.is_superuser:
-            return Category.objects.all()
-        return Category.objects.filter(user=user)
-    '''
+        if user.is_staff:
+            return Category.objects.all().order_by('modified_at').reverse()
+        return Category.objects.filter(Q(user=user) | Q(user=1)).order_by('modified_at').reverse()
 
 
-class CategoryDetail(RetrieveUpdateDestroyAPIView):
-    # permission_classes = [IsAuthenticated, CategoryUserWritePermission]
+class CategoryDetails(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated, CategoryUserWritePermission]
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
 

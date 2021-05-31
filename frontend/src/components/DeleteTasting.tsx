@@ -4,13 +4,12 @@ import IconButton from '@material-ui/core/IconButton'
 import DeleteOutlined from '@material-ui/icons/DeleteOutlined'
 
 import deleteTasting from '../actions/deleteTasting'
-import { TId } from './types'
 import { TRootState } from '../reducers/rootReducer'
 
 
 // Types and interfaces
 interface IDeleteTastingProps {
-    id: TId,
+    id: string,
     updateTriggerReload: Function
 }
 

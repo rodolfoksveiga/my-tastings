@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { Dispatch } from 'redux'
 
-import { TId, ITastingForm } from '../components/types'
+import { ITastingForm } from '../components/CreateTasting'
 
 
 // Types and interfaces
@@ -25,7 +25,7 @@ export const UPDATE_TASTING_FAIL = 'UPDATE_TASTING_FAIL'
 
 
 // Action
-export default function updateTasting(id: TId, body: ITastingForm) {
+export default function updateTasting(id: string, body: ITastingForm) {
     return async (dispatch: Dispatch<TDispatchUpdateTasting>) => {
         const config = {
             headers: {
