@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
-import Navi from './Navi'
+import NavigationBar from './NavigationBar'
 import Home from './Home'
 import TastingsList from './TastingsList'
 import CreateTasting from './CreateTasting'
@@ -35,7 +35,7 @@ export function App({ checkUserAuth, loadUser }: IAppProps) {
 
     return (
         <BrowserRouter>
-            <Navi />
+            <NavigationBar />
             <Switch>
                 <Route exact path='/' component={Home} />
                 <Route path='/register/' exact component={Register} />

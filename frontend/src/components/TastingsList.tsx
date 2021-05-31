@@ -61,11 +61,6 @@ export function TastingsList({ isAuthenticated, tastings, error, fetchTastingsLi
 
     return (
         <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
             <Grid
                 container
                 direction='column'

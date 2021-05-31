@@ -63,11 +63,6 @@ export function BeveragesList({ isAuthenticated, beverages, message, fetchBevera
 
     return (
         <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
             <Grid
                 container
                 direction='column'

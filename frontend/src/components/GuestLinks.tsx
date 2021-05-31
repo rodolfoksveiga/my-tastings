@@ -1,14 +1,16 @@
 // Import components, functions, types, variables, and styles
-import { Fragment } from 'react'
-import Button from '@material-ui/core/Button'
+import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav'
 
 
 // Component
 export default function GuestLinks() {
     return(
-        <Fragment>
-            <Button href='/login/'>Login</Button>
-            <Button href='/register/'>Register</Button>
-        </Fragment>
+        <Navbar.Collapse id='responsive-navbar-nav'>
+            <Nav className='mr-auto'>
+                <Nav.Link href='/login/'>Login</Nav.Link>
+                <Nav.Link href='/register/'>Register</Nav.Link>
+            </Nav>
+        </Navbar.Collapse>
     )
 }
