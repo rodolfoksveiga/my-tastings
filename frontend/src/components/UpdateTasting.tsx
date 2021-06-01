@@ -1,6 +1,6 @@
 // Import components, functions, types, variables, and styles
 import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
 
 import Grid from '@material-ui/core/Grid'
@@ -8,36 +8,45 @@ import Button from '@material-ui/core/Button'
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
 import FormikTasting from './FormikTasting'
-import fetchTastingDetails from '../actions/fetchTastingDetails'
 import updateTasting from '../actions/updateTasting'
+import { TTastings } from './TastingsList'
 import { TRootState } from '../reducers/rootReducer'
 import { ITastingParams } from './TastingDetails'
 import { ITastingForm } from './CreateTasting'
+import fetchTastingsList from '../actions/fetchTastingsList'
+
+
+// Types and interfaces
+interface IUpdateTastingProps {
+    isAuthenticated: boolean
+    tastings: TTastings | null
+    message: string | null
+    fetchTastingsList: Function
+    updateTasting: Function
+}
 
 
 // Main component
-export default function UpdateTasting() {
+export function UpdateTasting({ isAuthenticated, tastings, fetchTastingsList, updateTasting }: IUpdateTastingProps) {
     const { id } = useParams<ITastingParams>()
     const history = useHistory()
-    const state = useSelector((state: TRootState) => state.fetchTastingDetails)
-    const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchTastingDetails(id))
-    }, [dispatch, id])
+        fetchTastingsList()
+    }, [fetchTastingsList])
+
+    let tasting = null
+    if (tastings) {
+        tasting = tastings.find(item => String(item.id) === id)
+    }
 
     function handleUpdate(form: ITastingForm) {
-        dispatch(updateTasting(id, form))
+        updateTasting(id, form)
         history.push('/tastings/' + id + '/')
     }
 
     return (
         <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
             <Grid
                 container
                 direction='column'
@@ -50,9 +59,9 @@ export default function UpdateTasting() {
                 >
                     <h2>Update Tasting</h2>
                 </Grid>
-                {state.tasting && (
+                {tasting && (
                     <FormikTasting
-                        initialForm={state.tasting}
+                        initialFormData={tasting}
                         handleSubmit={handleUpdate} 
                     />
                 )}
@@ -72,3 +81,12 @@ export default function UpdateTasting() {
         </div>
     )
 }
+
+
+// Connect to Redux
+const mapStateToProps = (state: TRootState) => ({
+    isAuthenticated: state.authUser.isAuthenticated,
+    tastings: state.tastings.data
+})
+
+export default connect(mapStateToProps, { fetchTastingsList, updateTasting })(UpdateTasting)

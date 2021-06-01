@@ -12,7 +12,9 @@ interface IFetchTastingsListLoading {
 
 interface IFetchTastingsListSuccess {
     type: typeof FETCH_TASTINGS_LIST_SUCCESS,
-    payload: TTastings
+    payload: {
+        data: TTastings
+    }
 }
 
 interface IFetchTastingsListFail {
@@ -49,7 +51,9 @@ export default function fetchTastingsList() {
 
             dispatch({
                 type: FETCH_TASTINGS_LIST_SUCCESS,
-                payload: response.data
+                payload: {
+                    data: response.data
+                }
             })
 
         } catch (error) {

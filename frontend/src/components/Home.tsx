@@ -1,13 +1,18 @@
+// Import components, functions, types, variables, and styles
+import Typography from '@material-ui/core/Typography'
+
+
 // Main component
 export default function Home() {
     return (
         <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <h2>Home</h2>
+            <Typography
+                variant='h4'
+                component='h4'
+                align='center'
+            >
+                Home
+            </Typography>
         </div>
     )
 }

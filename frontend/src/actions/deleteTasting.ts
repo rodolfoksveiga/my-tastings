@@ -5,8 +5,7 @@ import { Dispatch } from 'redux'
 
 // Types and interfaces
 interface IDeleteTastingSuccess {
-    type: typeof DELETE_TASTING_SUCCESS,
-    payload: string
+    type: typeof DELETE_TASTING_SUCCESS
 }
 
 interface IDeleteTastingFail {
@@ -37,8 +36,7 @@ export default function deleteTasting(id: string) {
             await axios.delete(URL + id + '/', config)
 
             dispatch({
-                type: DELETE_TASTING_SUCCESS,
-                payload: id
+                type: DELETE_TASTING_SUCCESS
             })
 
             alert('The data was deleted!')

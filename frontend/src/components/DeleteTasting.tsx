@@ -1,27 +1,24 @@
 // Import components, functions, types, variables, and styles
-import { useSelector, useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteOutlined from '@material-ui/icons/DeleteOutlined'
 
 import deleteTasting from '../actions/deleteTasting'
-import { TRootState } from '../reducers/rootReducer'
 
 
 // Types and interfaces
 interface IDeleteTastingProps {
     id: string,
     updateTriggerReload: Function
+    deleteTasting: Function
 }
 
 
 // Main component
-export default function DeleteTasting({id, updateTriggerReload}: IDeleteTastingProps) {
-    const state = useSelector((state: TRootState) => state.deleteTasting)
-    const dispatch = useDispatch()
-
+export function DeleteTasting({ id, updateTriggerReload, deleteTasting }: IDeleteTastingProps) {
     function handleDelete() {
         if (window.confirm('Are you sure you want to delete this Tasting?')) {
-            dispatch(deleteTasting(id))
+            deleteTasting(id)
             updateTriggerReload()
         }
     }
@@ -32,3 +29,8 @@ export default function DeleteTasting({id, updateTriggerReload}: IDeleteTastingP
         </IconButton>
     )
 }
+
+
+
+// Connect to Redux
+export default connect(null, { deleteTasting })(DeleteTasting)

@@ -1,5 +1,4 @@
 // Import components, functions, types, variables, and styles
-import { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
@@ -7,9 +6,8 @@ import Button from '@material-ui/core/Button'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
-import fetchTastingDetails from '../actions/fetchTastingDetails'
 import { TRootState } from '../reducers/rootReducer'
-import { ITasting } from './TastingsList'
+import { TTastings } from './TastingsList'
 
 
 // Types and interfaces
@@ -18,34 +16,23 @@ export interface ITastingParams {
 }
 
 interface ITastingDetailsProps {
-    isAuthenticated: boolean,
-    tasting: ITasting | null,
-    error: string | null,
-    fetchTastingDetails: Function
+    isAuthenticated: boolean
+    tastings: TTastings | null
+    message: string | null
 }
 
 
 // Component
-export function TastingDetails({ isAuthenticated, tasting, error, fetchTastingDetails }: ITastingDetailsProps) {
+export function TastingDetails({ isAuthenticated, tastings, message }: ITastingDetailsProps) {
     const { id } = useParams<ITastingParams>()
 
-    useEffect(() => {
-        fetchTastingDetails(id)
-    }, [fetchTastingDetails, id])
-
-    // if (!isAuthenticated) {
-    //    return (
-    //        <Redirect to='/login/' />
-    //    )
-    //}
+    let tasting = null
+    if (tastings) {
+        tasting = tastings.find(item => String(item.id) === id)
+    }
 
     return (
         <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
             <Grid
                 container
                 direction='column'
@@ -57,8 +44,8 @@ export function TastingDetails({ isAuthenticated, tasting, error, fetchTastingDe
                 >
                     <h2>Tasting Details</h2>
                 </Grid>
-                {error ? (
-                    <h3>{error}</h3>
+                {message ? (
+                    <h3>{message}</h3>
                 ) : (
                     tasting && (
                         <div>
@@ -109,8 +96,7 @@ export function TastingDetails({ isAuthenticated, tasting, error, fetchTastingDe
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
     isAuthenticated: state.authUser.isAuthenticated,
-    tasting: state.fetchTastingDetails.tasting,
-    error: state.fetchTastingDetails.error    
+    tastings: state.tastings.data
 })
 
-export default connect(mapStateToProps, { fetchTastingDetails })(TastingDetails)
+export default connect(mapStateToProps)(TastingDetails)

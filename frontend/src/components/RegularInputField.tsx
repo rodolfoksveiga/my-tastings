@@ -4,7 +4,7 @@ import { Field, ErrorMessage } from 'formik'
 
 
 // Types and interfaces
-interface IInputFieldProps {
+interface IRegularInputFieldProps {
     input: string
     inputLabel: string
     type?: string
@@ -12,7 +12,7 @@ interface IInputFieldProps {
 
 
 // Component
-export default function InputField({ input, inputLabel, type='text' }: IInputFieldProps) {
+export default function RegularInputField({ input, inputLabel, type='text' }: IRegularInputFieldProps) {
     return (
         <div>
             <Field

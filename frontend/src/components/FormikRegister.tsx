@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 
-import InputField from './InputField'
+import RegularInputField from './RegularInputField'
 
 
 // Types and interfaces
@@ -58,16 +58,16 @@ export default function FormikRegister({initialFormData, handleSubmit}: IRegiste
                                 <Grid item xs={12}>
                                     <Grid container>
                                         <Grid item xs={12}>
-                                            <InputField input='username' inputLabel='Username' />
+                                            <RegularInputField input='username' inputLabel='Username' />
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <InputField input='email' inputLabel='Email' />
+                                            <RegularInputField input='email' inputLabel='Email' />
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <InputField input='password' inputLabel='Password' type='password' />
+                                            <RegularInputField input='password' inputLabel='Password' type='password' />
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <InputField input='repeatPassword' inputLabel='Repeat password' type='password' />
+                                            <RegularInputField input='repeatPassword' inputLabel='Repeat password' type='password' />
                                         </Grid>
                                     </Grid>
                                 </Grid>

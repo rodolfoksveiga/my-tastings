@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 // import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
@@ -9,6 +10,7 @@ import List from '@material-ui/core/List'
 
 import ListTastingItem from './ListTastingItem'
 import fetchTastingsList from '../actions/fetchTastingsList'
+import fetchBeveragesList from '../actions/fetchBeveragesList'
 import { TRootState } from '../reducers/rootReducer'
 
 
@@ -17,15 +19,15 @@ export interface ITasting {
     id: string
     modified_at: string
     name: string
-    beverage: number | null
+    beverage: number
     beverageName: string
-    user: number | null
+    user: number
     userName: string
     color: string
     appearance: string
     aroma: string
     finish: string
-    rating: number | null
+    rating: number
 }
 
 export type TTastings = ITasting[]
@@ -33,49 +35,39 @@ export type TTastings = ITasting[]
 type TTriggerReload = boolean
 
 interface ITastingsListProps {
-    isAuthenticated: boolean,
-    tastings: TTastings | null,
-    error: string | null,
+    isAuthenticated: boolean
+    tastings: TTastings | null
+    message: string | null
     fetchTastingsList: Function
+    fetchBeveragesList: Function
 }
 
 
 // Component
-export function TastingsList({ isAuthenticated, tastings, error, fetchTastingsList }: ITastingsListProps) {
+export function TastingsList({ isAuthenticated, tastings, message, fetchTastingsList, fetchBeveragesList }: ITastingsListProps) {
     const [triggerReload, setTriggerReload] = useState<TTriggerReload>(false)
 
     useEffect(() => {
         fetchTastingsList()
-    }, [fetchTastingsList, triggerReload])
+        fetchBeveragesList()
+    }, [fetchTastingsList, fetchBeveragesList, triggerReload])
 
     function updateTriggerReload() {
         setTriggerReload(!triggerReload)
-        console.log(triggerReload)
     }
-
-    // if (!isAuthenticated) {
-    //    return (
-    //        <Redirect to='/login/' />
-    //    )
-    //}
 
     return (
         <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
             <Grid
                 container
                 direction='column'
                 justify='flex-start'
                 alignItems='center'
             >
-                <Grid
-                    item
-                >
-                    <h2>List of Tastings</h2>
+                <Grid item>
+                    <Typography variant='h4' component='h4' align='center'>
+                        Tastings List
+                    </Typography>
                 </Grid>
                 <Grid
                     item
@@ -90,11 +82,11 @@ export function TastingsList({ isAuthenticated, tastings, error, fetchTastingsLi
                         Create new Tasting
                     </Button>
                 </Grid>
-                {error ? (
+                {message ? (
                     <Grid
                         item
                     >
-                        <h3>{error}</h3>
+                        <h3>{message}</h3>
                     </Grid>
                 ) : (
                     <Grid
@@ -125,8 +117,8 @@ export function TastingsList({ isAuthenticated, tastings, error, fetchTastingsLi
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
     isAuthenticated: state.authUser.isAuthenticated,
-    tastings: state.fetchTastingsList.tastings,
-    error: state.fetchTastingsList.error    
+    tastings: state.tastings.data,
+    message: state.tastings.message
 })
 
-export default connect(mapStateToProps, { fetchTastingsList })(TastingsList)
+export default connect(mapStateToProps, { fetchTastingsList, fetchBeveragesList })(TastingsList)

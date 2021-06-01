@@ -2,12 +2,8 @@
 import { combineReducers } from 'redux'
 
 import { authUserReducer } from './authUserReducer'
-import { fetchTastingsListReducer } from './fetchTastingsListReducer'
-import { fetchTastingDetailsReducer } from './fetchTastingDetailsReducer'
-import { createTastingReducer } from './createTastingReducer'
-import { deleteTastingReducer } from './deleteTastingReducer'
-import { updateTastingReducer } from './updateTastingReducer'
-import { beveragesReducer } from './beveragesReducer'
+import { tastingsReducer } from './tastingsReducer'
+import { beveragesReducer } from './beverageReducer'
 
 
 // Types and interfaces
@@ -17,10 +13,6 @@ export type TRootState = ReturnType<typeof rootReducer>
 // Reducer
 export const rootReducer = combineReducers({
     authUser: authUserReducer,
-    fetchTastingsList: fetchTastingsListReducer,
-    fetchTastingDetails: fetchTastingDetailsReducer,
-    createTasting: createTastingReducer,
-    deleteTasting: deleteTastingReducer,
-    updateTasting: updateTastingReducer,
+    tastings: tastingsReducer,
     beverages: beveragesReducer
 })

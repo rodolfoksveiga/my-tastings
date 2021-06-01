@@ -11,14 +11,16 @@ import { TBeverages } from '../components/BeveragesList'
 // Types and interfaces
 interface IFetchBeveragesListState {
     isLoading: boolean,
-    data?: TBeverages,
-    message?: string
+    data: TBeverages | null,
+    message: string | null
 }
 
 
 // Global variables
 const initialState = {
-    isLoading: false
+    isLoading: false,
+    data: null,
+    message: null
 }
 
 

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-// import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import Grid from '@material-ui/core/Grid'
@@ -36,8 +35,8 @@ export type TBeverages = IBeverage[]
 
 interface IBeveragesListProps {
     isAuthenticated: boolean,
-    beverages?: TBeverages
-    message?: string
+    beverages: TBeverages | null
+    message: string | null
     fetchBeveragesList: Function
 }
 
@@ -54,12 +53,6 @@ export function BeveragesList({ isAuthenticated, beverages, message, fetchBevera
         setTriggerReload(!triggerReload)
         console.log(triggerReload)
     }
-
-    // if (!isAuthenticated) {
-    //    return (
-    //        <Redirect to='/login/' />
-    //    )
-    //}
 
     return (
         <div>

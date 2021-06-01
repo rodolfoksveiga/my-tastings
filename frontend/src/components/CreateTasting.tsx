@@ -1,5 +1,5 @@
 // Import components, functions, types, variables, and styles
-import { useSelector, useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
 import Grid from '@material-ui/core/Grid'
@@ -8,7 +8,6 @@ import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
 import FormikTasting from './FormikTasting'
 import createTasting from '../actions/createTasting'
-import { TRootState } from '../reducers/rootReducer'
 
 
 // Types and interfaces
@@ -16,47 +15,59 @@ export interface ITastingForm {
     id?: string
     modified_at?: string
     name: string
-    beverage: number | null
-    user: number | null
+    beverage: number
     color: string
     appearance: string
     aroma: string
     finish: string
-    rating: number | null
+    rating: number
+    user: number
+}
+
+export interface ITastingFormFake {
+    id?: string
+    modified_at?: string
+    name: string
+    beverage?: number
+    beverageName: string
+    color: string
+    appearance: string
+    aroma: string
+    finish: string
+    rating: number
+    user?: number
+    userName?: string
+}
+
+interface ICreateTastingProps {
+    createTasting: Function
 }
 
 
 // Global variables
-const initialTastingForm: ITastingForm = {
+const initialTastingForm: ITastingFormFake = {
     name: '',
-    beverage: null,
-    user: null,
+    beverageName: '',
     color: '',
     appearance: '',
     aroma: '',
     finish: '',
-    rating: null
+    rating: 5
 }
 
 
 // Main component
-export default function CreateTasting() {
+export function CreateTasting({ createTasting }: ICreateTastingProps) {
     const history = useHistory()
-    const state = useSelector((state: TRootState) => state.createTasting)
-    const dispatch = useDispatch()
 
-    function handleCreate(form: ITastingForm) {
-        dispatch(createTasting(form))
+    function handleCreate(formData: ITastingForm, userId: number) {
+        formData.user = userId
+        createTasting(formData)
         history.push('/tastings/')
     }
 
     return (
         <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
             <Grid
                 container
                 direction='column'
@@ -70,7 +81,7 @@ export default function CreateTasting() {
                     <h2>Create Tasting</h2>
                 </Grid>
                 <FormikTasting
-                    initialForm={initialTastingForm}
+                    initialFormData={initialTastingForm}
                     handleSubmit={handleCreate} 
                 />
                 <Grid
@@ -89,3 +100,7 @@ export default function CreateTasting() {
         </div>
     )
 }
+
+
+// Connect to Redux
+export default connect(null, { createTasting })(CreateTasting)

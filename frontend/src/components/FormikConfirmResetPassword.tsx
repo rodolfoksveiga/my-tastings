@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 
-import InputField from './InputField'
+import RegularInputField from './RegularInputField'
 
 
 // Types and interfaces
@@ -47,10 +47,10 @@ export default function FormikResetPassword({initialFormData, handleSubmit}: IFo
                                 <Grid item xs={12}>
                                     <Grid container>
                                         <Grid item xs={12}>
-                                            <InputField input='newPassword' inputLabel='New password' type='password' />
+                                            <RegularInputField input='newPassword' inputLabel='New password' type='password' />
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <InputField input='repeatNewPassword' inputLabel='Repeat new password' type='password' />
+                                            <RegularInputField input='repeatNewPassword' inputLabel='Repeat new password' type='password' />
                                         </Grid>
                                     </Grid>
                                 </Grid>

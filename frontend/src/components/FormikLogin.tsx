@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 
-import InputField from './InputField'
+import RegularInputField from './RegularInputField'
 
 
 // Types and interfaces
@@ -50,10 +50,10 @@ export default function FormikLogin({initialFormData, handleSubmit}: ILoginFormi
                                 <Grid item xs={12}>
                                     <Grid container>
                                         <Grid item xs={12}>
-                                            <InputField input='username' inputLabel='Username' />
+                                            <RegularInputField input='username' inputLabel='Username' />
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <InputField input='password' inputLabel='Password' type='password' />
+                                            <RegularInputField input='password' inputLabel='Password' type='password' />
                                         </Grid>
                                     </Grid>
                                 </Grid>

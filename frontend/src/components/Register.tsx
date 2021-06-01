@@ -1,8 +1,9 @@
 // Import components, functions, types, variables, and styles
 import { useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { makeStyles } from '@material-ui/core/styles'
 
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
 import Alert from 'react-bootstrap/Alert'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
@@ -30,18 +31,20 @@ interface IRegisterUserProps {
 
 
 // Global variables
-const useStyles = makeStyles(theme => ({
-    container: {
-        padding: theme.spacing(5),
-    }
-}))
-
 const initialFormData: IFormData = {
     username: '',
     email: '',
     password: '',
     repeatPassword: ''
 }
+
+const useStyles = makeStyles((theme: Theme) => 
+    createStyles({
+        container: {
+            padding: theme.spacing(5)
+        }
+    })
+)
 
 
 // Main component
@@ -59,11 +62,14 @@ export function Register({ isAuthenticated, didSucceed, message, registerUser }:
 
     return (
         <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <Container className={classes.container} maxWidth="xs" >
+            <Container className={classes.container} maxWidth='xs' >
+                <Typography
+                    variant='h4'
+                    component='h4'
+                    align='center'
+                >
+                    Sign up
+                </Typography>
                 <Grid container spacing={5} direction='column' alignItems='center'>
                     {message && (
                         <Grid item>
@@ -88,7 +94,6 @@ export function Register({ isAuthenticated, didSucceed, message, registerUser }:
                 </Grid>
             </Container>
         </div>
-
     )
 }
 
