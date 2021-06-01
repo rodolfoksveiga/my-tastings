@@ -95,7 +95,7 @@ export function TastingsList({ isAuthenticated, tastings, message, fetchTastings
                     <Grid item>
                         <List>
                             {tastings && (
-                                tastings.map((tasting) => {
+                                tastings.map(tasting => {
                                     return (
                                         <ListTastingItem
                                             key={tasting.id}

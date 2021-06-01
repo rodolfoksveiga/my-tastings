@@ -23,15 +23,15 @@ export default function ListBeverageItem({ beverage, updateTriggerReload }: ILis
     return (
         <div>
             <ListItem
-                key={beverage.id}
                 button
                 component={Link}
                 to={'/tastings/' + beverage.id + '/'}
+                divider={true}
             >
                 <InsertDriveFileOutlinedIcon />
                 <ListItemText
                     primary={beverage.name}
-                    secondary={beverage.modified_at}
+                    inset={true}
                 />
                 <ListIconSecondaryAction>
                     <IconButton

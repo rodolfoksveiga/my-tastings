@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
+import { makeStyles } from '@material-ui/core/styles'
 
+import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
@@ -13,7 +15,6 @@ import { TRootState } from '../reducers/rootReducer'
 
 // Types and interfaces
 type TTriggerReload = boolean
-
 
 export interface IBeverage {
     id: string
@@ -41,8 +42,17 @@ interface IBeveragesListProps {
 }
 
 
+// Global variables
+const useStyles = makeStyles(theme => ({
+    container: {
+        padding: theme.spacing(5),
+    }
+}))
+
+
 // Component
 export function BeveragesList({ isAuthenticated, beverages, message, fetchBeveragesList }: IBeveragesListProps) {
+    const classes = useStyles()
     const [triggerReload, setTriggerReload] = useState<TTriggerReload>(false)
 
     useEffect(() => {
@@ -56,20 +66,16 @@ export function BeveragesList({ isAuthenticated, beverages, message, fetchBevera
 
     return (
         <div>
+            <Typography variant='h4' component='h4' align='center'>
+                Beverages List
+            </Typography>
             <Grid
-                container
+                className={classes.container}
                 direction='column'
                 justify='flex-start'
                 alignItems='center'
             >
-                <Grid
-                    item
-                >
-                    <h2>List of Beverages</h2>
-                </Grid>
-                <Grid
-                    item
-                >
+                <Grid item>
                     <Button
                         variant='outlined'
                         href='/tastings/create/'
@@ -81,20 +87,17 @@ export function BeveragesList({ isAuthenticated, beverages, message, fetchBevera
                     </Button>
                 </Grid>
                 {message ? (
-                    <Grid
-                        item
-                    >
+                    <Grid item>
                         <h3>{message}</h3>
                     </Grid>
                 ) : (
-                    <Grid
-                        item
-                    >
+                    <Grid item>
                         <List>
                             {beverages && (
                                 beverages.map(beverage => {
                                     return (
                                         <ListBeverageItem
+                                            key={beverage.id}
                                             beverage={beverage}
                                             updateTriggerReload={updateTriggerReload}
                                         />
@@ -115,7 +118,7 @@ export function BeveragesList({ isAuthenticated, beverages, message, fetchBevera
 const mapStateToProps = (state: TRootState) => ({
     isAuthenticated: state.authUser.isAuthenticated,
     beverages: state.beverages.data,
-    error: state.beverages.message 
+    message: state.beverages.message 
 })
 
 export default connect(mapStateToProps, { fetchBeveragesList })(BeveragesList)
