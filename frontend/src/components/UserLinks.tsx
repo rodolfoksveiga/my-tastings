@@ -16,6 +16,7 @@ export default function UserLinks({ handleLogout }: IUserLinksProps) {
         <Fragment>
             <Button href='/tastings/'>Tastings</Button>
             <Button href='/beverages/'>Beverages</Button>
+            <Button href='/tastings/'>Producers</Button>
             <Button href='/login/' onClick={() => handleLogout()}>Logout</Button>
         </Fragment>
     )

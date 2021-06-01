@@ -62,14 +62,14 @@ export function Register({ isAuthenticated, didSucceed, message, registerUser }:
 
     return (
         <div>
+            <Typography
+                variant='h4'
+                component='h4'
+                align='center'
+            >
+                Register
+            </Typography>
             <Container className={classes.container} maxWidth='xs' >
-                <Typography
-                    variant='h4'
-                    component='h4'
-                    align='center'
-                >
-                    Sign up
-                </Typography>
                 <Grid container spacing={5} direction='column' alignItems='center'>
                     {message && (
                         <Grid item>

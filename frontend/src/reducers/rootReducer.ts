@@ -3,7 +3,7 @@ import { combineReducers } from 'redux'
 
 import { authUserReducer } from './authUserReducer'
 import { tastingsReducer } from './tastingsReducer'
-import { beveragesReducer } from './beverageReducer'
+import { beveragesReducer } from './beveragesReducer'
 
 
 // Types and interfaces

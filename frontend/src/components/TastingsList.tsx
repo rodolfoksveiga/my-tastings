@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-// import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { makeStyles } from '@material-ui/core/styles'
 
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
@@ -43,8 +43,17 @@ interface ITastingsListProps {
 }
 
 
+// Global variables
+const useStyles = makeStyles(theme => ({
+    container: {
+        padding: theme.spacing(5),
+    }
+}))
+
+
 // Component
 export function TastingsList({ isAuthenticated, tastings, message, fetchTastingsList, fetchBeveragesList }: ITastingsListProps) {
+    const classes = useStyles()
     const [triggerReload, setTriggerReload] = useState<TTriggerReload>(false)
 
     useEffect(() => {
@@ -58,20 +67,16 @@ export function TastingsList({ isAuthenticated, tastings, message, fetchTastings
 
     return (
         <div>
+            <Typography variant='h4' component='h4' align='center'>
+                Tastings List
+            </Typography>
             <Grid
-                container
+                className={classes.container}
                 direction='column'
                 justify='flex-start'
                 alignItems='center'
             >
                 <Grid item>
-                    <Typography variant='h4' component='h4' align='center'>
-                        Tastings List
-                    </Typography>
-                </Grid>
-                <Grid
-                    item
-                >
                     <Button
                         variant='outlined'
                         href='/tastings/create/'
@@ -83,15 +88,11 @@ export function TastingsList({ isAuthenticated, tastings, message, fetchTastings
                     </Button>
                 </Grid>
                 {message ? (
-                    <Grid
-                        item
-                    >
+                    <Grid item>
                         <h3>{message}</h3>
                     </Grid>
                 ) : (
-                    <Grid
-                        item
-                    >
+                    <Grid item>
                         <List>
                             {tastings && (
                                 tastings.map((tasting) => {

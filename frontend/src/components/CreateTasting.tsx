@@ -1,7 +1,9 @@
 // Import components, functions, types, variables, and styles
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles'
 
+import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
@@ -45,6 +47,13 @@ interface ICreateTastingProps {
 
 
 // Global variables
+const useStyles = makeStyles(theme => ({
+    container: {
+        padding: theme.spacing(5),
+        spacing: theme.spacing(3)
+    }
+}))
+
 const initialTastingForm: ITastingFormFake = {
     name: '',
     beverageName: '',
@@ -58,6 +67,7 @@ const initialTastingForm: ITastingFormFake = {
 
 // Main component
 export function CreateTasting({ createTasting }: ICreateTastingProps) {
+    const classes = useStyles()
     const history = useHistory()
 
     function handleCreate(formData: ITastingForm, userId: number) {
@@ -68,25 +78,23 @@ export function CreateTasting({ createTasting }: ICreateTastingProps) {
 
     return (
         <div>
+            <Typography variant='h4' component='h4' align='center'>
+                Create Tasting
+            </Typography>
             <Grid
                 container
+                className={classes.container}
                 direction='column'
                 justify='flex-start'
-                spacing={3}
                 alignItems='center'
             >
-                <Grid
-                    item
-                >
-                    <h2>Create Tasting</h2>
+                <Grid item>
+                    <FormikTasting
+                        initialFormData={initialTastingForm}
+                        handleSubmit={handleCreate} 
+                    />
                 </Grid>
-                <FormikTasting
-                    initialFormData={initialTastingForm}
-                    handleSubmit={handleCreate} 
-                />
-                <Grid
-                    item
-                >
+                <Grid item>
                     <Button
                         variant='outlined'
                         href='/tastings/'

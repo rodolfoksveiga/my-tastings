@@ -37,7 +37,7 @@ export function App({ checkUserAuth, loadUser }: IAppProps) {
         <BrowserRouter>
             <NavigationBar />
             <Switch>
-                <Route exact path='/' component={Home} />
+                <Route path='/' component={Home} exact />
                 <Route path='/register/' exact component={Register} />
                 <Route path='/login/' exact component={Login} />
                 <Route path='/activate/:userId/:token/' exact component={Activate} />

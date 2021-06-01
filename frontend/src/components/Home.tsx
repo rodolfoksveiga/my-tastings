@@ -6,11 +6,7 @@ import Typography from '@material-ui/core/Typography'
 export default function Home() {
     return (
         <div>
-            <Typography
-                variant='h4'
-                component='h4'
-                align='center'
-            >
+            <Typography variant='h4' component='h4' align='center'>
                 Home
             </Typography>
         </div>

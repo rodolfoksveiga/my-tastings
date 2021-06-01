@@ -2,7 +2,9 @@
 import { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles'
 
+import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
@@ -26,8 +28,18 @@ interface IUpdateTastingProps {
 }
 
 
+// Global variables
+const useStyles = makeStyles(theme => ({
+    container: {
+        padding: theme.spacing(5),
+        spacing: theme.spacing(3)
+    }
+}))
+
+
 // Main component
 export function UpdateTasting({ isAuthenticated, tastings, fetchTastingsList, updateTasting }: IUpdateTastingProps) {
+    const classes = useStyles()
     const { id } = useParams<ITastingParams>()
     const history = useHistory()
 
@@ -47,27 +59,24 @@ export function UpdateTasting({ isAuthenticated, tastings, fetchTastingsList, up
 
     return (
         <div>
+            <Typography variant='h4' component='h4' align='center'>
+                Update Tasting
+            </Typography>
             <Grid
                 container
+                className={classes.container}
                 direction='column'
                 justify='flex-start'
-                spacing={3}
                 alignItems='center'
             >
-                <Grid
-                    item
-                >
-                    <h2>Update Tasting</h2>
-                </Grid>
+                    
                 {tasting && (
                     <FormikTasting
                         initialFormData={tasting}
                         handleSubmit={handleUpdate} 
                     />
                 )}
-                <Grid
-                    item
-                >
+                <Grid item>
                     <Button
                         variant='outlined'
                         href='/tastings/'

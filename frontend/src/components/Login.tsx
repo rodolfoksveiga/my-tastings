@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { makeStyles } from '@material-ui/core/styles'
 
+import Typography from '@material-ui/core/Typography'
 import Alert from 'react-bootstrap/Alert'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
@@ -55,11 +56,10 @@ export function Login({ isAuthenticated, didSucceed, message, loginUser }: ILogi
 
     return (
         <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <Container className={classes.container} maxWidth="xs" >
+            <Typography variant='h4' component='h4' align='center'>
+                Login
+            </Typography>
+            <Container className={classes.container} maxWidth='xs'>
                 <Grid container spacing={5} direction='column' alignItems='center'>
                     {message && (
                         <Grid item>
