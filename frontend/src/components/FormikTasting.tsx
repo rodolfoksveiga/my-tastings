@@ -1,5 +1,4 @@
 // Import components, functions, types, variables, and styles
-import {useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'

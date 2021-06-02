@@ -1,5 +1,7 @@
 // Import components, functions, types, variables, and styles
 import { Link } from 'react-router-dom'
+
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined'
@@ -18,8 +20,21 @@ interface IListTastingItemProps {
 }
 
 
+// Global variables
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        listText: {
+            marginRight: theme.spacing(8),
+            marginLeft: theme.spacing(1)
+        }
+    })
+)
+
+
 // Component
 export default function ListTastingItem({ tasting, updateTriggerReload }: IListTastingItemProps) {
+    const classes = useStyles()
+
     return (
         <div>
             <ListItem
@@ -29,9 +44,8 @@ export default function ListTastingItem({ tasting, updateTriggerReload }: IListT
                 divider={true}
             >
                 <InsertDriveFileOutlinedIcon />
-                <ListItemText
+                <ListItemText className={classes.listText}
                     primary={tasting.name}
-                    inset={true}
                 />
                 <ListIconSecondaryAction>
                     <IconButton

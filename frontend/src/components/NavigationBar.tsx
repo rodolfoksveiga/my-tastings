@@ -24,11 +24,11 @@ interface INavProps {
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1,
-      marginBottom: theme.spacing(3)
+        flexGrows: true,
+        marginBottom: theme.spacing(3)
     },
     title: {
-      marginRight: theme.spacing(2)
+        marginRight: theme.spacing(2)
     }
   })
 )
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
 // Main component
 export function NavigationBar({ isAuthenticated, logoutUser }: INavProps) {
     const classes = useStyles()
-
+    
     return (
         <div className={classes.root}>
             <AppBar position='sticky'>
@@ -47,7 +47,7 @@ export function NavigationBar({ isAuthenticated, logoutUser }: INavProps) {
                     </Typography>
                     <Button href='/'>Home</Button>
                     {isAuthenticated
-                        ? <UserLinks handleLogout={logoutUser} />
+                        ? <UserLinks logoutUser={logoutUser} />
                         : <GuestLinks />
                     }
                 </Toolbar>
