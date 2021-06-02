@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { makeStyles } from '@material-ui/core/styles'
+import { useHistory } from 'react-router-dom'
 
+import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
@@ -14,25 +15,24 @@ import { TRootState } from '../reducers/rootReducer'
 
 
 // Types and interfaces
-type TTriggerReload = boolean
-
 export interface IBeverage {
     id: string
     modified_at: string
     name: string
-    category: number
-    producer: number
+    beverage: number
+    beverageName: string
     user: number
-    classification: string
-    base: string
-    year: string
-    degree: number
-    volume: number
-    price: number
-    tags: string[]
+    userName: string
+    color: string
+    appearance: string
+    aroma: string
+    finish: string
+    rating: number
 }
 
 export type TBeverages = IBeverage[]
+
+type TTriggerReload = boolean
 
 interface IBeveragesListProps {
     isAuthenticated: boolean
@@ -45,15 +45,28 @@ interface IBeveragesListProps {
 
 // Global variables
 const useStyles = makeStyles(theme => ({
-    container: {
-        padding: theme.spacing(5),
+    parentGrid: {
+        padding: theme.spacing(2)
+    },
+    pageTitle: {
+        margin: theme.spacing(2)
+    },
+    createButton: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(2),
+        color: theme.palette.common.black,
+        '&:hover': {
+            color: theme.palette.primary.main,
+            borderColor: theme.palette.primary.main
+        }
     }
 }))
 
 
 // Component
-export function BeveragesList({ isAuthenticated, access,  beverages, message, fetchBeveragesList }: IBeveragesListProps) {
+export function BeveragesList({ isAuthenticated, access, beverages, message, fetchBeveragesList }: IBeveragesListProps) {
     const classes = useStyles()
+    const history = useHistory()
     const [triggerReload, setTriggerReload] = useState<TTriggerReload>(false)
 
     useEffect(() => {
@@ -62,20 +75,23 @@ export function BeveragesList({ isAuthenticated, access,  beverages, message, fe
 
     function updateTriggerReload() {
         setTriggerReload(!triggerReload)
-        console.log(triggerReload)
+    }
+
+    if (!isAuthenticated) {
+        history.push('/login/')
     }
 
     return (
         <div>
-            <Typography variant='h4' component='h4' align='center'>
+            <Typography className={classes.pageTitle} variant='h4' component='h4' align='center'>
                 Beverages List
             </Typography>
-            <Grid className={classes.container}>
+            <Grid className={classes.parentGrid}>
                 <Grid item>
                     <Button
+                        className={classes.createButton}
                         variant='outlined'
                         href='/tastings/create/'
-                        color='primary'
                         startIcon={<AddOutlinedIcon />}
                         fullWidth
                     >
@@ -115,7 +131,7 @@ const mapStateToProps = (state: TRootState) => ({
     isAuthenticated: state.authUser.isAuthenticated,
     access: state.authUser.access,
     beverages: state.beverages.data,
-    message: state.beverages.message 
+    message: state.beverages.message
 })
 
 export default connect(mapStateToProps, { fetchBeveragesList })(BeveragesList)

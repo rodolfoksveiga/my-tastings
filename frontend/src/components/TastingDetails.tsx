@@ -1,6 +1,6 @@
 // Import components, functions, types, variables, and styles
 import { connect } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
@@ -70,11 +70,16 @@ const useStyles = makeStyles(theme => ({
 // Component
 export function TastingDetails({ isAuthenticated, tastings, message }: ITastingDetailsProps) {
     const classes = useStyles()
+    const history = useHistory()
     const { id } = useParams<ITastingParams>()
 
     let tasting = null
     if (tastings) {
         tasting = tastings.find(item => String(item.id) === id)
+    }
+
+    if (!isAuthenticated) {
+        history.push('/login/')
     }
 
     return (

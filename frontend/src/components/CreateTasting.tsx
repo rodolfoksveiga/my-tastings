@@ -89,6 +89,10 @@ export function CreateTasting({ isAuthenticated, access, createTasting }: ICreat
         history.push('/tastings/')
     }
 
+    if (!isAuthenticated) {
+        history.push('/login/')
+    }
+
     return (
         <div>
             <Typography className={classes.pageTitle} variant='h4' component='h4' align='center'>

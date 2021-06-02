@@ -10,7 +10,6 @@ import { TRootState } from '../reducers/rootReducer'
 
 // Types and interfaces
 interface IDeleteTastingProps {
-    isAuthenticated: boolean
     access: string | null
     id: string
     updateTriggerReload: Function
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 // Main component
-export function DeleteTasting({ isAuthenticated, access, id, updateTriggerReload, deleteTasting }: IDeleteTastingProps) {
+export function DeleteTasting({ access, id, updateTriggerReload, deleteTasting }: IDeleteTastingProps) {
     const classes = useStyles()
     
     function handleDelete() {
@@ -52,7 +51,6 @@ export function DeleteTasting({ isAuthenticated, access, id, updateTriggerReload
 
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
-    isAuthenticated: state.authUser.isAuthenticated,
     access: state.authUser.access
 })
 

@@ -89,12 +89,7 @@ export function TastingsList({ isAuthenticated, access, tastings, message, fetch
             <Typography className={classes.pageTitle} variant='h4' component='h4' align='center'>
                 Tastings List
             </Typography>
-            <Grid
-                className={classes.parentGrid}
-                direction='column'
-                justify='flex-start'
-                alignItems='center'
-            >
+            <Grid className={classes.parentGrid}>
                 <Grid item>
                     <Button
                         className={classes.createButton}

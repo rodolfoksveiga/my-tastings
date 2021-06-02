@@ -61,6 +61,10 @@ export function UpdateTasting({ isAuthenticated, access, tastings, updateTasting
         history.push('/tastings/' + id + '/')
     }
 
+    if (!isAuthenticated) {
+        history.push('/login/')
+    }
+
     return (
         <div>
             <Typography className={classes.pageTitle} variant='h4' component='h4' align='center'>
