@@ -43,10 +43,6 @@ export function UpdateTasting({ isAuthenticated, tastings, fetchTastingsList, up
     const { id } = useParams<ITastingParams>()
     const history = useHistory()
 
-    useEffect(() => {
-        fetchTastingsList()
-    }, [fetchTastingsList])
-
     let tasting = null
     if (tastings) {
         tasting = tastings.find(item => String(item.id) === id)

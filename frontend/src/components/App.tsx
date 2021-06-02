@@ -1,6 +1,7 @@
 // Import components, functions, types, variables, and styles
 import { useEffect } from 'react'
 import { connect } from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import NavigationBar from './NavigationBar'
@@ -17,6 +18,8 @@ import ResetPassword from './ResetPassword'
 import ConfirmResetPassword from './ConfirmResetPassword'
 import checkUserAuth from '../actions/checkUserAuth'
 import loadUser from '../actions/loadUser'
+
+import { persistor } from '../store'
 
 
 // Types and interfaces
@@ -35,20 +38,22 @@ export function App({ checkUserAuth, loadUser }: IAppProps) {
 
     return (
         <BrowserRouter>
-            <NavigationBar />
-            <Switch>
-                <Route path='/' component={Home} exact />
-                <Route path='/register/' exact component={Register} />
-                <Route path='/login/' exact component={Login} />
-                <Route path='/activate/:userId/:token/' exact component={Activate} />
-                <Route path='/reset-password/' exact component={ResetPassword} />
-                <Route path='/reset-password-confirm/:userId/:token/' exact component={ConfirmResetPassword} />
-                <Route path='/tastings/' exact component={TastingsList} />
-                <Route path='/tastings/create/' exact component={CreateTasting} />
-                <Route path='/tastings/:id/' exact component={Tasting} />
-                <Route path='/tastings/:id/update/' exact component={UpdateTasting} />
-                <Route path='/beverages/' exact component={BeveragesList} />
-            </Switch>
+            <PersistGate persistor={persistor}>
+                <NavigationBar />
+                    <Switch>
+                        <Route path='/' component={Home} exact />
+                        <Route path='/register/' exact component={Register} />
+                        <Route path='/login/' exact component={Login} />
+                        <Route path='/activate/:userId/:token/' exact component={Activate} />
+                        <Route path='/reset-password/' exact component={ResetPassword} />
+                        <Route path='/reset-password-confirm/:userId/:token/' exact component={ConfirmResetPassword} />
+                        <Route path='/tastings/' exact component={TastingsList} />
+                        <Route path='/tastings/create/' exact component={CreateTasting} />
+                        <Route path='/tastings/:id/' exact component={Tasting} />
+                        <Route path='/tastings/:id/update/' exact component={UpdateTasting} />
+                        <Route path='/beverages/' exact component={BeveragesList} />
+                    </Switch>
+            </PersistGate>
         </BrowserRouter>
     )
 }

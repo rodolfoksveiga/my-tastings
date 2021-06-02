@@ -67,8 +67,8 @@ type TDispatchAuthUser = (
 // Global variables
 const initialState = {
     isAuthenticated: false,
-    access: localStorage.getItem('access'),
-    refresh: localStorage.getItem('refresh'),
+    access: null,
+    refresh: null,
     user: null,
     message: null
 }

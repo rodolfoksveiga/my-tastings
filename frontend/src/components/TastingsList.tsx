@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-import { makeStyles } from '@material-ui/core/styles'
+// import { useHistory } from 'react-router-dom'
 
+import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
@@ -54,6 +55,7 @@ const useStyles = makeStyles(theme => ({
 // Component
 export function TastingsList({ isAuthenticated, tastings, message, fetchTastingsList, fetchBeveragesList }: ITastingsListProps) {
     const classes = useStyles()
+    // const history = useHistory()
     const [triggerReload, setTriggerReload] = useState<TTriggerReload>(false)
 
     useEffect(() => {
@@ -64,6 +66,10 @@ export function TastingsList({ isAuthenticated, tastings, message, fetchTastings
     function updateTriggerReload() {
         setTriggerReload(!triggerReload)
     }
+
+    // if (isAuthenticated) {
+    //     history.push('/login/')
+    // }
 
     return (
         <div>
