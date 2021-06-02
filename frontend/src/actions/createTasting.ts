@@ -27,13 +27,13 @@ export const CREATE_TASTING_FAIL = 'CREATE_TASTING_FAIL'
 
 
 // Action
-export default function createTasting(body: ITastingForm) {
+export default function createTasting(access: string | null, body: ITastingForm) {
     return async (dispatch: Dispatch<TDispatchCreateTasting>) => {
         try {
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('access'),
+                    'Authorization': 'Bearer ' + access,
                     'Accept': 'application/json'
                 }
             }

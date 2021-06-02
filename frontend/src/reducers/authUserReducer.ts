@@ -107,8 +107,12 @@ export function authUserReducer(state: IAuthUserState = initialState, action: TD
                 ...state,
                 isAuthenticated: true
             }
+        case CHECK_USER_AUTH_FAIL:
+            return {
+                ...state,
+                isAuthenticated: false
+            }
         case LOGIN_USER_SUCCESS:
-            localStorage.setItem('access', action.payload.access)
             return {
                 ...state,
                 isAuthenticated: true,
@@ -126,14 +130,7 @@ export function authUserReducer(state: IAuthUserState = initialState, action: TD
                 ...state,
                 user: null
             }
-        case CHECK_USER_AUTH_FAIL:
-            return {
-                ...state,
-                isAuthenticated: false
-            }
         case LOGIN_USER_FAIL:
-            localStorage.removeItem('access')
-            localStorage.removeItem('refresh')
             return {
                 ...state,
                 isAuthenticated: false,
@@ -144,8 +141,6 @@ export function authUserReducer(state: IAuthUserState = initialState, action: TD
                 message: action.payload
             }
         case LOGOUT_USER_SUCCESS:
-            localStorage.removeItem('access')
-            localStorage.removeItem('refresh')
             return {
                 ...state,
                 isAuthenticated: false,

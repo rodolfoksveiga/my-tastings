@@ -56,12 +56,9 @@ const FormSchema = Yup.object().shape({
 
 // Main component
 export function FormikTasting({initialFormData, userId, beverages, handleSubmit, fetchBeveragesList}: ITastingFormikProps) {
-    useEffect(() => {
-        fetchBeveragesList()
-    }, [fetchBeveragesList])
-
     let initialBeverage: IBeverage | null | undefined = null
     if (beverages) {
+        console.log(initialBeverage)
         initialBeverage = beverages.find(item => item.name === initialFormData.beverageName)
     }
 

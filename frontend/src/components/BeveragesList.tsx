@@ -35,7 +35,8 @@ export interface IBeverage {
 export type TBeverages = IBeverage[]
 
 interface IBeveragesListProps {
-    isAuthenticated: boolean,
+    isAuthenticated: boolean
+    access: string | null
     beverages: TBeverages | null
     message: string | null
     fetchBeveragesList: Function
@@ -51,13 +52,13 @@ const useStyles = makeStyles(theme => ({
 
 
 // Component
-export function BeveragesList({ isAuthenticated, beverages, message, fetchBeveragesList }: IBeveragesListProps) {
+export function BeveragesList({ isAuthenticated, access,  beverages, message, fetchBeveragesList }: IBeveragesListProps) {
     const classes = useStyles()
     const [triggerReload, setTriggerReload] = useState<TTriggerReload>(false)
 
     useEffect(() => {
-        fetchBeveragesList()
-    }, [fetchBeveragesList, triggerReload])
+        fetchBeveragesList(access)
+    }, [access, fetchBeveragesList, triggerReload])
 
     function updateTriggerReload() {
         setTriggerReload(!triggerReload)
@@ -69,12 +70,7 @@ export function BeveragesList({ isAuthenticated, beverages, message, fetchBevera
             <Typography variant='h4' component='h4' align='center'>
                 Beverages List
             </Typography>
-            <Grid
-                className={classes.container}
-                direction='column'
-                justify='flex-start'
-                alignItems='center'
-            >
+            <Grid className={classes.container}>
                 <Grid item>
                     <Button
                         variant='outlined'
@@ -117,6 +113,7 @@ export function BeveragesList({ isAuthenticated, beverages, message, fetchBevera
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
     isAuthenticated: state.authUser.isAuthenticated,
+    access: state.authUser.access,
     beverages: state.beverages.data,
     message: state.beverages.message 
 })

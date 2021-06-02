@@ -51,7 +51,7 @@ export default function loginUser(username: string, password: string) {
             })
 
             // ATTENTION HERE!
-            dispatch<any>(loadUser())
+            dispatch<any>(loadUser(response.data.access))
 
         } catch (error) {
             dispatch({

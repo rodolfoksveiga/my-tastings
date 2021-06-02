@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-// import { useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
@@ -37,6 +37,7 @@ type TTriggerReload = boolean
 
 interface ITastingsListProps {
     isAuthenticated: boolean
+    access: string | null
     tastings: TTastings | null
     message: string | null
     fetchTastingsList: Function
@@ -53,35 +54,30 @@ const useStyles = makeStyles(theme => ({
 
 
 // Component
-export function TastingsList({ isAuthenticated, tastings, message, fetchTastingsList, fetchBeveragesList }: ITastingsListProps) {
+export function TastingsList({ isAuthenticated, access, tastings, message, fetchTastingsList, fetchBeveragesList }: ITastingsListProps) {
     const classes = useStyles()
-    // const history = useHistory()
+    const history = useHistory()
     const [triggerReload, setTriggerReload] = useState<TTriggerReload>(false)
 
     useEffect(() => {
-        fetchTastingsList()
-        fetchBeveragesList()
-    }, [fetchTastingsList, fetchBeveragesList, triggerReload])
+        fetchTastingsList(access)
+        fetchBeveragesList(access)
+    }, [access, fetchTastingsList, fetchBeveragesList, triggerReload])
 
     function updateTriggerReload() {
         setTriggerReload(!triggerReload)
     }
 
-    // if (isAuthenticated) {
-    //     history.push('/login/')
-    // }
+    if (!isAuthenticated) {
+        history.push('/login/')
+    }
 
     return (
         <div>
             <Typography variant='h4' component='h4' align='center'>
                 Tastings List
             </Typography>
-            <Grid
-                className={classes.container}
-                direction='column'
-                justify='flex-start'
-                alignItems='center'
-            >
+            <Grid className={classes.container}>
                 <Grid item>
                     <Button
                         variant='outlined'
@@ -124,6 +120,7 @@ export function TastingsList({ isAuthenticated, tastings, message, fetchTastings
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
     isAuthenticated: state.authUser.isAuthenticated,
+    access: state.authUser.access,
     tastings: state.tastings.data,
     message: state.tastings.message
 })

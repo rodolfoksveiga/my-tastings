@@ -23,13 +23,13 @@ export const DELETE_TASTING_FAIL = 'DELETE_TASTING_FAIL'
 
 
 // Action
-export default function deleteTasting(id: string) {
+export default function deleteTasting(access: string | null, id: string) {
     return async (dispatch: Dispatch<TDispatchDeleteTasting>) => {
         try {
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('access')
+                    'Authorization': 'Bearer ' + access
                 }
             }
 

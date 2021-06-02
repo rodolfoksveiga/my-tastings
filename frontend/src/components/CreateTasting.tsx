@@ -10,6 +10,7 @@ import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
 import FormikTasting from './FormikTasting'
 import createTasting from '../actions/createTasting'
+import { TRootState } from '../reducers/rootReducer'
 
 
 // Types and interfaces
@@ -42,6 +43,8 @@ export interface ITastingFormFake {
 }
 
 interface ICreateTastingProps {
+    isAuthenticated: boolean
+    access: string | null
     createTasting: Function
 }
 
@@ -66,13 +69,13 @@ const initialTastingForm: ITastingFormFake = {
 
 
 // Main component
-export function CreateTasting({ createTasting }: ICreateTastingProps) {
+export function CreateTasting({ isAuthenticated, access, createTasting }: ICreateTastingProps) {
     const classes = useStyles()
     const history = useHistory()
 
     function handleCreate(formData: ITastingForm, userId: number) {
         formData.user = userId
-        createTasting(formData)
+        createTasting(access, formData)
         history.push('/tastings/')
     }
 
@@ -111,4 +114,9 @@ export function CreateTasting({ createTasting }: ICreateTastingProps) {
 
 
 // Connect to Redux
-export default connect(null, { createTasting })(CreateTasting)
+const mapStateToProps = (state: TRootState) => ({
+    isAuthenticated: state.authUser.isAuthenticated,
+    access: state.authUser.access
+})
+
+export default connect(mapStateToProps, { createTasting })(CreateTasting)

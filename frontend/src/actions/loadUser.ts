@@ -29,13 +29,13 @@ export const LOAD_USER_FAIL = 'LOAD_USER_FAIL'
 
 
 // Actions
-export default function loadUser() {
+export default function loadUser(access: string | null) {
     return async (dispatch: Dispatch<TDispatchLoadUser>) => {
-        if (localStorage.getItem('access')) {
+        if (access) {
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('access'),
+                    'Authorization': 'Bearer ' + access,
                     'Accept': 'application/json'
                 }
             }

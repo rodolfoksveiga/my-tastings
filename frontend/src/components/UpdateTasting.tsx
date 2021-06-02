@@ -1,5 +1,4 @@
 // Import components, functions, types, variables, and styles
-import { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useParams, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
@@ -21,6 +20,7 @@ import fetchTastingsList from '../actions/fetchTastingsList'
 // Types and interfaces
 interface IUpdateTastingProps {
     isAuthenticated: boolean
+    access: string | null
     tastings: TTastings | null
     message: string | null
     fetchTastingsList: Function
@@ -38,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 
 
 // Main component
-export function UpdateTasting({ isAuthenticated, tastings, fetchTastingsList, updateTasting }: IUpdateTastingProps) {
+export function UpdateTasting({ isAuthenticated, access, tastings, fetchTastingsList, updateTasting }: IUpdateTastingProps) {
     const classes = useStyles()
     const { id } = useParams<ITastingParams>()
     const history = useHistory()
@@ -49,7 +49,7 @@ export function UpdateTasting({ isAuthenticated, tastings, fetchTastingsList, up
     }
 
     function handleUpdate(form: ITastingForm) {
-        updateTasting(id, form)
+        updateTasting(access, id, form)
         history.push('/tastings/' + id + '/')
     }
 
@@ -91,6 +91,7 @@ export function UpdateTasting({ isAuthenticated, tastings, fetchTastingsList, up
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
     isAuthenticated: state.authUser.isAuthenticated,
+    access: state.authUser.access,
     tastings: state.tastings.data
 })
 

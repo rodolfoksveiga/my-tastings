@@ -33,12 +33,12 @@ export const FETCH_TASTINGS_LIST_FAIL = 'FETCH_TASTINGS_LIST_FAIL'
 
 
 // Action
-export default function fetchTastingsList() {
+export default function fetchTastingsList(access: string | null) {
     return async (dispatch: Dispatch<TDispatchFetchTastingsList>) => {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('access')
+                'Authorization': 'Bearer ' + access
             }
         }
 

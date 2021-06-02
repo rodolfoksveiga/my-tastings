@@ -23,9 +23,9 @@ export const CHECK_USER_AUTH_FAIL = 'CHECK_USER_AUTH_FAIL'
 
 
 // Actions
-export default function checkAuthentication() {
+export default function checkAuthentication(access: string | null) {
     return async (dispatch: Dispatch<TDispatchCheckUserAuth>) => {
-        if (localStorage.getItem('access')) {
+        if (access) {
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ export default function checkAuthentication() {
             }
 
             const body = JSON.stringify({
-                token: localStorage.getItem('access')
+                token: access
             })
 
             try {

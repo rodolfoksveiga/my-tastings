@@ -36,12 +36,14 @@ export function beveragesReducer(state: IFetchBeveragesListState = initialState,
             return {
                 ...state,
                 isLoading: false,
-                data: action.payload
+                data: action.payload,
+                message: null
             }
         case FETCH_BEVERAGES_LIST_FAIL:
             return {
                 ...state,
                 isLoading: false,
+                data: null,
                 message: action.payload
             }
         default:

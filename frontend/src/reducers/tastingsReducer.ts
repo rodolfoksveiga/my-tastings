@@ -60,6 +60,7 @@ export function tastingsReducer(state: ITastingsState = initialState, action: TD
             return {
                 ...state,
                 isLoading: false,
+                data: null,
                 message: action.payload
             }
         case CREATE_TASTING_SUCCESS:

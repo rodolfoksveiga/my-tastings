@@ -31,12 +31,12 @@ export const FETCH_BEVERAGES_LIST_FAIL = 'FETCH_BEVERAGES_LIST_FAIL'
 
 
 // Action
-export default function fetchBeveragesList() {
+export default function fetchBeveragesList(access: string | null) {
     return async (dispatch: Dispatch<TDispatchFetchBeveragesList>) => {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('access')
+                'Authorization': 'Bearer ' + access
             }
         }
 
