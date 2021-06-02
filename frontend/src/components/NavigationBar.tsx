@@ -22,15 +22,20 @@ interface INavProps {
 
 // Global variables
 const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-        flexGrows: true,
-        marginBottom: theme.spacing(3)
-    },
-    title: {
-        marginRight: theme.spacing(2)
-    }
-  })
+    createStyles({
+        appBar: {
+            flexGrows: true,
+            marginBottom: theme.spacing(3)
+        },
+        title: {
+            marginRight: theme.spacing(2)
+        },
+        navBarLink: {
+            '&:hover': {
+                color: theme.palette.common.white
+            }
+        }
+    })
 )
 
 
@@ -39,13 +44,13 @@ export function NavigationBar({ isAuthenticated, logoutUser }: INavProps) {
     const classes = useStyles()
     
     return (
-        <div className={classes.root}>
-            <AppBar position='sticky'>
+        <div>
+            <AppBar className={classes.appBar} position='sticky'>
                 <Toolbar>
                     <Typography className={classes.title} variant='h6'>
                         MyTastings
                     </Typography>
-                    <Button href='/'>Home</Button>
+                    <Button className={classes.navBarLink} href='/'>Home</Button>
                     {isAuthenticated
                         ? <UserLinks logoutUser={logoutUser} />
                         : <GuestLinks />

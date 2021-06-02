@@ -23,9 +23,17 @@ interface IListTastingItemProps {
 // Global variables
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-        listText: {
+        listItem: {
+            marginLeft: theme.spacing(1),
             marginRight: theme.spacing(8),
-            marginLeft: theme.spacing(1)
+            '&:hover': {
+                color: theme.palette.primary.main
+            }
+        },
+        detailIcon: {
+            '&:hover': {
+                color: theme.palette.warning.main
+            }
         }
     })
 )
@@ -38,17 +46,17 @@ export default function ListTastingItem({ tasting, updateTriggerReload }: IListT
     return (
         <div>
             <ListItem
+                className={classes.listItem}
                 button
                 component={Link}
                 to={'/tastings/' + tasting.id + '/'}
                 divider={true}
             >
                 <InsertDriveFileOutlinedIcon />
-                <ListItemText className={classes.listText}
-                    primary={tasting.name}
-                />
+                <ListItemText primary={tasting.name} />
                 <ListIconSecondaryAction>
                     <IconButton
+                        className={classes.detailIcon}
                         href={'/tastings/' + tasting.id + '/update/'}
                     >
                         <EditOutlinedIcon />

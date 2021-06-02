@@ -80,18 +80,8 @@ const theme = createMuiTheme({
             black: '#000',
             white: '#fff'
         },
-        primary: {
-            light: deepPurple[200],
-            main: deepPurple[500],
-            dark: deepPurple[800],
-            contrastText: '#fff'
-        },
-        secondary: {
-            light: lime[200],
-            main: lime[500],
-            dark: lime[800],
-            contrastText: '#fff'
-        },
+        primary: deepPurple,
+        secondary: lime,
         error: {
             light: '#e57373',
             main: '#f44336',

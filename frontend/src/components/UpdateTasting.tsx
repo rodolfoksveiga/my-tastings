@@ -14,7 +14,6 @@ import { TTastings } from './TastingsList'
 import { TRootState } from '../reducers/rootReducer'
 import { ITastingParams } from './TastingDetails'
 import { ITastingForm } from './CreateTasting'
-import fetchTastingsList from '../actions/fetchTastingsList'
 
 
 // Types and interfaces
@@ -23,22 +22,31 @@ interface IUpdateTastingProps {
     access: string | null
     tastings: TTastings | null
     message: string | null
-    fetchTastingsList: Function
     updateTasting: Function
 }
 
 
 // Global variables
 const useStyles = makeStyles(theme => ({
-    container: {
-        padding: theme.spacing(5),
-        spacing: theme.spacing(3)
+    parentGrid: {
+        padding: theme.spacing(2),
+    },
+    pageTitle: {
+        margin: theme.spacing(2)
+    },
+    cancelButton: {
+        marginTop: theme.spacing(3),
+        color: theme.palette.common.black,
+        '&:hover': {
+            color: theme.palette.error.main,
+            borderColor: theme.palette.error.main
+        }
     }
 }))
 
 
 // Main component
-export function UpdateTasting({ isAuthenticated, access, tastings, fetchTastingsList, updateTasting }: IUpdateTastingProps) {
+export function UpdateTasting({ isAuthenticated, access, tastings, updateTasting }: IUpdateTastingProps) {
     const classes = useStyles()
     const { id } = useParams<ITastingParams>()
     const history = useHistory()
@@ -55,12 +63,12 @@ export function UpdateTasting({ isAuthenticated, access, tastings, fetchTastings
 
     return (
         <div>
-            <Typography variant='h4' component='h4' align='center'>
+            <Typography className={classes.pageTitle} variant='h4' component='h4' align='center'>
                 Update Tasting
             </Typography>
             <Grid
                 container
-                className={classes.container}
+                className={classes.parentGrid}
                 direction='column'
                 justify='flex-start'
                 alignItems='center'
@@ -74,6 +82,7 @@ export function UpdateTasting({ isAuthenticated, access, tastings, fetchTastings
                 )}
                 <Grid item>
                     <Button
+                        className={classes.cancelButton}
                         variant='outlined'
                         href='/tastings/'
                         startIcon={<ArrowBackOutlinedIcon />}
@@ -95,4 +104,4 @@ const mapStateToProps = (state: TRootState) => ({
     tastings: state.tastings.data
 })
 
-export default connect(mapStateToProps, { fetchTastingsList, updateTasting })(UpdateTasting)
+export default connect(mapStateToProps, { updateTasting })(UpdateTasting)

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 
+import { makeStyles } from '@material-ui/core/styles'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
@@ -53,8 +54,33 @@ const FormSchema = Yup.object().shape({
         .required('Required')
 })
 
+
+// Global variables
+const useStyles = makeStyles(theme => ({
+    submitButtons: {
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
+        color: theme.palette.common.black
+    },
+    saveButton: {
+        '&:hover': {
+            color: theme.palette.success.main,
+            borderColor: theme.palette.success.main
+        }
+    },
+    resetButton: {
+        '&:hover': {
+            color: theme.palette.warning.main,
+            borderColor: theme.palette.warning.main
+        }
+    }
+}))
+
+
 // Main component
 export function FormikTasting({initialFormData, userId, beverages, handleSubmit, fetchBeveragesList}: ITastingFormikProps) {
+    const classes = useStyles()
+    
     let initialBeverage: IBeverage | null | undefined = null
     if (beverages) {
         console.log(initialBeverage)
@@ -70,7 +96,7 @@ export function FormikTasting({initialFormData, userId, beverages, handleSubmit,
             >
                 {({dirty, isValid}) => {
                     return(
-                        <Form>
+                        <Form autoComplete='off'>
                             <RegularInputField input='name' inputLabel='Name' />
                             {beverages && (
                                 <Autocomplete
@@ -78,7 +104,6 @@ export function FormikTasting({initialFormData, userId, beverages, handleSubmit,
                                     value={initialBeverage}
                                     options={beverages}
                                     getOptionLabel={option => option.name}
-                                    style={{ width: 300 }}
                                     renderInput={params => (
                                         <TextField
                                             {...params}
@@ -86,7 +111,7 @@ export function FormikTasting({initialFormData, userId, beverages, handleSubmit,
                                             variant='outlined'
                                             margin='dense'
                                             fullWidth
-                                            />
+                                        />
                                     )}
                                 />
                             )}
@@ -105,25 +130,21 @@ export function FormikTasting({initialFormData, userId, beverages, handleSubmit,
                                 step={1}
                                 valueLabelDisplay='auto'
                             />
-                            <Grid
-                                item
-                            >
-                                <ButtonGroup
-                                    fullWidth
-                                >
+                            <Grid item>
+                                <ButtonGroup className={classes.submitButtons} fullWidth>
                                     <Button
+                                        className={classes.saveButton}
                                         type='submit'
                                         variant='outlined'
-                                        color='primary'
                                         disabled={!dirty || !isValid}
                                         startIcon={<SaveOutlinedIcon />}
                                     >
                                         Save
                                     </Button>
                                     <Button
+                                        className={classes.resetButton}
                                         type='reset'
                                         variant='outlined'
-                                        color='secondary'
                                         disabled={!dirty}
                                         startIcon={
                                             initialFormData.id

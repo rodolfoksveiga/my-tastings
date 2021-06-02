@@ -1,8 +1,8 @@
 // Import components, functions, types, variables, and styles
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core/styles'
 
+import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
@@ -51,9 +51,19 @@ interface ICreateTastingProps {
 
 // Global variables
 const useStyles = makeStyles(theme => ({
-    container: {
-        padding: theme.spacing(5),
-        spacing: theme.spacing(3)
+    parentGrid: {
+        padding: theme.spacing(2),
+    },
+    pageTitle: {
+        margin: theme.spacing(2)
+    },
+    cancelButton: {
+        marginTop: theme.spacing(3),
+        color: theme.palette.common.black,
+        '&:hover': {
+            color: theme.palette.error.main,
+            borderColor: theme.palette.error.main
+        }
     }
 }))
 
@@ -81,12 +91,12 @@ export function CreateTasting({ isAuthenticated, access, createTasting }: ICreat
 
     return (
         <div>
-            <Typography variant='h4' component='h4' align='center'>
+            <Typography className={classes.pageTitle} variant='h4' component='h4' align='center'>
                 Create Tasting
             </Typography>
             <Grid
                 container
-                className={classes.container}
+                className={classes.parentGrid}
                 direction='column'
                 justify='flex-start'
                 alignItems='center'
@@ -99,6 +109,7 @@ export function CreateTasting({ isAuthenticated, access, createTasting }: ICreat
                 </Grid>
                 <Grid item>
                     <Button
+                        className={classes.cancelButton}
                         variant='outlined'
                         href='/tastings/'
                         startIcon={<ArrowBackOutlinedIcon />}

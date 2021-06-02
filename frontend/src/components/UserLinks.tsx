@@ -2,6 +2,7 @@
 import { useState, MouseEvent, Fragment } from 'react'
 import { useHistory } from 'react-router-dom'
 
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -14,8 +15,21 @@ interface IUserLinksProps {
 }
 
 
+// Global variables
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        navBarLinks: {
+            '&:hover': {
+                color: theme.palette.common.white
+            }
+        }
+    })
+)
+
+
 // Component
 export default function UserLinks({ logoutUser }: IUserLinksProps) {
+    const classes = useStyles()
     const history = useHistory()
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
@@ -30,9 +44,15 @@ export default function UserLinks({ logoutUser }: IUserLinksProps) {
 
     return(
         <Fragment>
-            <Button href='/tastings/'>Tastings</Button>
-            <Button href='/beverages/'>Beverages</Button>
-            <Button href='/tastings/'>Producers</Button>
+            <Button className={classes.navBarLinks} href='/tastings/'>
+                Tastings
+            </Button>
+            <Button className={classes.navBarLinks} href='/beverages/'>
+                Beverages
+            </Button>
+            <Button className={classes.navBarLinks} href='/tastings/'>
+                Producers
+            </Button>
             <IconButton onClick={handleClick} color='secondary'>
                 <AccountCircleOutlinedIcon />
             </IconButton>

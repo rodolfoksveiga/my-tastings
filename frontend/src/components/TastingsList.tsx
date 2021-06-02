@@ -47,8 +47,20 @@ interface ITastingsListProps {
 
 // Global variables
 const useStyles = makeStyles(theme => ({
-    container: {
-        padding: theme.spacing(5),
+    parentGrid: {
+        padding: theme.spacing(2)
+    },
+    pageTitle: {
+        margin: theme.spacing(2)
+    },
+    createButton: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(2),
+        color: theme.palette.common.black,
+        '&:hover': {
+            color: theme.palette.primary.main,
+            borderColor: theme.palette.primary.main
+        }
     }
 }))
 
@@ -74,15 +86,20 @@ export function TastingsList({ isAuthenticated, access, tastings, message, fetch
 
     return (
         <div>
-            <Typography variant='h4' component='h4' align='center'>
+            <Typography className={classes.pageTitle} variant='h4' component='h4' align='center'>
                 Tastings List
             </Typography>
-            <Grid className={classes.container}>
+            <Grid
+                className={classes.parentGrid}
+                direction='column'
+                justify='flex-start'
+                alignItems='center'
+            >
                 <Grid item>
                     <Button
+                        className={classes.createButton}
                         variant='outlined'
                         href='/tastings/create/'
-                        color='primary'
                         startIcon={<AddOutlinedIcon />}
                         fullWidth
                     >

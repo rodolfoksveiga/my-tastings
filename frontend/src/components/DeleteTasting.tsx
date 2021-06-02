@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import IconButton from '@material-ui/core/IconButton'
 import DeleteOutlined from '@material-ui/icons/DeleteOutlined'
 
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import deleteTasting from '../actions/deleteTasting'
 import { TRootState } from '../reducers/rootReducer'
 
@@ -17,8 +18,22 @@ interface IDeleteTastingProps {
 }
 
 
+// Global variables
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        deleteIcon: {
+            '&:hover': {
+                color: theme.palette.error.main
+            }
+        }
+    })
+)
+
+
 // Main component
 export function DeleteTasting({ isAuthenticated, access, id, updateTriggerReload, deleteTasting }: IDeleteTastingProps) {
+    const classes = useStyles()
+    
     function handleDelete() {
         if (window.confirm('Are you sure you want to delete this Tasting?')) {
             deleteTasting(access, id)
@@ -27,7 +42,7 @@ export function DeleteTasting({ isAuthenticated, access, id, updateTriggerReload
     }
 
     return (
-        <IconButton onClick={handleDelete}>
+        <IconButton className={classes.deleteIcon} onClick={handleDelete}>
             <DeleteOutlined />
         </IconButton>
     )
