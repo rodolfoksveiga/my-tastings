@@ -10,7 +10,6 @@ import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
 import FormikTasting from './FormikTasting'
 import createTasting from '../actions/createTasting'
-import { IBeverage } from './BeveragesList'
 import { TRootState } from '../reducers/rootReducer'
 
 
@@ -19,7 +18,7 @@ export interface ITastingForm {
     id?: number
     modified_at?: string
     name: string
-    beverage: number | IBeverage | null
+    beverage: number | null
     user: number | null
     color: string
     appearance: string
@@ -55,12 +54,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-function isIBeverage(obj: any): obj is IBeverage {
-    return obj.foo !== undefined 
-  }
-
-
-
 // Main component
 export function CreateTasting({ isAuthenticated, accessToken, userId, createTasting }: ICreateTastingProps) {
     const classes = useStyles()
@@ -78,12 +71,6 @@ export function CreateTasting({ isAuthenticated, accessToken, userId, createTast
     }
 
     function handleCreate(formData: ITastingForm) {
-        console.log(formData)
-        if (isIBeverage(formData.beverage)) {
-            console.log('IGUAL!')
-            formData.beverage = formData.beverage.id
-        }
-        console.log(formData)
         createTasting(accessToken, formData)
         history.push('/tastings/')
     }

@@ -1,8 +1,7 @@
 // Import components, functions, types, variables, and styles
-import { FunctionComponent } from 'react'
 import { connect } from 'react-redux'
-import { Formik, Form, Field } from 'formik'
-import { Autocomplete } from 'formik-material-ui-lab'
+import { Formik, Form } from 'formik'
+import Autocomplete from '@material-ui/lab/Autocomplete'
 import * as Yup from 'yup'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -20,7 +19,6 @@ import RegularInputField from './RegularInputField'
 import { ITastingForm } from './CreateTasting'
 import { TRootState } from '../reducers/rootReducer'
 import { IBeverage, TBeverages } from './BeveragesList'
-import React from 'react'
 
 
 // Types and interfaces
@@ -34,21 +32,6 @@ interface ITastingFormikProps {
 // Validation schema
 const FormSchema = Yup.object().shape({
     name: Yup.string()
-        .min(1, 'Too short!')
-        .required('Required'),
-    color: Yup.string()
-        .min(1, 'Too short!')
-        .required('Required'),
-    appearance: Yup.string()
-        .min(1, 'Too short!')
-        .required('Required'),
-    aroma: Yup.string()
-        .min(1, 'Too short!')
-        .required('Required'),
-    finish: Yup.string()
-        .min(1, 'Too short!')
-        .required('Required'),
-    rating: Yup.string()
         .min(1, 'Too short!')
         .required('Required')
 })
@@ -79,10 +62,10 @@ const useStyles = makeStyles(theme => ({
 // Main component
 export function FormikTasting({initialFormData, beverages, handleSubmit}: ITastingFormikProps) {
     const classes = useStyles()
-    
-    let beverage: IBeverage | undefined = undefined
+
+    let initialBeverage: IBeverage | null | undefined = null
     if (beverages) {
-        beverage = beverages.find(item => item.id === initialFormData.beverage)
+        initialBeverage = beverages.find(item => item.id === initialFormData.beverage)
     }
 
     return (
@@ -92,26 +75,31 @@ export function FormikTasting({initialFormData, beverages, handleSubmit}: ITasti
                 onSubmit={form => handleSubmit(form)}
                 validationSchema={FormSchema}
             >
-                {({handleChange, values, dirty, isValid}) => {
+                {({setFieldValue, dirty, isValid}) => {
                     return(
                         <Form autoComplete='off'>
                             <RegularInputField input='name' inputLabel='Name' />
                             {beverages && (
-                                <Field
-                                    name='beverage'
-                                    component={Autocomplete}
-                                    value={beverage && beverage.name}
-                                    options={beverages}
-                                    getOptionLabel={(option: IBeverage) => option.name}
-                                    fullWidth
-                                    renderInput={(params: FunctionComponent) => (
-                                        <TextField
-                                            {...params}
-                                            label='Beverage'
-                                            variant='outlined'
-                                            margin='dense'
+                                <Autocomplete
+                                freeSolo
+                                value={initialBeverage}
+                                options={beverages}
+                                getOptionLabel={option => option.name}
+                                onChange={(e, value) => {
+                                    setFieldValue(
+                                        'beverage',
+                                        value !== null && typeof value !== 'string' ? value.id : null
+                                    )
+                                }}
+                                renderInput={params => (
+                                    <TextField
+                                        {...params}
+                                        label='Beverage'
+                                        variant='outlined'
+                                        margin='dense'
+                                        fullWidth
                                         />
-                                    )}
+                                )}
                                 />
                             )}
                             <RegularInputField input='color' inputLabel='Color' />

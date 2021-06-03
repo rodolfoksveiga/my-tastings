@@ -19,7 +19,7 @@ import { ITastingForm } from './CreateTasting'
 // Types and interfaces
 interface IUpdateTastingProps {
     isAuthenticated: boolean
-    access: string | null
+    accessToken: string | null
     tastings: TTastings | null
     message: string | null
     updateTasting: Function
@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
 
 
 // Main component
-export function UpdateTasting({ isAuthenticated, access, tastings, updateTasting }: IUpdateTastingProps) {
+export function UpdateTasting({ isAuthenticated, accessToken, tastings, updateTasting }: IUpdateTastingProps) {
     const classes = useStyles()
     const { id } = useParams<ITastingParams>()
     const history = useHistory()
@@ -57,7 +57,7 @@ export function UpdateTasting({ isAuthenticated, access, tastings, updateTasting
     }
 
     function handleUpdate(form: ITastingForm) {
-        updateTasting(access, id, form)
+        updateTasting(accessToken, id, form)
         history.push('/tastings/' + id + '/')
     }
 
