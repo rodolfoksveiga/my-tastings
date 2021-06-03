@@ -22,9 +22,8 @@ export default function RegularInputField({ input, inputLabel, type='text' }: IR
                 id={input}
                 label={inputLabel}
                 variant='outlined'
-                color='primary'
-                fullWidth
                 margin='dense'
+                fullWidth
                 helperText={<ErrorMessage name={input} />}
             />
         </div>

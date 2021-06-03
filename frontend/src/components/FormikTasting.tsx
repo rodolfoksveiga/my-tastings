@@ -1,10 +1,11 @@
 // Import components, functions, types, variables, and styles
+import { FunctionComponent } from 'react'
 import { connect } from 'react-redux'
-import { Formik, Form } from 'formik'
+import { Formik, Form, Field } from 'formik'
+import { Autocomplete } from 'formik-material-ui-lab'
 import * as Yup from 'yup'
 
 import { makeStyles } from '@material-ui/core/styles'
-import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
 import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
@@ -16,19 +17,17 @@ import ClearAllOutlinedIcon from '@material-ui/icons/ClearAllOutlined'
 import HistoryOutlinedIcon from '@material-ui/icons/HistoryOutlined'
 
 import RegularInputField from './RegularInputField'
-import fetchBeveragesList from '../actions/fetchBeveragesList'
-import { ITastingFormFake } from './CreateTasting'
+import { ITastingForm } from './CreateTasting'
 import { TRootState } from '../reducers/rootReducer'
 import { IBeverage, TBeverages } from './BeveragesList'
+import React from 'react'
 
 
 // Types and interfaces
 interface ITastingFormikProps {
-    initialFormData: ITastingFormFake
-    userId?: number
+    initialFormData: ITastingForm
     beverages: TBeverages | null
     handleSubmit: Function
-    fetchBeveragesList: Function
 }
 
 
@@ -78,39 +77,39 @@ const useStyles = makeStyles(theme => ({
 
 
 // Main component
-export function FormikTasting({initialFormData, userId, beverages, handleSubmit, fetchBeveragesList}: ITastingFormikProps) {
+export function FormikTasting({initialFormData, beverages, handleSubmit}: ITastingFormikProps) {
     const classes = useStyles()
     
-    let initialBeverage: IBeverage | null | undefined = null
+    let beverage: IBeverage | undefined = undefined
     if (beverages) {
-        console.log(initialBeverage)
-        initialBeverage = beverages.find(item => item.name === initialFormData.beverageName)
+        beverage = beverages.find(item => item.id === initialFormData.beverage)
     }
 
     return (
         <div>
             <Formik
                 initialValues={initialFormData}
-                onSubmit={form => handleSubmit(form, userId)}
+                onSubmit={form => handleSubmit(form)}
                 validationSchema={FormSchema}
             >
-                {({dirty, isValid}) => {
+                {({handleChange, values, dirty, isValid}) => {
                     return(
                         <Form autoComplete='off'>
                             <RegularInputField input='name' inputLabel='Name' />
                             {beverages && (
-                                <Autocomplete
-                                    freeSolo
-                                    value={initialBeverage}
+                                <Field
+                                    name='beverage'
+                                    component={Autocomplete}
+                                    value={beverage && beverage.name}
                                     options={beverages}
-                                    getOptionLabel={option => option.name}
-                                    renderInput={params => (
+                                    getOptionLabel={(option: IBeverage) => option.name}
+                                    fullWidth
+                                    renderInput={(params: FunctionComponent) => (
                                         <TextField
                                             {...params}
                                             label='Beverage'
                                             variant='outlined'
                                             margin='dense'
-                                            fullWidth
                                         />
                                     )}
                                 />
@@ -168,8 +167,7 @@ export function FormikTasting({initialFormData, userId, beverages, handleSubmit,
 
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
-    userId: state.authUser.user?.id,
     beverages: state.beverages.data
 })
 
-export default connect(mapStateToProps, { fetchBeveragesList })(FormikTasting)
+export default connect(mapStateToProps)(FormikTasting)

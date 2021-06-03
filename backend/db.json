@@ -400,8 +400,7 @@
                 "admin"
             ],
             "country": "Germany",
-            "region": "Hessen",
-            "tags": []
+            "region": "Hessen"
         }
     },
     {
@@ -414,10 +413,7 @@
                 "admin"
             ],
             "country": "Germany",
-            "region": "Bavaria",
-            "tags": [
-                1
-            ]
+            "region": "Bavaria"
         }
     },
     {
@@ -430,10 +426,7 @@
                 "admin"
             ],
             "country": "Brazil",
-            "region": "Santa Catarina",
-            "tags": [
-                2
-            ]
+            "region": "Santa Catarina"
         }
     },
     {
@@ -446,11 +439,7 @@
                 "admin"
             ],
             "country": "Brazil",
-            "region": "Minas Gerais",
-            "tags": [
-                1,
-                2
-            ]
+            "region": "Minas Gerais"
         }
     },
     {

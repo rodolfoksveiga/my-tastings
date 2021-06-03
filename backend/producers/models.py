@@ -36,11 +36,6 @@ class Producer(Model):
         _('Region'),
         max_length=100
     )
-    tags = ManyToManyField(
-        Tag,
-        blank=True,
-        related_name='producers'
-    )
 
     def __str__(self):
         return self.name

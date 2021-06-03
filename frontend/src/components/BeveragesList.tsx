@@ -16,27 +16,26 @@ import { TRootState } from '../reducers/rootReducer'
 
 // Types and interfaces
 export interface IBeverage {
-    id: string
+    id: number
     modified_at: string
     name: string
-    beverage: number
-    beverageName: string
+    category: number
+    producer: number
     user: number
-    userName: string
-    color: string
-    appearance: string
-    aroma: string
-    finish: string
-    rating: number
+    classification: string
+    base: string
+    degree: string
+    price: string
+    year: string
+    tags: number[]
+    volume: number
 }
 
 export type TBeverages = IBeverage[]
 
-type TTriggerReload = boolean
-
 interface IBeveragesListProps {
     isAuthenticated: boolean
-    access: string | null
+    accessToken: string | null
     beverages: TBeverages | null
     message: string | null
     fetchBeveragesList: Function
@@ -64,14 +63,14 @@ const useStyles = makeStyles(theme => ({
 
 
 // Component
-export function BeveragesList({ isAuthenticated, access, beverages, message, fetchBeveragesList }: IBeveragesListProps) {
+export function BeveragesList({ isAuthenticated, accessToken, beverages, message, fetchBeveragesList }: IBeveragesListProps) {
     const classes = useStyles()
     const history = useHistory()
-    const [triggerReload, setTriggerReload] = useState<TTriggerReload>(false)
+    const [triggerReload, setTriggerReload] = useState<boolean>(false)
 
     useEffect(() => {
-        fetchBeveragesList(access)
-    }, [access, fetchBeveragesList, triggerReload])
+        fetchBeveragesList(accessToken)
+    }, [accessToken, fetchBeveragesList, triggerReload])
 
     function updateTriggerReload() {
         setTriggerReload(!triggerReload)
@@ -129,7 +128,7 @@ export function BeveragesList({ isAuthenticated, access, beverages, message, fet
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
     isAuthenticated: state.authUser.isAuthenticated,
-    access: state.authUser.access,
+    accessToken: state.authUser.accessToken,
     beverages: state.beverages.data,
     message: state.beverages.message
 })

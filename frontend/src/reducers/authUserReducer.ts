@@ -12,7 +12,6 @@ import {
 import {
     LOAD_USER_SUCCESS,
     LOAD_USER_FAIL,
-    IUser,
     TDispatchLoadUser
 } from '../actions/loadUser'
 import {
@@ -45,9 +44,11 @@ import {
 // Types and interfaces
 interface IAuthUserState {
     isAuthenticated: boolean
-    access: string | null
-    refresh: string | null
-    user: IUser | null
+    accessToken: string | null
+    refreshToken: string | null
+    userId: number | null
+    userName: string | null
+    userEmail: string | null
     message: string | null
     didSucceed?: boolean
 }
@@ -67,9 +68,11 @@ type TDispatchAuthUser = (
 // Global variables
 const initialState = {
     isAuthenticated: false,
-    access: null,
-    refresh: null,
-    user: null,
+    accessToken: null,
+    refreshToken: null,
+    userId: null,
+    userName: null,
+    userEmail: null,
     message: null
 }
 
@@ -116,14 +119,16 @@ export function authUserReducer(state: IAuthUserState = initialState, action: TD
             return {
                 ...state,
                 isAuthenticated: true,
-                access: action.payload.access,
-                refresh: action.payload.refresh,
+                accessToken: action.payload.access,
+                refreshToken: action.payload.refresh,
                 message: null
             }
         case LOAD_USER_SUCCESS:
             return {
                 ...state,
-                user: action.payload
+                userId: action.payload.id,
+                userName: action.payload.username,
+                userEmail: action.payload.email
             }
         case LOAD_USER_FAIL:
             return {
@@ -135,18 +140,22 @@ export function authUserReducer(state: IAuthUserState = initialState, action: TD
                 ...state,
                 isAuthenticated: false,
                 didSucceed: false,
-                access: null,
-                refresh: null,
-                user: null,
+                accessToken: null,
+                refreshToken: null,
+                userId: null,
+                userName: null,
+                userEmail: null,
                 message: action.payload
             }
         case LOGOUT_USER_SUCCESS:
             return {
                 ...state,
                 isAuthenticated: false,
-                access: null,
-                refresh: null,
-                user: null,
+                accessToken: null,
+                refreshToken: null,
+                userId: null,
+                userName: null,
+                userEmail: null,
                 message: null
             }
         case LOGOUT_USER_FAIL:

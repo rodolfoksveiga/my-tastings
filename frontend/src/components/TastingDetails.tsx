@@ -9,6 +9,8 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
+import IconButton from '@material-ui/core/IconButton'
+import Link from '@material-ui/icons/Link'
 
 import { TRootState } from '../reducers/rootReducer'
 import { TTastings } from './TastingsList'
@@ -36,9 +38,7 @@ const useStyles = makeStyles(theme => ({
     },
     paper: {
         marginTop: theme.spacing(1),
-        color: theme.palette.common.black,
-        borderColor: theme.palette.primary.main,
-        borderWidth: 2
+        color: theme.palette.common.black
     },
     paperHeader: {
         margin: theme.spacing(2)
@@ -62,6 +62,12 @@ const useStyles = makeStyles(theme => ({
         '&:hover': {
             color: theme.palette.error.main,
             borderColor: theme.palette.error.main
+        }
+    },
+    linkButton: {
+        '&:hover': {
+            color: theme.palette.primary.main,
+            borderColor: theme.palette.primary.main
         }
     }
 }))
@@ -112,8 +118,15 @@ export function TastingDetails({ isAuthenticated, tastings, message }: ITastingD
                                     >
                                         {tasting.name}
                                     </Typography>
+                                    <hr />
                                     <Typography className={classes.paperText} component='p'>
                                         Beverage: {tasting.beverageName}
+                                        <IconButton
+                                            className={classes.linkButton}
+                                            href={'/beverages/' + tasting.beverage + '/'}
+                                        >
+                                            <Link />
+                                        </IconButton>
                                     </Typography>
                                     <Typography className={classes.paperText} component='p'>
                                         Modified at: {tasting.modified_at}

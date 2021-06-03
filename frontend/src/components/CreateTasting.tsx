@@ -10,41 +10,28 @@ import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
 import FormikTasting from './FormikTasting'
 import createTasting from '../actions/createTasting'
+import { IBeverage } from './BeveragesList'
 import { TRootState } from '../reducers/rootReducer'
 
 
 // Types and interfaces
 export interface ITastingForm {
-    id?: string
+    id?: number
     modified_at?: string
     name: string
-    beverage: number
+    beverage: number | IBeverage | null
+    user: number | null
     color: string
     appearance: string
     aroma: string
     finish: string
     rating: number
-    user: number
-}
-
-export interface ITastingFormFake {
-    id?: string
-    modified_at?: string
-    name: string
-    beverage?: number
-    beverageName: string
-    color: string
-    appearance: string
-    aroma: string
-    finish: string
-    rating: number
-    user?: number
-    userName?: string
 }
 
 interface ICreateTastingProps {
     isAuthenticated: boolean
-    access: string | null
+    accessToken: string | null
+    userId: number | null
     createTasting: Function
 }
 
@@ -67,25 +54,37 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-const initialTastingForm: ITastingFormFake = {
-    name: '',
-    beverageName: '',
-    color: '',
-    appearance: '',
-    aroma: '',
-    finish: '',
-    rating: 5
-}
+
+function isIBeverage(obj: any): obj is IBeverage {
+    return obj.foo !== undefined 
+  }
+
 
 
 // Main component
-export function CreateTasting({ isAuthenticated, access, createTasting }: ICreateTastingProps) {
+export function CreateTasting({ isAuthenticated, accessToken, userId, createTasting }: ICreateTastingProps) {
     const classes = useStyles()
     const history = useHistory()
 
-    function handleCreate(formData: ITastingForm, userId: number) {
-        formData.user = userId
-        createTasting(access, formData)
+    const initialTastingForm: ITastingForm = {
+        name: '',
+        beverage: null,
+        user: userId,
+        color: '',
+        appearance: '',
+        aroma: '',
+        finish: '',
+        rating: 5
+    }
+
+    function handleCreate(formData: ITastingForm) {
+        console.log(formData)
+        if (isIBeverage(formData.beverage)) {
+            console.log('IGUAL!')
+            formData.beverage = formData.beverage.id
+        }
+        console.log(formData)
+        createTasting(accessToken, formData)
         history.push('/tastings/')
     }
 
@@ -131,7 +130,8 @@ export function CreateTasting({ isAuthenticated, access, createTasting }: ICreat
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
     isAuthenticated: state.authUser.isAuthenticated,
-    access: state.authUser.access
+    accessToken: state.authUser.accessToken,
+    userId: state.authUser.userId
 })
 
 export default connect(mapStateToProps, { createTasting })(CreateTasting)

@@ -25,12 +25,12 @@ export const UPDATE_TASTING_FAIL = 'UPDATE_TASTING_FAIL'
 
 
 // Action
-export default function updateTasting(id: string, body: ITastingForm) {
+export default function updateTasting(access: string, id: string, body: ITastingForm) {
     return async (dispatch: Dispatch<TDispatchUpdateTasting>) => {
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('access'),
+                'Authorization': 'Bearer ' + access,
                 'Accept': 'application/json'
             }
         }

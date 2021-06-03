@@ -8,39 +8,39 @@ import IconButton from '@material-ui/core/IconButton'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
 
 import DeleteTasting from './DeleteTasting'
-import { IBeverage } from './BeveragesList'
+import { IProducer } from './ProducersList'
 
 
 // Types and interfaces
-interface IListBeverageItemProps {
-    beverage: IBeverage
+interface IListProducerItemProps {
+    producer: IProducer
     updateTriggerReload: Function
 }
 
 
 // Component
-export default function ListBeverageItem({ beverage, updateTriggerReload }: IListBeverageItemProps) {
+export default function ListProducerItem({ producer, updateTriggerReload }: IListProducerItemProps) {
     return (
         <div>
             <ListItem
                 button
                 component={Link}
-                to={'/tastings/' + beverage.id + '/'}
+                to={'/tastings/' + producer.id + '/'}
                 divider={true}
             >
                 <InsertDriveFileOutlinedIcon />
                 <ListItemText
-                    primary={beverage.name}
+                    primary={producer.name}
                     inset={true}
                 />
                 <ListIconSecondaryAction>
                     <IconButton
-                        href={'/beverages/' + beverage.id + '/update/'}
+                        href={'/producers/' + producer.id + '/update/'}
                     >
                         <EditOutlinedIcon />
                     </IconButton>
                     <DeleteTasting
-                        id={beverage.id}
+                        id={producer.id}
                         updateTriggerReload={updateTriggerReload}
                     />
                 </ListIconSecondaryAction>

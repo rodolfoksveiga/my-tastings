@@ -13,6 +13,8 @@ import CreateTasting from './CreateTasting'
 import Tasting from './TastingDetails'
 import UpdateTasting from './UpdateTasting'
 import BeveragesList from './BeveragesList'
+import CategoriesList from './CategoriesList'
+import ProducersList from './ProducersList'
 import Login from './Login'
 import Register from './Register'
 import Activate from './Activate'
@@ -26,18 +28,18 @@ import { TRootState } from '../reducers/rootReducer'
 // Types and interfaces
 interface IAppProps {
     isAuthenticated: boolean
-    access: string | null
+    accessToken: string | null
     checkUserAuth: Function
     loadUser: Function
 }
 
 
 // Main component
-export function App({ isAuthenticated, access, checkUserAuth, loadUser }: IAppProps) {
+export function App({ isAuthenticated, accessToken, checkUserAuth, loadUser }: IAppProps) {
     useEffect(() => {
-        checkUserAuth(access)
-        loadUser(access)
-    }, [isAuthenticated, access, checkUserAuth, loadUser])
+        checkUserAuth(accessToken)
+        loadUser(accessToken)
+    }, [isAuthenticated, accessToken, checkUserAuth, loadUser])
 
     return (
         <BrowserRouter>
@@ -55,6 +57,8 @@ export function App({ isAuthenticated, access, checkUserAuth, loadUser }: IAppPr
                     <Route path='/tastings/:id/' exact component={Tasting} />
                     <Route path='/tastings/:id/update/' exact component={UpdateTasting} />
                     <Route path='/beverages/' exact component={BeveragesList} />
+                    <Route path='/categories/' exact component={CategoriesList} />
+                    <Route path='/producers/' exact component={ProducersList} />
                 </Switch>
             </ThemeProvider>
         </BrowserRouter>
@@ -65,7 +69,7 @@ export function App({ isAuthenticated, access, checkUserAuth, loadUser }: IAppPr
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
     isAuthenticated: state.authUser.isAuthenticated,
-    access: state.authUser.access,
+    accessToken: state.authUser.accessToken,
     tastings: state.tastings.data
 })
 

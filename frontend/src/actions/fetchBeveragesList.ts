@@ -63,4 +63,3 @@ export default function fetchBeveragesList(access: string | null) {
 
     }
 }
-

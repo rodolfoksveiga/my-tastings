@@ -12,6 +12,5 @@ class ProducerSerializer(serializers.ModelSerializer):
             'name',
             'user',
             'country',
-            'region',
-            'tags'
+            'region'
         ]

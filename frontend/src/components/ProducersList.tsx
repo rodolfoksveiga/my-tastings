@@ -9,36 +9,30 @@ import Button from '@material-ui/core/Button'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import List from '@material-ui/core/List'
 
-import ListTastingItem from './ListTastingItem'
-import fetchTastingsList from '../actions/fetchTastingsList'
-import fetchBeveragesList from '../actions/fetchBeveragesList'
+import ListProducerItem from './ListProducerItem'
+import fetchProducersList from '../actions/fetchProducersList'
 import { TRootState } from '../reducers/rootReducer'
 
 
 // Types and interfaces
-export interface ITasting {
+export interface IProducer {
     id: number
     modified_at: string
     name: string
-    beverage: number
-    beverageName: string
     user: number
-    color: string
-    appearance: string
-    aroma: string
-    finish: string
-    rating: number
+    userName: string
+    country: string
+    region: string
 }
 
-export type TTastings = ITasting[]
+export type TProducers = IProducer[]
 
-interface ITastingsListProps {
+interface IProducersListProps {
     isAuthenticated: boolean
     accessToken: string | null
-    tastings: TTastings | null
+    producers: TProducers | null
     message: string | null
-    fetchTastingsList: Function
-    fetchBeveragesList: Function
+    fetchProducersList: Function
 }
 
 
@@ -63,15 +57,14 @@ const useStyles = makeStyles(theme => ({
 
 
 // Component
-export function TastingsList({ isAuthenticated, accessToken, tastings, message, fetchTastingsList, fetchBeveragesList }: ITastingsListProps) {
+export function ProducersList({ isAuthenticated, accessToken, producers, message, fetchProducersList }: IProducersListProps) {
     const classes = useStyles()
     const history = useHistory()
     const [triggerReload, setTriggerReload] = useState<boolean>(false)
 
     useEffect(() => {
-        fetchTastingsList(accessToken)
-        fetchBeveragesList(accessToken)
-    }, [accessToken, fetchTastingsList, fetchBeveragesList, triggerReload])
+        fetchProducersList(accessToken)
+    }, [accessToken, fetchProducersList, triggerReload])
 
     function updateTriggerReload() {
         setTriggerReload(!triggerReload)
@@ -84,18 +77,18 @@ export function TastingsList({ isAuthenticated, accessToken, tastings, message, 
     return (
         <div>
             <Typography className={classes.pageTitle} variant='h4' component='h4' align='center'>
-                Tastings List
+                Producers List
             </Typography>
             <Grid className={classes.parentGrid}>
                 <Grid item>
                     <Button
                         className={classes.createButton}
                         variant='outlined'
-                        href='/tastings/create/'
+                        href='/producers/create/'
                         startIcon={<AddOutlinedIcon />}
                         fullWidth
                     >
-                        Create new Tasting
+                        Create new Producer
                     </Button>
                 </Grid>
                 {message ? (
@@ -105,12 +98,12 @@ export function TastingsList({ isAuthenticated, accessToken, tastings, message, 
                 ) : (
                     <Grid item>
                         <List>
-                            {tastings && (
-                                tastings.map(tasting => {
+                            {producers && (
+                                producers.map(producer => {
                                     return (
-                                        <ListTastingItem
-                                            key={tasting.id}
-                                            tasting={tasting}
+                                        <ListProducerItem
+                                            key={producer.id}
+                                            producer={producer}
                                             updateTriggerReload={updateTriggerReload}
                                         />
                                     )
@@ -130,8 +123,8 @@ export function TastingsList({ isAuthenticated, accessToken, tastings, message, 
 const mapStateToProps = (state: TRootState) => ({
     isAuthenticated: state.authUser.isAuthenticated,
     accessToken: state.authUser.accessToken,
-    tastings: state.tastings.data,
-    message: state.tastings.message
+    producers: state.producers.data,
+    message: state.producers.message
 })
 
-export default connect(mapStateToProps, { fetchTastingsList, fetchBeveragesList })(TastingsList)
+export default connect(mapStateToProps, { fetchProducersList })(ProducersList)

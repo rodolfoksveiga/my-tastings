@@ -10,8 +10,8 @@ import { TRootState } from '../reducers/rootReducer'
 
 // Types and interfaces
 interface IDeleteTastingProps {
-    access: string | null
-    id: string
+    accessToken: string | null
+    id: number
     updateTriggerReload: Function
     deleteTasting: Function
 }
@@ -30,12 +30,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 // Main component
-export function DeleteTasting({ access, id, updateTriggerReload, deleteTasting }: IDeleteTastingProps) {
+export function DeleteTasting({ accessToken, id, updateTriggerReload, deleteTasting }: IDeleteTastingProps) {
     const classes = useStyles()
     
     function handleDelete() {
         if (window.confirm('Are you sure you want to delete this Tasting?')) {
-            deleteTasting(access, id)
+            deleteTasting(accessToken, id)
             updateTriggerReload()
         }
     }
@@ -51,7 +51,7 @@ export function DeleteTasting({ access, id, updateTriggerReload, deleteTasting }
 
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
-    access: state.authUser.access
+    accessToken: state.authUser.accessToken
 })
 
 export default connect(mapStateToProps, { deleteTasting })(DeleteTasting)

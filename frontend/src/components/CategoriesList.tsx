@@ -9,36 +9,28 @@ import Button from '@material-ui/core/Button'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import List from '@material-ui/core/List'
 
-import ListTastingItem from './ListTastingItem'
-import fetchTastingsList from '../actions/fetchTastingsList'
-import fetchBeveragesList from '../actions/fetchBeveragesList'
+import ListCategoryItem from './ListCategoryItem'
+import fetchCategoriesList from '../actions/fetchCategoriesList'
 import { TRootState } from '../reducers/rootReducer'
 
 
 // Types and interfaces
-export interface ITasting {
+export interface ICategory {
     id: number
     modified_at: string
     name: string
-    beverage: number
-    beverageName: string
     user: number
-    color: string
-    appearance: string
-    aroma: string
-    finish: string
-    rating: number
+    userName: string
 }
 
-export type TTastings = ITasting[]
+export type TCategories = ICategory[]
 
-interface ITastingsListProps {
+interface ICategoriesListProps {
     isAuthenticated: boolean
     accessToken: string | null
-    tastings: TTastings | null
+    categories: TCategories | null
     message: string | null
-    fetchTastingsList: Function
-    fetchBeveragesList: Function
+    fetchCategoriesList: Function
 }
 
 
@@ -63,15 +55,14 @@ const useStyles = makeStyles(theme => ({
 
 
 // Component
-export function TastingsList({ isAuthenticated, accessToken, tastings, message, fetchTastingsList, fetchBeveragesList }: ITastingsListProps) {
+export function CategoriesList({ isAuthenticated, accessToken, categories, message, fetchCategoriesList }: ICategoriesListProps) {
     const classes = useStyles()
     const history = useHistory()
     const [triggerReload, setTriggerReload] = useState<boolean>(false)
 
     useEffect(() => {
-        fetchTastingsList(accessToken)
-        fetchBeveragesList(accessToken)
-    }, [accessToken, fetchTastingsList, fetchBeveragesList, triggerReload])
+        fetchCategoriesList(accessToken)
+    }, [accessToken, fetchCategoriesList, triggerReload])
 
     function updateTriggerReload() {
         setTriggerReload(!triggerReload)
@@ -84,7 +75,7 @@ export function TastingsList({ isAuthenticated, accessToken, tastings, message, 
     return (
         <div>
             <Typography className={classes.pageTitle} variant='h4' component='h4' align='center'>
-                Tastings List
+                Categories List
             </Typography>
             <Grid className={classes.parentGrid}>
                 <Grid item>
@@ -95,7 +86,7 @@ export function TastingsList({ isAuthenticated, accessToken, tastings, message, 
                         startIcon={<AddOutlinedIcon />}
                         fullWidth
                     >
-                        Create new Tasting
+                        Create new Category
                     </Button>
                 </Grid>
                 {message ? (
@@ -105,12 +96,12 @@ export function TastingsList({ isAuthenticated, accessToken, tastings, message, 
                 ) : (
                     <Grid item>
                         <List>
-                            {tastings && (
-                                tastings.map(tasting => {
+                            {categories && (
+                                categories.map(category => {
                                     return (
-                                        <ListTastingItem
-                                            key={tasting.id}
-                                            tasting={tasting}
+                                        <ListCategoryItem
+                                            key={category.id}
+                                            category={category}
                                             updateTriggerReload={updateTriggerReload}
                                         />
                                     )
@@ -130,8 +121,8 @@ export function TastingsList({ isAuthenticated, accessToken, tastings, message, 
 const mapStateToProps = (state: TRootState) => ({
     isAuthenticated: state.authUser.isAuthenticated,
     accessToken: state.authUser.accessToken,
-    tastings: state.tastings.data,
-    message: state.tastings.message
+    categories: state.categories.data,
+    message: state.categories.message
 })
 
-export default connect(mapStateToProps, { fetchTastingsList, fetchBeveragesList })(TastingsList)
+export default connect(mapStateToProps, { fetchCategoriesList })(CategoriesList)

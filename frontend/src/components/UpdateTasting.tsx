@@ -104,7 +104,7 @@ export function UpdateTasting({ isAuthenticated, access, tastings, updateTasting
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
     isAuthenticated: state.authUser.isAuthenticated,
-    access: state.authUser.access,
+    accessToken: state.authUser.accessToken,
     tastings: state.tastings.data
 })
 
