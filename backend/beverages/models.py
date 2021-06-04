@@ -82,11 +82,11 @@ class Beverage(Model):
         decimal_places=2,
         validators=[MinValueValidator(0), MaxValueValidator(100000)]
     )
-    tags = ManyToManyField(
-        Tag,
-        blank=True,
-        related_name='beverages'
-    )
+    # tags = ManyToManyField(
+    #     Tag,
+    #     blank=True,
+    #     related_name='beverages'
+    # )
 
     def __str__(self):
         return self.name

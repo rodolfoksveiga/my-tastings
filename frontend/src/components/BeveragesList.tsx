@@ -32,7 +32,6 @@ export interface IBeverage {
     volume: number
     degree: string
     price: string
-    tags: number[]
 }
 
 export type TBeverages = IBeverage[]
@@ -111,7 +110,7 @@ export function BeveragesList({
                     <Button
                         className={classes.createButton}
                         variant='outlined'
-                        href='/tastings/create/'
+                        href='/beverages/create/'
                         startIcon={<AddOutlinedIcon />}
                         fullWidth
                     >

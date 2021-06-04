@@ -8,30 +8,32 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
-import FormikTasting from './FormikTasting'
-import createTasting from '../actions/createTasting'
+import FormikBeverage from './FormikBeverage'
+import createBeverage from '../actions/createBeverage'
 import { TRootState } from '../reducers/rootReducer'
 
 
 // Types and interfaces
-export interface ITastingForm {
+export interface IBeverageForm {
     id?: number
     modified_at?: string
     name: string
-    beverage: number | null
+    producer: number | null
+    category: number | null
     user: number | null
-    color: string
-    appearance: string
-    aroma: string
-    finish: string
-    rating: number
+    classification: string
+    base: string
+    year: string
+    volume: number
+    degree: string
+    price: string
 }
 
-interface ICreateTastingProps {
+interface ICreateBeverageProps {
     isAuthenticated: boolean
     accessToken: string | null
     userId: number | null
-    createTasting: Function
+    createBeverage: Function
 }
 
 
@@ -55,25 +57,27 @@ const useStyles = makeStyles(theme => ({
 
 
 // Main component
-export function CreateTasting({ isAuthenticated, accessToken, userId, createTasting }: ICreateTastingProps) {
+export function CreateBeverage({ isAuthenticated, accessToken, userId, createBeverage }: ICreateBeverageProps) {
     const classes = useStyles()
     const history = useHistory()
 
-    const initialTastingForm: ITastingForm = {
+    const initialBeverageForm: IBeverageForm = {
         name: '',
-        beverage: null,
+        producer: 0,
+        category: 0,
         user: userId,
-        color: '',
-        appearance: '',
-        aroma: '',
-        finish: '',
-        rating: 5
+        classification: '',
+        base: '',
+        year: '',
+        volume: 1000,
+        degree: '',
+        price: ''
     }
 
-    function handleCreate(formData: ITastingForm) {
+    function handleCreate(formData: IBeverageForm) {
         console.log(formData)
-        createTasting(accessToken, formData)
-        history.push('/tastings/')
+        createBeverage(accessToken, formData)
+        history.push('/beverages/')
     }
 
     if (!isAuthenticated) {
@@ -83,7 +87,7 @@ export function CreateTasting({ isAuthenticated, accessToken, userId, createTast
     return (
         <div>
             <Typography className={classes.pageTitle} variant='h4' component='h4' align='center'>
-                Create Tasting
+                Create Beverage
             </Typography>
             <Grid
                 container
@@ -93,8 +97,8 @@ export function CreateTasting({ isAuthenticated, accessToken, userId, createTast
                 alignItems='center'
             >
                 <Grid item>
-                    <FormikTasting
-                        initialFormData={initialTastingForm}
+                    <FormikBeverage
+                        initialFormData={initialBeverageForm}
                         handleSubmit={handleCreate} 
                     />
                 </Grid>
@@ -102,11 +106,11 @@ export function CreateTasting({ isAuthenticated, accessToken, userId, createTast
                     <Button
                         className={classes.cancelButton}
                         variant='outlined'
-                        href='/tastings/'
+                        href='/beverages/'
                         startIcon={<ArrowBackOutlinedIcon />}
                         fullWidth
                     >
-                        Back to Tastings List
+                        Back to Beverages List
                     </Button>
                 </Grid>
             </Grid>
@@ -122,4 +126,4 @@ const mapStateToProps = (state: TRootState) => ({
     userId: state.authUser.userId
 })
 
-export default connect(mapStateToProps, { createTasting })(CreateTasting)
+export default connect(mapStateToProps, { createBeverage })(CreateBeverage)

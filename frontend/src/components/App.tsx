@@ -13,6 +13,7 @@ import CreateTasting from './CreateTasting'
 import TastingDetails from './TastingDetails'
 import UpdateTasting from './UpdateTasting'
 import BeveragesList from './BeveragesList'
+import CreateBeverage from './CreateBeverage'
 import BeverageDetails from './BeverageDetails'
 import CategoriesList from './CategoriesList'
 import ProducersList from './ProducersList'
@@ -59,6 +60,7 @@ export function App({ isAuthenticated, accessToken, checkUserAuth, loadUser }: I
                     <Route path='/tastings/:id/' exact component={TastingDetails} />
                     <Route path='/tastings/:id/update/' exact component={UpdateTasting} />
                     <Route path='/beverages/' exact component={BeveragesList} />
+                    <Route path='/beverages/create/' exact component={CreateBeverage} />
                     <Route path='/beverages/:id/' exact component={BeverageDetails} />
                     <Route path='/producers/' exact component={ProducersList} />
                     <Route path='/producers/:id/' exact component={ProducerDetails} />

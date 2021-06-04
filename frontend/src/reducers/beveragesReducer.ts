@@ -5,11 +5,18 @@ import {
     FETCH_BEVERAGES_LIST_FAIL,
     TDispatchFetchBeveragesList
 } from '../actions/fetchBeveragesList'
+import {
+    CREATE_BEVERAGE_SUCCESS,
+    CREATE_BEVERAGE_FAIL,
+    TDispatchCreateBeverage
+} from '../actions/createBeverage'
 import { TBeverages } from '../components/BeveragesList'
 
 
 // Types and interfaces
-interface IFetchBeveragesListState {
+type TDispatchBeverage = TDispatchFetchBeveragesList | TDispatchCreateBeverage
+
+interface IBeveragesListState {
     isLoading: boolean,
     data: TBeverages | null,
     message: string | null
@@ -25,7 +32,7 @@ const initialState = {
 
 
 // Reducer
-export function beveragesReducer(state: IFetchBeveragesListState = initialState, action: TDispatchFetchBeveragesList) {
+export function beveragesReducer(state: IBeveragesListState = initialState, action: TDispatchBeverage) {
     switch (action.type) {
         case FETCH_BEVERAGES_LIST_LOADING:
             return {
@@ -44,6 +51,16 @@ export function beveragesReducer(state: IFetchBeveragesListState = initialState,
                 ...state,
                 isLoading: false,
                 data: null,
+                message: action.payload
+            }
+        case CREATE_BEVERAGE_SUCCESS:
+            return {
+                ...state,
+                message: null
+            }
+        case CREATE_BEVERAGE_FAIL:
+            return {
+                ...state,
                 message: action.payload
             }
         default:

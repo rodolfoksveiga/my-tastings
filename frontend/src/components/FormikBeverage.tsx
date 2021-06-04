@@ -6,27 +6,27 @@ import * as Yup from 'yup'
 import { makeStyles } from '@material-ui/core/styles'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import TextField from '@material-ui/core/TextField'
-import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
-import Slider from '@material-ui/core/Slider'
 import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined'
 import ClearAllOutlinedIcon from '@material-ui/icons/ClearAllOutlined'
 import HistoryOutlinedIcon from '@material-ui/icons/HistoryOutlined'
 
 import RegularInputField from './RegularInputField'
-import { ITastingForm } from './CreateTasting'
+import { IBeverageForm } from './CreateBeverage'
 import { TRootState } from '../reducers/rootReducer'
-import { ITasting, TTastings } from './TastingsList'
 import { IBeverage, TBeverages } from './BeveragesList'
+import { IProducer, TProducers } from './ProducersList'
+import { ICategory, TCategories } from './CategoriesList'
 
 
 // Types and interfaces
-interface ITastingFormikProps {
-    initialFormData: ITastingForm
-    tastings: TTastings | null
+interface IBeverageFormikProps {
+    initialFormData: IBeverageForm
     beverages: TBeverages | null
+    producers: TProducers | null
+    categories: TCategories | null
     handleSubmit: Function
 }
 
@@ -62,19 +62,22 @@ const useStyles = makeStyles(theme => ({
 
 
 // Main component
-export function FormikTasting({
+export function FormikBeverage({
     initialFormData,
-    tastings,
     beverages,
+    producers,
+    categories,
     handleSubmit
-}: ITastingFormikProps) {
+}: IBeverageFormikProps) {
     const classes = useStyles()
 
-    let initialTasting: ITasting | undefined = undefined
     let initialBeverage: IBeverage | undefined = undefined
-    if (tastings && beverages) {
-        initialTasting = tastings.find(item => item.id === initialFormData.id)
-        initialBeverage = beverages.find(item => item.id === initialFormData.beverage)
+    let initialProducer: IProducer | undefined = undefined
+    let initialCategory: ICategory | undefined = undefined
+    if (beverages && producers && categories) {
+        initialBeverage = beverages.find(item => item.id === initialFormData.id)
+        initialProducer = producers.find(item => item.id === initialFormData.producer)
+        initialCategory = categories.find(item => item.id === initialFormData.category)
     }
 
     return (
@@ -86,24 +89,24 @@ export function FormikTasting({
             >
                 {({setFieldValue, dirty, isValid}) => {
                     return(
-                        (tastings && beverages) && (
+                        (beverages && producers && categories) && (
                             <Form autoComplete='off'>
                                 <RegularInputField input='name' inputLabel='Name' />
                                 <Autocomplete
                                     freeSolo
-                                    value={initialBeverage}
-                                    options={beverages}
+                                    value={initialProducer}
+                                    options={producers}
                                     getOptionLabel={option => option.name}
                                     onChange={(e, value) => {
                                         setFieldValue(
-                                            'beverage',
+                                            'producer',
                                             value !== null && typeof value !== 'string' ? value.id : null
                                         )
                                     }}
                                     renderInput={params => (
                                         <TextField
                                             {...params}
-                                            label={'Beverage'}
+                                            label={'Producer'}
                                             variant='outlined'
                                             margin='dense'
                                             fullWidth
@@ -112,19 +115,19 @@ export function FormikTasting({
                                 />
                                 <Autocomplete
                                     freeSolo
-                                    value={initialTasting}
-                                    options={tastings}
-                                    getOptionLabel={option => option.color}
+                                    value={initialCategory}
+                                    options={categories}
+                                    getOptionLabel={option => option.name}
                                     onChange={(e, value) => {
                                         setFieldValue(
-                                            'color',
-                                            value !== null && typeof value !== 'string' ? value.color : null
+                                            'category',
+                                            value !== null && typeof value !== 'string' ? value.id : null
                                         )
                                     }}
                                     renderInput={params => (
                                         <TextField
                                             {...params}
-                                            label={'Color'}
+                                            label={'Category'}
                                             variant='outlined'
                                             margin='dense'
                                             fullWidth
@@ -133,19 +136,19 @@ export function FormikTasting({
                                 />
                                 <Autocomplete
                                     freeSolo
-                                    value={initialTasting}
-                                    options={tastings}
-                                    getOptionLabel={option => option.appearance}
+                                    value={initialBeverage}
+                                    options={beverages}
+                                    getOptionLabel={option => option.classification}
                                     onChange={(e, value) => {
                                         setFieldValue(
-                                            'appearance',
-                                            value !== null && typeof value !== 'string' ? value.appearance : null
+                                            'classification',
+                                            value !== null && typeof value !== 'string' ? value.classification : null
                                         )
                                     }}
                                     renderInput={params => (
                                         <TextField
                                             {...params}
-                                            label={'Appearance'}
+                                            label={'Classification'}
                                             variant='outlined'
                                             margin='dense'
                                             fullWidth
@@ -154,57 +157,29 @@ export function FormikTasting({
                                 />
                                 <Autocomplete
                                     freeSolo
-                                    value={initialTasting}
-                                    options={tastings}
-                                    getOptionLabel={option => option.aroma}
+                                    value={initialBeverage}
+                                    options={beverages}
+                                    getOptionLabel={option => option.base}
                                     onChange={(e, value) => {
                                         setFieldValue(
-                                            'aroma',
-                                            value !== null && typeof value !== 'string' ? value.aroma : null
+                                            'base',
+                                            value !== null && typeof value !== 'string' ? value.base : null
                                         )
                                     }}
                                     renderInput={params => (
                                         <TextField
                                             {...params}
-                                            label={'Aroma'}
+                                            label={'Base'}
                                             variant='outlined'
                                             margin='dense'
                                             fullWidth
                                             />
                                     )}
                                 />
-                                <Autocomplete
-                                    freeSolo
-                                    value={initialTasting}
-                                    options={tastings}
-                                    getOptionLabel={option => option.finish}
-                                    onChange={(e, value) => {
-                                        setFieldValue(
-                                            'finish',
-                                            value !== null && typeof value !== 'string' ? value.finish : null
-                                        )
-                                    }}
-                                    renderInput={params => (
-                                        <TextField
-                                            {...params}
-                                            label={'Finish'}
-                                            variant='outlined'
-                                            margin='dense'
-                                            fullWidth
-                                            />
-                                    )}
-                                />
-                                <Typography className='text-center mt-2'>
-                                    Rating
-                                </Typography>
-                                <Slider
-                                    defaultValue={initialFormData.rating}
-                                    marks
-                                    min={0}
-                                    max={10}
-                                    step={1}
-                                    valueLabelDisplay='auto'
-                                />
+                                <RegularInputField input='year' inputLabel='Year' />
+                                <RegularInputField input='volume' inputLabel='Volume' type='let' />
+                                <RegularInputField input='degree' inputLabel='Degree' type='let' />
+                                <RegularInputField input='price' inputLabel='Price' type='let' />
                                 <Grid item>
                                     <ButtonGroup className={classes.submitButtons} fullWidth>
                                         <Button
@@ -244,8 +219,9 @@ export function FormikTasting({
 
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
-    tastings: state.tastings.data,
-    beverages: state.beverages.data
+    beverages: state.beverages.data,
+    producers: state.producers.data,
+    categories: state.categories.data
 })
 
-export default connect(mapStateToProps)(FormikTasting)
+export default connect(mapStateToProps)(FormikBeverage)

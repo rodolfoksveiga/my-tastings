@@ -26,5 +26,5 @@ class BeverageSerializer(serializers.ModelSerializer):
             'degree',
             'volume',
             'price',
-            'tags'
+            # 'tags'
         ]
