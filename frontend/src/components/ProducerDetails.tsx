@@ -9,21 +9,19 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
-import IconButton from '@material-ui/core/IconButton'
-import Link from '@material-ui/icons/Link'
 
 import { TRootState } from '../reducers/rootReducer'
-import { TTastings } from './TastingsList'
+import { TProducers } from './ProducersList'
 
 
 // Types and interfaces
-export interface ITastingParams {
+export interface IProducerParams {
     id: string
 }
 
-interface ITastingDetailsProps {
+interface IProducerDetailsProps {
     isAuthenticated: boolean
-    tastings: TTastings | null
+    producers: TProducers | null
     message: string | null
 }
 
@@ -79,14 +77,14 @@ const useStyles = makeStyles(theme => ({
 
 
 // Component
-export function TastingDetails({ isAuthenticated, tastings, message }: ITastingDetailsProps) {
+export function ProducerDetails({ isAuthenticated, producers, message }: IProducerDetailsProps) {
     const classes = useStyles()
     const history = useHistory()
-    const { id } = useParams<ITastingParams>()
+    const { id } = useParams<IProducerParams>()
 
-    let tasting = null
-    if (tastings) {
-        tasting = tastings.find(item => String(item.id) === id)
+    let producer = null
+    if (producers) {
+        producer = producers.find(item => String(item.id) === id)
     }
 
     if (!isAuthenticated) {
@@ -96,7 +94,7 @@ export function TastingDetails({ isAuthenticated, tastings, message }: ITastingD
     return (
         <div>
             <Typography className={classes.pageTitle} variant='h4' component='h2' align='center'>
-                Tasting Detail
+                Producer Detail
             </Typography>
             <Grid
                 className={classes.parentGrid}
@@ -108,7 +106,7 @@ export function TastingDetails({ isAuthenticated, tastings, message }: ITastingD
                 {message ? (
                     <h3>{message}</h3>
                 ) : (
-                    tasting && (
+                    producer && (
                         <div>
                             <Grid item >
                                 <Paper 
@@ -121,35 +119,14 @@ export function TastingDetails({ isAuthenticated, tastings, message }: ITastingD
                                         component='h3'
                                         align='center'
                                     >
-                                        {tasting.name}
+                                        {producer.name}
                                     </Typography>
                                     <hr />
-                                    <Typography className={classes.paperLink} component='p'>
-                                    <b>Beverage: </b>{tasting.beverageName}
-                                        <IconButton
-                                            className={classes.linkButton}
-                                            href={'/beverages/' + tasting.beverage + '/'}
-                                        >
-                                            <Link />
-                                        </IconButton>
+                                    <Typography className={classes.paperText} component='p'>
+                                        <b>Country: </b>{producer.country}
                                     </Typography>
                                     <Typography className={classes.paperText} component='p'>
-                                        <b>Modified at: </b>{tasting.modified_at}
-                                    </Typography>
-                                    <Typography className={classes.paperText} component='p'>
-                                    <b>Color: </b>{tasting.color}
-                                    </Typography>
-                                    <Typography className={classes.paperText} component='p'>
-                                    <b>Appearance: </b>{tasting.appearance}
-                                    </Typography>
-                                    <Typography className={classes.paperText} component='p'>
-                                    <b>Aroma: </b>{tasting.aroma}
-                                    </Typography>
-                                    <Typography className={classes.paperText} component='p'>
-                                    <b>Finish: </b>{tasting.finish}
-                                    </Typography>
-                                    <Typography className={classes.paperText} component='p'>
-                                    <b>Rating: </b>{tasting.rating}
+                                        <b>Region: </b>{producer.region}
                                     </Typography>
                                 </Paper>
                             </Grid>
@@ -157,11 +134,11 @@ export function TastingDetails({ isAuthenticated, tastings, message }: ITastingD
                                 <Button
                                     className={classes.updateButton}
                                     variant='outlined'
-                                    href={'/tastings/' + id + '/update/'}
+                                    href={'/producers/' + id + '/update/'}
                                     startIcon={<EditOutlinedIcon />}
                                     fullWidth
                                 >
-                                    Update Tasting
+                                    Update Producer
                                 </Button>
                             </Grid>
                             <Grid
@@ -170,11 +147,11 @@ export function TastingDetails({ isAuthenticated, tastings, message }: ITastingD
                                 <Button
                                     className={classes.cancelButton}
                                     variant='outlined'
-                                    href='/tastings/'
+                                    href='/producers/'
                                     startIcon={<ArrowBackOutlinedIcon />}
                                     fullWidth
                                 >
-                                    Back to Tastings List
+                                    Back to Producers List
                                 </Button>
                             </Grid>
                         </div>
@@ -189,7 +166,7 @@ export function TastingDetails({ isAuthenticated, tastings, message }: ITastingD
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
     isAuthenticated: state.authUser.isAuthenticated,
-    tastings: state.tastings.data
+    producers: state.producers.data
 })
 
-export default connect(mapStateToProps)(TastingDetails)
+export default connect(mapStateToProps)(ProducerDetails)

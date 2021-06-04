@@ -32,14 +32,14 @@ class Beverage(Model):
         unique=True,
         max_length=100
     )
-    category = ForeignKey(
-        Category,
+    producer = ForeignKey(
+        Producer,
         null=True,
         on_delete=PROTECT,
         related_name='beverages'
     )
-    producer = ForeignKey(
-        Producer,
+    category = ForeignKey(
+        Category,
         null=True,
         on_delete=PROTECT,
         related_name='beverages'

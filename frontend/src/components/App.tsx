@@ -10,11 +10,13 @@ import NavigationBar from './NavigationBar'
 import Home from './Home'
 import TastingsList from './TastingsList'
 import CreateTasting from './CreateTasting'
-import Tasting from './TastingDetails'
+import TastingDetails from './TastingDetails'
 import UpdateTasting from './UpdateTasting'
 import BeveragesList from './BeveragesList'
+import BeverageDetails from './BeverageDetails'
 import CategoriesList from './CategoriesList'
 import ProducersList from './ProducersList'
+import ProducerDetails from './ProducerDetails'
 import Login from './Login'
 import Register from './Register'
 import Activate from './Activate'
@@ -54,11 +56,13 @@ export function App({ isAuthenticated, accessToken, checkUserAuth, loadUser }: I
                     <Route path='/reset-password-confirm/:userId/:token/' exact component={ConfirmResetPassword} />
                     <Route path='/tastings/' exact component={TastingsList} />
                     <Route path='/tastings/create/' exact component={CreateTasting} />
-                    <Route path='/tastings/:id/' exact component={Tasting} />
+                    <Route path='/tastings/:id/' exact component={TastingDetails} />
                     <Route path='/tastings/:id/update/' exact component={UpdateTasting} />
                     <Route path='/beverages/' exact component={BeveragesList} />
-                    <Route path='/categories/' exact component={CategoriesList} />
+                    <Route path='/beverages/:id/' exact component={BeverageDetails} />
                     <Route path='/producers/' exact component={ProducersList} />
+                    <Route path='/producers/:id/' exact component={ProducerDetails} />
+                    <Route path='/categories/' exact component={CategoriesList} />
                 </Switch>
             </ThemeProvider>
         </BrowserRouter>

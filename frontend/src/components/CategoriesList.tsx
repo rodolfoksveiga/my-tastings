@@ -20,7 +20,6 @@ export interface ICategory {
     modified_at: string
     name: string
     user: number
-    userName: string
 }
 
 export type TCategories = ICategory[]
@@ -74,7 +73,7 @@ export function CategoriesList({ isAuthenticated, accessToken, categories, messa
 
     return (
         <div>
-            <Typography className={classes.pageTitle} variant='h4' component='h4' align='center'>
+            <Typography className={classes.pageTitle} variant='h4' component='h2' align='center'>
                 Categories List
             </Typography>
             <Grid className={classes.parentGrid}>

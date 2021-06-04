@@ -25,7 +25,8 @@ const initialState = {
 
 
 // Reducer
-export function producersReducer(state: IFetchProducersListState = initialState, action: TDispatchFetchProducersList) {
+export function producersReducer(state: IFetchProducersListState = initialState,
+                                 action: TDispatchFetchProducersList) {
     switch (action.type) {
         case FETCH_PRODUCERS_LIST_LOADING:
             return {

@@ -50,11 +50,11 @@ export default function UserLinks({ logoutUser }: IUserLinksProps) {
             <Button className={classes.navBarLinks} href='/beverages/'>
                 Beverages
             </Button>
-            <Button className={classes.navBarLinks} href='/categories/'>
-                Categories
-            </Button>
             <Button className={classes.navBarLinks} href='/producers/'>
                 Producers
+            </Button>
+            <Button className={classes.navBarLinks} href='/categories/'>
+                Categories
             </Button>
             <IconButton onClick={handleClick} color='secondary'>
                 <AccountCircleOutlinedIcon />

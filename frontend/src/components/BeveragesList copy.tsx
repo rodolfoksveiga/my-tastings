@@ -9,28 +9,41 @@ import Button from '@material-ui/core/Button'
 import AddOutlinedIcon from '@material-ui/icons/AddOutlined'
 import List from '@material-ui/core/List'
 
-import ListProducerItem from './ListProducerItem'
-import fetchProducersList from '../actions/fetchProducersList'
+import ListBeverageItem from './ListBeverageItem'
+import fetchBeveragesList from '../actions/fetchBeveragesList'
 import { TRootState } from '../reducers/rootReducer'
+import fetchCategoriesList from '../actions/fetchCategoriesList'
+import fetchProducersList from '../actions/fetchProducersList'
 
 
 // Types and interfaces
-export interface IProducer {
+export interface IBeverage {
     id: number
     modified_at: string
     name: string
+    producer: number
+    producerName: string
+    category: number
+    categoryName: string
     user: number
-    country: string
-    region: string
+    classification: string
+    base: string
+    year: string
+    volume: number
+    degree: string
+    price: string
+    tags: number[]
 }
 
-export type TProducers = IProducer[]
+export type TBeverages = IBeverage[]
 
-interface IProducersListProps {
+interface IBeveragesListProps {
     isAuthenticated: boolean
     accessToken: string | null
-    producers: TProducers | null
+    beverages: TBeverages | null
     message: string | null
+    fetchBeveragesList: Function
+    fetchCategoriesList: Function
     fetchProducersList: Function
 }
 
@@ -56,14 +69,24 @@ const useStyles = makeStyles(theme => ({
 
 
 // Component
-export function ProducersList({ isAuthenticated, accessToken, producers, message, fetchProducersList }: IProducersListProps) {
+export function BeveragesList({
+        isAuthenticated,
+        accessToken,
+        beverages,
+        message,
+        fetchBeveragesList,
+        fetchCategoriesList,
+        fetchProducersList
+    }: IBeveragesListProps) {
     const classes = useStyles()
     const history = useHistory()
     const [triggerReload, setTriggerReload] = useState<boolean>(false)
 
     useEffect(() => {
+        fetchBeveragesList(accessToken)
+        fetchCategoriesList(accessToken)
         fetchProducersList(accessToken)
-    }, [accessToken, fetchProducersList, triggerReload])
+    }, [accessToken, fetchBeveragesList, fetchCategoriesList, fetchProducersList,  triggerReload])
 
     function updateTriggerReload() {
         setTriggerReload(!triggerReload)
@@ -78,21 +101,21 @@ export function ProducersList({ isAuthenticated, accessToken, producers, message
             <Typography
                 className={classes.pageTitle}
                 variant='h4'
-                component='h2'
+                component='h4'
                 align='center'
             >
-                Producers List
+                Beverages List
             </Typography>
             <Grid className={classes.parentGrid}>
                 <Grid item>
                     <Button
                         className={classes.createButton}
                         variant='outlined'
-                        href='/producers/create/'
+                        href='/tastings/create/'
                         startIcon={<AddOutlinedIcon />}
                         fullWidth
                     >
-                        Create new Producer
+                        Create new Beverage
                     </Button>
                 </Grid>
                 {message ? (
@@ -102,12 +125,12 @@ export function ProducersList({ isAuthenticated, accessToken, producers, message
                 ) : (
                     <Grid item>
                         <List>
-                            {producers && (
-                                producers.map(producer => {
+                            {beverages && (
+                                beverages.map(beverage => {
                                     return (
-                                        <ListProducerItem
-                                            key={producer.id}
-                                            producer={producer}
+                                        <ListBeverageItem
+                                            key={beverage.id}
+                                            beverage={beverage}
                                             updateTriggerReload={updateTriggerReload}
                                         />
                                     )
@@ -127,8 +150,12 @@ export function ProducersList({ isAuthenticated, accessToken, producers, message
 const mapStateToProps = (state: TRootState) => ({
     isAuthenticated: state.authUser.isAuthenticated,
     accessToken: state.authUser.accessToken,
-    producers: state.producers.data,
-    message: state.producers.message
+    beverages: state.beverages.data,
+    message: state.beverages.message
 })
 
-export default connect(mapStateToProps, { fetchProducersList })(ProducersList)
+export default connect(mapStateToProps, {
+    fetchBeveragesList,
+    fetchCategoriesList,
+    fetchProducersList
+})(BeveragesList)

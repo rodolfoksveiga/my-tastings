@@ -1,5 +1,5 @@
 // Import components, functions, types, variables, and styles
-import { Link } from 'react-router-dom'
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined'
@@ -18,23 +18,37 @@ interface IListCategoryItemProps {
 }
 
 
+// Global variables
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        listItem: {
+            marginLeft: theme.spacing(1),
+            marginRight: theme.spacing(8)
+        },
+        detailIcon: {
+            '&:hover': {
+                color: theme.palette.warning.main
+            }
+        }
+    })
+)
+
+
 // Component
 export default function ListCategoryItem({ category, updateTriggerReload }: IListCategoryItemProps) {
+    const classes = useStyles()
+
     return (
         <div>
             <ListItem
-                button
-                component={Link}
-                to={'/tastings/' + category.id + '/'}
+                className={classes.listItem}
                 divider={true}
             >
                 <InsertDriveFileOutlinedIcon />
-                <ListItemText
-                    primary={category.name}
-                    inset={true}
-                />
+                <ListItemText primary={category.name} />
                 <ListIconSecondaryAction>
                     <IconButton
+                        className={classes.detailIcon}
                         href={'/categories/' + category.id + '/update/'}
                     >
                         <EditOutlinedIcon />

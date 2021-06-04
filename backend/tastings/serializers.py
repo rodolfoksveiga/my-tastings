@@ -6,7 +6,6 @@ from .models import Tasting
 class TastingSerializer(serializers.ModelSerializer):
     beverageName = serializers.CharField(
         source='beverage.name', read_only=True)
-    userName = serializers.CharField(source='user.username', read_only=True)
 
     class Meta:
         model = Tasting
@@ -17,7 +16,6 @@ class TastingSerializer(serializers.ModelSerializer):
             'beverage',
             'beverageName',
             'user',
-            'userName',
             'color',
             'appearance',
             'aroma',

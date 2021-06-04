@@ -1,5 +1,7 @@
 // Import components, functions, types, variables, and styles
 import { Link } from 'react-router-dom'
+
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import InsertDriveFileOutlinedIcon from '@material-ui/icons/InsertDriveFileOutlined'
@@ -18,23 +20,43 @@ interface IListProducerItemProps {
 }
 
 
+// Global variables
+const useStyles = makeStyles((theme: Theme) =>
+    createStyles({
+        listItem: {
+            marginLeft: theme.spacing(1),
+            marginRight: theme.spacing(8),
+            '&:hover': {
+                color: theme.palette.primary.main
+            }
+        },
+        detailIcon: {
+            '&:hover': {
+                color: theme.palette.warning.main
+            }
+        }
+    })
+)
+
+
 // Component
 export default function ListProducerItem({ producer, updateTriggerReload }: IListProducerItemProps) {
+    const classes = useStyles()
+    
     return (
         <div>
             <ListItem
+                className={classes.listItem}
                 button
                 component={Link}
-                to={'/tastings/' + producer.id + '/'}
+                to={'/producers/' + producer.id + '/'}
                 divider={true}
             >
                 <InsertDriveFileOutlinedIcon />
-                <ListItemText
-                    primary={producer.name}
-                    inset={true}
-                />
+                <ListItemText primary={producer.name} />
                 <ListIconSecondaryAction>
                     <IconButton
+                        className={classes.detailIcon}
                         href={'/producers/' + producer.id + '/update/'}
                     >
                         <EditOutlinedIcon />

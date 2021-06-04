@@ -12,6 +12,8 @@ import List from '@material-ui/core/List'
 import ListBeverageItem from './ListBeverageItem'
 import fetchBeveragesList from '../actions/fetchBeveragesList'
 import { TRootState } from '../reducers/rootReducer'
+import fetchCategoriesList from '../actions/fetchCategoriesList'
+import fetchProducersList from '../actions/fetchProducersList'
 
 
 // Types and interfaces
@@ -20,15 +22,17 @@ export interface IBeverage {
     modified_at: string
     name: string
     category: number
+    categoryName: string
     producer: number
+    producerName: string
     user: number
     classification: string
     base: string
+    year: string
+    volume: number
     degree: string
     price: string
-    year: string
     tags: number[]
-    volume: number
 }
 
 export type TBeverages = IBeverage[]
@@ -39,6 +43,8 @@ interface IBeveragesListProps {
     beverages: TBeverages | null
     message: string | null
     fetchBeveragesList: Function
+    fetchCategoriesList: Function
+    fetchProducersList: Function
 }
 
 
@@ -63,14 +69,24 @@ const useStyles = makeStyles(theme => ({
 
 
 // Component
-export function BeveragesList({ isAuthenticated, accessToken, beverages, message, fetchBeveragesList }: IBeveragesListProps) {
+export function BeveragesList({
+        isAuthenticated,
+        accessToken,
+        beverages,
+        message,
+        fetchBeveragesList,
+        fetchCategoriesList,
+        fetchProducersList
+    }: IBeveragesListProps) {
     const classes = useStyles()
     const history = useHistory()
     const [triggerReload, setTriggerReload] = useState<boolean>(false)
 
     useEffect(() => {
         fetchBeveragesList(accessToken)
-    }, [accessToken, fetchBeveragesList, triggerReload])
+        fetchCategoriesList(accessToken)
+        fetchProducersList(accessToken)
+    }, [accessToken, fetchBeveragesList, fetchCategoriesList, fetchProducersList,  triggerReload])
 
     function updateTriggerReload() {
         setTriggerReload(!triggerReload)
@@ -82,7 +98,12 @@ export function BeveragesList({ isAuthenticated, accessToken, beverages, message
 
     return (
         <div>
-            <Typography className={classes.pageTitle} variant='h4' component='h4' align='center'>
+            <Typography
+                className={classes.pageTitle}
+                variant='h4'
+                component='h2'
+                align='center'
+            >
                 Beverages List
             </Typography>
             <Grid className={classes.parentGrid}>
@@ -133,4 +154,8 @@ const mapStateToProps = (state: TRootState) => ({
     message: state.beverages.message
 })
 
-export default connect(mapStateToProps, { fetchBeveragesList })(BeveragesList)
+export default connect(mapStateToProps, {
+    fetchBeveragesList,
+    fetchCategoriesList,
+    fetchProducersList
+})(BeveragesList)

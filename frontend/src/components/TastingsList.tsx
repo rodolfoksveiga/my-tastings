@@ -83,7 +83,12 @@ export function TastingsList({ isAuthenticated, accessToken, tastings, message, 
 
     return (
         <div>
-            <Typography className={classes.pageTitle} variant='h4' component='h4' align='center'>
+            <Typography
+                className={classes.pageTitle}
+                variant='h4'
+                component='h2'
+                align='center'
+            >
                 Tastings List
             </Typography>
             <Grid className={classes.parentGrid}>
