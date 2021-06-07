@@ -272,7 +272,7 @@
             ],
             "classification": "Classification1",
             "base": "Base1",
-            "year": "2000-01-01",
+            "year": 2020,
             "degree": "20.00",
             "volume": 1000,
             "price": "100.00"
@@ -291,7 +291,7 @@
             ],
             "classification": "Classification2",
             "base": "Base2",
-            "year": "2000-01-01",
+            "year": 2020,
             "degree": "20.00",
             "volume": 1000,
             "price": "100.00"
@@ -310,7 +310,7 @@
             ],
             "classification": "Classification3",
             "base": "Base3",
-            "year": "2010-01-01",
+            "year": 2020,
             "degree": "10.00",
             "volume": 1000,
             "price": "10.00"
@@ -329,7 +329,7 @@
             ],
             "classification": "Classification4",
             "base": "Base4",
-            "year": "2010-01-01",
+            "year": 2020,
             "degree": "10.00",
             "volume": 1000,
             "price": "10.00"

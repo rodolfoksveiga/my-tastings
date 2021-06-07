@@ -28,7 +28,7 @@ export interface IBeverage {
     user: number
     classification: string
     base: string
-    year: string
+    year: number
     volume: number
     degree: string
     price: string

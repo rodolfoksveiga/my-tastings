@@ -1,12 +1,12 @@
+import datetime
 from django.utils.translation import gettext_lazy as _
 from django.db.models import (
-    PROTECT,
+    SET_NULL,
     CASCADE,
     Model,
     DateTimeField,
     CharField,
     ForeignKey,
-    DateField,
     DecimalField,
     PositiveSmallIntegerField,
     ManyToManyField
@@ -30,18 +30,20 @@ class Beverage(Model):
     name = CharField(
         _('Name'),
         unique=True,
-        max_length=100
+        max_length=200
     )
     producer = ForeignKey(
         Producer,
         null=True,
-        on_delete=PROTECT,
+        blank=True,
+        on_delete=SET_NULL,
         related_name='beverages'
     )
     category = ForeignKey(
         Category,
         null=True,
-        on_delete=PROTECT,
+        blank=True,
+        on_delete=SET_NULL,
         related_name='beverages'
     )
     user = ForeignKey(
@@ -53,34 +55,38 @@ class Beverage(Model):
     classification = CharField(
         _('Classification'),
         null=True,
-        max_length=100
+        blank=True,
+        max_length=200
     )
     base = CharField(
         _('Base'),
         null=True,
-        max_length=100
+        blank=True,
+        max_length=200
     )
-    year = DateField(
+    year = PositiveSmallIntegerField(
         _('Year'),
         null=True,
+        blank=True
     )
     degree = DecimalField(
         _('Degree (%)'),
         null=True,
+        blank=True,
         max_digits=5,
-        decimal_places=2,
-        validators=[MinValueValidator(0), MaxValueValidator(100)]
+        decimal_places=2
     )
     volume = PositiveSmallIntegerField(
         _('Volume (mL)'),
         null=True,
-        validators=[MinValueValidator(100), MaxValueValidator(10000)]
+        blank=True
     )
     price = DecimalField(
         _('Price'),
+        null=True,
+        blank=True,
         max_digits=8,
-        decimal_places=2,
-        validators=[MinValueValidator(0), MaxValueValidator(100000)]
+        decimal_places=2
     )
     # tags = ManyToManyField(
     #     Tag,

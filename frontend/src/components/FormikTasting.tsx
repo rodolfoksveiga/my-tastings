@@ -1,6 +1,6 @@
 // Import components, functions, types, variables, and styles
 import { connect } from 'react-redux'
-import { Formik, Form } from 'formik'
+import { Formik, Form, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 
 import { makeStyles } from '@material-ui/core/styles'
@@ -29,14 +29,6 @@ interface ITastingFormikProps {
     beverages: TBeverages | null
     handleSubmit: Function
 }
-
-
-// Validation schema
-const FormSchema = Yup.object().shape({
-    name: Yup.string()
-        .min(1, 'Too short!')
-        .required('Required')
-})
 
 
 // Global variables
@@ -70,6 +62,11 @@ export function FormikTasting({
 }: ITastingFormikProps) {
     const classes = useStyles()
 
+    const FormSchema = Yup.object().shape({
+        name: Yup.string()
+            .required('You must define a name for your tasting.')
+    })
+
     let initialTasting: ITasting | undefined = undefined
     let initialBeverage: IBeverage | undefined = undefined
     if (tastings && beverages) {
@@ -81,7 +78,10 @@ export function FormikTasting({
         <div>
             <Formik
                 initialValues={initialFormData}
-                onSubmit={form => handleSubmit(form)}
+                onSubmit={form => {
+                    form.name = form.name.trim()
+                    handleSubmit(form)
+                }}
                 validationSchema={FormSchema}
             >
                 {({setFieldValue, dirty, isValid}) => {
@@ -107,7 +107,7 @@ export function FormikTasting({
                                             variant='outlined'
                                             margin='dense'
                                             fullWidth
-                                            />
+                                        />
                                     )}
                                 />
                                 <Autocomplete
@@ -115,6 +115,7 @@ export function FormikTasting({
                                     value={initialTasting}
                                     options={tastings}
                                     getOptionLabel={option => option.color}
+                                    filterOptions={(options, state) => options}
                                     onChange={(e, value) => {
                                         setFieldValue(
                                             'color',
@@ -128,7 +129,7 @@ export function FormikTasting({
                                             variant='outlined'
                                             margin='dense'
                                             fullWidth
-                                            />
+                                        />
                                     )}
                                 />
                                 <Autocomplete
@@ -149,7 +150,7 @@ export function FormikTasting({
                                             variant='outlined'
                                             margin='dense'
                                             fullWidth
-                                            />
+                                        />
                                     )}
                                 />
                                 <Autocomplete
@@ -170,7 +171,7 @@ export function FormikTasting({
                                             variant='outlined'
                                             margin='dense'
                                             fullWidth
-                                            />
+                                        />
                                     )}
                                 />
                                 <Autocomplete
@@ -191,7 +192,7 @@ export function FormikTasting({
                                             variant='outlined'
                                             margin='dense'
                                             fullWidth
-                                            />
+                                        />
                                     )}
                                 />
                                 <Typography className='text-center mt-2'>

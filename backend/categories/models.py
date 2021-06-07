@@ -18,7 +18,7 @@ class Category(Model):
     name = CharField(
         _('Name'),
         unique=True,
-        max_length=100
+        max_length=200
     )
     user = ForeignKey(
         User,

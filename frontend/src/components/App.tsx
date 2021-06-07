@@ -16,7 +16,9 @@ import BeveragesList from './BeveragesList'
 import CreateBeverage from './CreateBeverage'
 import BeverageDetails from './BeverageDetails'
 import CategoriesList from './CategoriesList'
+import CreateCategory from './CreateCategory'
 import ProducersList from './ProducersList'
+import CreateProducer from './CreateProducer'
 import ProducerDetails from './ProducerDetails'
 import Login from './Login'
 import Register from './Register'
@@ -63,8 +65,10 @@ export function App({ isAuthenticated, accessToken, checkUserAuth, loadUser }: I
                     <Route path='/beverages/create/' exact component={CreateBeverage} />
                     <Route path='/beverages/:id/' exact component={BeverageDetails} />
                     <Route path='/producers/' exact component={ProducersList} />
+                    <Route path='/producers/create/' exact component={CreateProducer} />
                     <Route path='/producers/:id/' exact component={ProducerDetails} />
                     <Route path='/categories/' exact component={CategoriesList} />
+                    <Route path='/categories/create/' exact component={CreateCategory} />
                 </Switch>
             </ThemeProvider>
         </BrowserRouter>

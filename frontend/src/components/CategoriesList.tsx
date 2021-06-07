@@ -81,7 +81,7 @@ export function CategoriesList({ isAuthenticated, accessToken, categories, messa
                     <Button
                         className={classes.createButton}
                         variant='outlined'
-                        href='/tastings/create/'
+                        href='/categories/create/'
                         startIcon={<AddOutlinedIcon />}
                         fullWidth
                     >

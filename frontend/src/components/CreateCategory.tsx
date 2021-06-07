@@ -8,32 +8,24 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import ArrowBackOutlinedIcon from '@material-ui/icons/ArrowBackOutlined'
 
-import FormikBeverage from './FormikBeverage'
-import createBeverage from '../actions/createBeverage'
+import FormikCategory from './FormikCategory'
+import createCategory from '../actions/createCategory'
 import { TRootState } from '../reducers/rootReducer'
 
 
 // Types and interfaces
-export interface IBeverageForm {
+export interface ICategoryForm {
     id?: number
     modified_at?: string
-    name: string | null
-    producer: number | string | null
-    category: number | string | null
+    name: string
     user: number | null
-    classification: string | null
-    base: string | null
-    year: number | string | null
-    volume: number | string | null
-    degree: string | null
-    price: string | null
 }
 
-interface ICreateBeverageProps {
+interface ICreateCategoryProps {
     isAuthenticated: boolean
     accessToken: string | null
     userId: number | null
-    createBeverage: Function
+    createCategory: Function
 }
 
 
@@ -57,27 +49,18 @@ const useStyles = makeStyles(theme => ({
 
 
 // Main component
-export function CreateBeverage({ isAuthenticated, accessToken, userId, createBeverage }: ICreateBeverageProps) {
+export function CreateCategory({ isAuthenticated, accessToken, userId, createCategory }: ICreateCategoryProps) {
     const classes = useStyles()
     const history = useHistory()
 
-    const initialBeverageForm: IBeverageForm = {
+    const initialCategoryForm: ICategoryForm = {
         name: '',
-        producer: '',
-        category: '',
-        user: userId,
-        classification: '',
-        base: '',
-        year: '',
-        volume: '',
-        degree: '',
-        price: ''
+        user: userId
     }
 
-    function handleCreate(formData: IBeverageForm) {
-        console.log(formData)
-        createBeverage(accessToken, formData)
-        history.push('/beverages/')
+    function handleCreate(formData: ICategoryForm) {
+        createCategory(accessToken, formData)
+        history.push('/categories/')
     }
 
     if (!isAuthenticated) {
@@ -87,7 +70,7 @@ export function CreateBeverage({ isAuthenticated, accessToken, userId, createBev
     return (
         <div>
             <Typography className={classes.pageTitle} variant='h4' component='h4' align='center'>
-                Create Beverage
+                Create Category
             </Typography>
             <Grid
                 container
@@ -97,8 +80,8 @@ export function CreateBeverage({ isAuthenticated, accessToken, userId, createBev
                 alignItems='center'
             >
                 <Grid item>
-                    <FormikBeverage
-                        initialFormData={initialBeverageForm}
+                    <FormikCategory
+                        initialFormData={initialCategoryForm}
                         handleSubmit={handleCreate} 
                     />
                 </Grid>
@@ -106,11 +89,11 @@ export function CreateBeverage({ isAuthenticated, accessToken, userId, createBev
                     <Button
                         className={classes.cancelButton}
                         variant='outlined'
-                        href='/beverages/'
+                        href='/categories/'
                         startIcon={<ArrowBackOutlinedIcon />}
                         fullWidth
                     >
-                        Back to Beverages List
+                        Back to Categories List
                     </Button>
                 </Grid>
             </Grid>
@@ -126,4 +109,4 @@ const mapStateToProps = (state: TRootState) => ({
     userId: state.authUser.userId
 })
 
-export default connect(mapStateToProps, { createBeverage })(CreateBeverage)
+export default connect(mapStateToProps, { createCategory })(CreateCategory)

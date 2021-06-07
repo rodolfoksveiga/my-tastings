@@ -20,7 +20,7 @@ class Producer(Model):
     name = CharField(
         _('Name'),
         unique=True,
-        max_length=100
+        max_length=200
     )
     user = ForeignKey(
         User,
@@ -30,11 +30,15 @@ class Producer(Model):
     )
     country = CharField(
         _('Country'),
-        max_length=100
+        null=True,
+        blank=True,
+        max_length=200
     )
     region = CharField(
         _('Region'),
-        max_length=100
+        null=True,
+        blank=True,
+        max_length=200
     )
 
     def __str__(self):

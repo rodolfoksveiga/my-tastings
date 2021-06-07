@@ -1,6 +1,6 @@
 from django.utils.translation import gettext_lazy as _
 from django.db.models import (
-    PROTECT,
+    SET_NULL,
     CASCADE,
     Model,
     DateTimeField,
@@ -25,32 +25,44 @@ class Tasting(Model):
     )
     name = CharField(
         _('Name'),
-        max_length=100
+        max_length=200
     )
     beverage = ForeignKey(
         Beverage,
-        on_delete=PROTECT
+        null=True,
+        blank=True,
+        on_delete=SET_NULL,
+        related_name='tastings'
     )
     user = ForeignKey(
         User,
+        null=True,
         on_delete=CASCADE,
         related_name='tastings'
     )
     color = CharField(
         _('Color'),
-        max_length=100
+        null=True,
+        blank=True,
+        max_length=200
     )
     appearance = CharField(
         _('Appearance'),
-        max_length=100
+        null=True,
+        blank=True,
+        max_length=200
     )
     aroma = CharField(
         _('Aroma'),
-        max_length=100
+        null=True,
+        blank=True,
+        max_length=200
     )
     finish = CharField(
         _('Finish'),
-        max_length=100
+        null=True,
+        blank=True,
+        max_length=200
     )
     rating = PositiveSmallIntegerField(
         _('Rating'),
