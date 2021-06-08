@@ -16,7 +16,7 @@ import HistoryOutlinedIcon from '@material-ui/icons/HistoryOutlined'
 import RegularInputField from './RegularInputField'
 import { IBeverageForm } from './CreateBeverage'
 import { TRootState } from '../reducers/rootReducer'
-import { IBeverage, TBeverages } from './BeveragesList'
+import { TBeverages } from './BeveragesList'
 import { IProducer, TProducers } from './ProducersList'
 import { ICategory, TCategories } from './CategoriesList'
 
@@ -52,11 +52,11 @@ const useStyles = makeStyles(theme => ({
     }
 }))
 
-function stringOrNull(value: string | null) {
+export function stringOrNull(value: string | null) {
     return value === '' || value === null ? null : value.trim()
 }
 
-function numberOrNull(value: number | string | null) {
+export function numberOrNull(value: number | string | null) {
     return value === 0 || value === null ? null : value
 }
 
@@ -110,11 +110,9 @@ export function FormikBeverage({
             )
     })
 
-    let initialBeverage: IBeverage | undefined = undefined
     let initialProducer: IProducer | undefined = undefined
     let initialCategory: ICategory | undefined = undefined
     if (beverages && producers && categories) {
-        initialBeverage = beverages.find(item => item.id === initialFormData.id)
         initialProducer = producers.find(item => item.id === initialFormData.producer)
         initialCategory = categories.find(item => item.id === initialFormData.category)
     }
@@ -124,7 +122,7 @@ export function FormikBeverage({
             <Formik
                 initialValues={initialFormData}
                 onSubmit={form => {
-                    form.name = stringOrNull(form.name)
+                    form.name = form.name.trim()
                     form.category = numberOrNull(Number(form.category))
                     form.producer = numberOrNull(Number(form.producer))
                     form.classification = stringOrNull(form.classification)
@@ -184,48 +182,8 @@ export function FormikBeverage({
                                             />
                                     )}
                                 />
-                                <Autocomplete
-                                    freeSolo
-                                    value={initialBeverage}
-                                    options={beverages}
-                                    getOptionLabel={option => option.classification}
-                                    onChange={(e, value) => {
-                                        setFieldValue(
-                                            'classification',
-                                            value !== null && typeof value !== 'string' ? value.classification : null
-                                        )
-                                    }}
-                                    renderInput={params => (
-                                        <TextField
-                                            {...params}
-                                            label={'Classification'}
-                                            variant='outlined'
-                                            margin='dense'
-                                            fullWidth
-                                            />
-                                    )}
-                                />
-                                <Autocomplete
-                                    freeSolo
-                                    value={initialBeverage}
-                                    options={beverages}
-                                    getOptionLabel={option => option.base}
-                                    onChange={(e, value) => {
-                                        setFieldValue(
-                                            'base',
-                                            value !== null && typeof value !== 'string' ? value.base : null
-                                        )
-                                    }}
-                                    renderInput={params => (
-                                        <TextField
-                                            {...params}
-                                            label={'Base'}
-                                            variant='outlined'
-                                            margin='dense'
-                                            fullWidth
-                                            />
-                                    )}
-                                />
+                                <RegularInputField input='classification' inputLabel='Classification' />
+                                <RegularInputField input='base' inputLabel='Base' />
                                 <RegularInputField input='year' inputLabel='Year' type='number' />
                                 <RegularInputField input='volume' inputLabel='Volume (mL)' type='number' />
                                 <RegularInputField input='degree' inputLabel='Percentage of alcohol (%)' type='let' />

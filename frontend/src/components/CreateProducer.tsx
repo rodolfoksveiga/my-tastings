@@ -19,8 +19,8 @@ export interface IProducerForm {
     modified_at?: string
     name: string
     user: number | null
-    country: string
-    region: string
+    country: string | null
+    region: string | null
 }
 
 interface ICreateProducerProps {

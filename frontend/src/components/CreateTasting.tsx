@@ -16,14 +16,14 @@ import { TRootState } from '../reducers/rootReducer'
 // Types and interfaces
 export interface ITastingForm {
     id?: number
-    modified_at?: string
+    modified_at?: string | null
     name: string
-    beverage: number | null
+    beverage: number |string |  null
     user: number | null
-    color: string
-    appearance: string
-    aroma: string
-    finish: string
+    color: string | null
+    appearance: string | null
+    aroma: string | null
+    finish: string | null
     rating: number
 }
 
@@ -61,7 +61,7 @@ export function CreateTasting({ isAuthenticated, accessToken, userId, createTast
 
     const initialTastingForm: ITastingForm = {
         name: '',
-        beverage: null,
+        beverage: '',
         user: userId,
         color: '',
         appearance: '',

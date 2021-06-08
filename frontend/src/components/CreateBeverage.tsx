@@ -17,7 +17,7 @@ import { TRootState } from '../reducers/rootReducer'
 export interface IBeverageForm {
     id?: number
     modified_at?: string
-    name: string | null
+    name: string
     producer: number | string | null
     category: number | string | null
     user: number | null

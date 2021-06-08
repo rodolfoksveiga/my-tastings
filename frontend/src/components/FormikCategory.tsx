@@ -56,7 +56,6 @@ export function FormikCategory({initialFormData, categories, handleSubmit}: ICat
         '^((?!' + categories.map(categorie => categorie.name).join('|') + ')).*$' :
         '.'
     const regex = new RegExp(names)
-    console.log(regex)
     const FormSchema = Yup.object().shape({
         name: Yup.string()
             .trim()
@@ -68,7 +67,10 @@ export function FormikCategory({initialFormData, categories, handleSubmit}: ICat
         <div>
             <Formik
                 initialValues={initialFormData}
-                onSubmit={form => handleSubmit(form)}
+                onSubmit={form => {
+                    form.name = form.name.trim()
+                    handleSubmit(form)
+                }}
                 validationSchema={FormSchema}
             >
                 {({dirty, isValid}) => {

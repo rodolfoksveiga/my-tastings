@@ -4,8 +4,6 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 
 import { makeStyles } from '@material-ui/core/styles'
-import Autocomplete from '@material-ui/lab/Autocomplete'
-import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
@@ -13,10 +11,12 @@ import SaveOutlinedIcon from '@material-ui/icons/SaveOutlined'
 import ClearAllOutlinedIcon from '@material-ui/icons/ClearAllOutlined'
 import HistoryOutlinedIcon from '@material-ui/icons/HistoryOutlined'
 
+
+import { stringOrNull } from './FormikBeverage'
 import RegularInputField from './RegularInputField'
 import { IProducerForm } from './CreateProducer'
 import { TRootState } from '../reducers/rootReducer'
-import { IProducer, TProducers } from './ProducersList'
+import { TProducers } from './ProducersList'
 
 
 // Types and interfaces
@@ -69,98 +69,51 @@ export function FormikProducer({
             .required('You must define a producer name.')
     })
 
-    let initialProducer: IProducer | undefined = undefined
-    if (producers) {
-        initialProducer = producers.find(item => item.id === initialFormData.id)
-    }
-
     return (
         <div>
             <Formik
                 initialValues={initialFormData}
                 onSubmit={form => {
                     form.name = form.name.trim()
-                    form.country = form.country.trim()
-                    form.region = form.region.trim()
+                    form.country = stringOrNull(form.country)
+                    form.region = stringOrNull(form.region)
                     handleSubmit(form)
                 }}
                 validationSchema={FormSchema}
             >
-                {({setFieldValue, dirty, isValid}) => {
+                {({dirty, isValid}) => {
                     return(
-                        (producers) && (
-                            <Form autoComplete='off'>
-                                <RegularInputField input='name' inputLabel='Name' />
-                                <Autocomplete
-                                    freeSolo
-                                    value={initialProducer}
-                                    options={producers}
-                                    getOptionLabel={option => option.country}
-                                    onChange={(e, value) => {
-                                        setFieldValue(
-                                            'country',
-                                            value !== null && typeof value !== 'string' ? value.country : null
-                                        )
-                                    }}
-                                    renderInput={params => (
-                                        <TextField
-                                            {...params}
-                                            label={'Country'}
-                                            variant='outlined'
-                                            margin='dense'
-                                            fullWidth
-                                            />
-                                    )}
-                                />
-                                <Autocomplete
-                                    freeSolo
-                                    value={initialProducer}
-                                    options={producers}
-                                    getOptionLabel={option => option.region}
-                                    onChange={(e, value) => {
-                                        setFieldValue(
-                                            'region',
-                                            value !== null && typeof value !== 'string' ? value.region : null
-                                        )
-                                    }}
-                                    renderInput={params => (
-                                        <TextField
-                                            {...params}
-                                            label={'Region'}
-                                            variant='outlined'
-                                            margin='dense'
-                                            fullWidth
-                                            />
-                                    )}
-                                />
-                                <Grid item>
-                                    <ButtonGroup className={classes.submitButtons} fullWidth>
-                                        <Button
-                                            className={classes.saveButton}
-                                            type='submit'
-                                            variant='outlined'
-                                            disabled={!isValid}
-                                            startIcon={<SaveOutlinedIcon />}
-                                        >
-                                            Save
-                                        </Button>
-                                        <Button
-                                            className={classes.resetButton}
-                                            type='reset'
-                                            variant='outlined'
-                                            disabled={!dirty}
-                                            startIcon={
-                                                initialFormData.id
-                                                ? <HistoryOutlinedIcon />
-                                                : <ClearAllOutlinedIcon />
-                                            }
-                                        >
-                                            {initialFormData.id ? 'Reset' : 'Clear'}
-                                        </Button>
-                                    </ButtonGroup>
-                                </Grid>
-                            </Form>
-                        )
+                        <Form autoComplete='off'>
+                            <RegularInputField input='name' inputLabel='Name' />
+                            <RegularInputField input='country' inputLabel='Country' />
+                            <RegularInputField input='region' inputLabel='Region' />
+                            <Grid item>
+                                <ButtonGroup className={classes.submitButtons} fullWidth>
+                                    <Button
+                                        className={classes.saveButton}
+                                        type='submit'
+                                        variant='outlined'
+                                        disabled={!isValid}
+                                        startIcon={<SaveOutlinedIcon />}
+                                    >
+                                        Save
+                                    </Button>
+                                    <Button
+                                        className={classes.resetButton}
+                                        type='reset'
+                                        variant='outlined'
+                                        disabled={!dirty}
+                                        startIcon={
+                                            initialFormData.id
+                                            ? <HistoryOutlinedIcon />
+                                            : <ClearAllOutlinedIcon />
+                                        }
+                                    >
+                                        {initialFormData.id ? 'Reset' : 'Clear'}
+                                    </Button>
+                                </ButtonGroup>
+                            </Grid>
+                        </Form>
                     )
                 }}
             </Formik>
