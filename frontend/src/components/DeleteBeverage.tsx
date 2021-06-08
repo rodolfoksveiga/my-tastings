@@ -7,6 +7,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import deleteTasting from '../actions/deleteTasting'
 import { TRootState } from '../reducers/rootReducer'
 
+
 // Types and interfaces
 interface IDeleteTastingProps {
     accessToken: string | null
@@ -15,26 +16,23 @@ interface IDeleteTastingProps {
     deleteTasting: Function
 }
 
+
 // Global variables
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         deleteIcon: {
             '&:hover': {
-                color: theme.palette.error.main,
-            },
-        },
+                color: theme.palette.error.main
+            }
+        }
     })
 )
 
-// Main component
-export function DeleteTasting({
-    accessToken,
-    id,
-    updateTriggerReload,
-    deleteTasting,
-}: IDeleteTastingProps) {
-    const classes = useStyles()
 
+// Main component
+export function DeleteTasting({ accessToken, id, updateTriggerReload, deleteTasting }: IDeleteTastingProps) {
+    const classes = useStyles()
+    
     function handleDelete() {
         if (window.confirm('Are you sure you want to delete this Tasting?')) {
             deleteTasting(accessToken, id)
@@ -49,9 +47,11 @@ export function DeleteTasting({
     )
 }
 
+
+
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
-    accessToken: state.authUser.accessToken,
+    accessToken: state.authUser.accessToken
 })
 
-export default connect(mapStateToProps, { deleteBeverage })(DeleteBeverage)
+export default connect(mapStateToProps, { deleteTasting })(DeleteTasting)

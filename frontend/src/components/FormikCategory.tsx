@@ -16,7 +16,6 @@ import { ICategoryForm } from './CreateCategory'
 import { TRootState } from '../reducers/rootReducer'
 import { TCategories } from './CategoriesList'
 
-
 // Types and interfaces
 interface ICategoryFormikProps {
     initialFormData: ICategoryForm
@@ -24,65 +23,72 @@ interface ICategoryFormikProps {
     handleSubmit: Function
 }
 
-
 // Global variables
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     submitButtons: {
         marginTop: theme.spacing(2),
         marginBottom: theme.spacing(2),
-        color: theme.palette.common.black
+        color: theme.palette.common.black,
     },
     saveButton: {
         '&:hover': {
             color: theme.palette.success.main,
-            borderColor: theme.palette.success.main
-        }
+            borderColor: theme.palette.success.main,
+        },
     },
     resetButton: {
         '&:hover': {
             color: theme.palette.warning.main,
-            borderColor: theme.palette.warning.main
-        }
-    }
+            borderColor: theme.palette.warning.main,
+        },
+    },
 }))
 
-
 // Main component
-export function FormikCategory({initialFormData, categories, handleSubmit}: ICategoryFormikProps) {
+export function FormikCategory({
+    initialFormData,
+    categories,
+    handleSubmit,
+}: ICategoryFormikProps) {
     const classes = useStyles()
-    
+
     // FIX HERE!
-    const names = categories ?
-        '^((?!' + categories.map(categorie => categorie.name).join('|') + ')).*$' :
-        '.'
+    const names = categories
+        ? '^((?!' +
+          categories.map((categorie) => categorie.name).join('|') +
+          ')).*$'
+        : '.'
     const regex = new RegExp(names)
     const FormSchema = Yup.object().shape({
         name: Yup.string()
             .trim()
             .matches(regex, 'Category already exist. Try another name.')
-            .required('You must define a category name.')
+            .required('You must define a category name.'),
     })
 
     return (
         <div>
             <Formik
                 initialValues={initialFormData}
-                onSubmit={form => {
+                onSubmit={(form) => {
                     form.name = form.name.trim()
                     handleSubmit(form)
                 }}
                 validationSchema={FormSchema}
             >
-                {({dirty, isValid}) => {
-                    return(
-                        <Form autoComplete='off'>
-                            <RegularInputField input='name' inputLabel='Name' />
+                {({ dirty, isValid }) => {
+                    return (
+                        <Form autoComplete="off">
+                            <RegularInputField input="name" inputLabel="Name" />
                             <Grid item>
-                                <ButtonGroup className={classes.submitButtons} fullWidth>
+                                <ButtonGroup
+                                    className={classes.submitButtons}
+                                    fullWidth
+                                >
                                     <Button
                                         className={classes.saveButton}
-                                        type='submit'
-                                        variant='outlined'
+                                        type="submit"
+                                        variant="outlined"
                                         disabled={!isValid}
                                         startIcon={<SaveOutlinedIcon />}
                                     >
@@ -90,13 +96,15 @@ export function FormikCategory({initialFormData, categories, handleSubmit}: ICat
                                     </Button>
                                     <Button
                                         className={classes.resetButton}
-                                        type='reset'
-                                        variant='outlined'
+                                        type="reset"
+                                        variant="outlined"
                                         disabled={!dirty}
                                         startIcon={
-                                            initialFormData.id
-                                            ? <HistoryOutlinedIcon />
-                                            : <ClearAllOutlinedIcon />
+                                            initialFormData.id ? (
+                                                <HistoryOutlinedIcon />
+                                            ) : (
+                                                <ClearAllOutlinedIcon />
+                                            )
                                         }
                                     >
                                         {initialFormData.id ? 'Reset' : 'Clear'}
@@ -111,11 +119,9 @@ export function FormikCategory({initialFormData, categories, handleSubmit}: ICat
     )
 }
 
-
-
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
-    categories: state.categories.data
+    categories: state.categories.data,
 })
 
 export default connect(mapStateToProps)(FormikCategory)

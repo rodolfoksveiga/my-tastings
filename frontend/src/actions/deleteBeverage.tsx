@@ -3,25 +3,27 @@ import axios from 'axios'
 import { Dispatch } from 'redux'
 
 // Types and interfaces
-interface IDeleteTastingSuccess {
-    type: typeof DELETE_TASTING_SUCCESS
+interface IDeleteBeverageSuccess {
+    type: typeof DELETE_BEVERAGE_SUCCESS
 }
 
-interface IDeleteTastingFail {
-    type: typeof DELETE_TASTING_FAIL
+interface IDeleteBeverageFail {
+    type: typeof DELETE_BEVERAGE_FAIL
     payload: string
 }
 
-export type TDispatchDeleteTasting = IDeleteTastingSuccess | IDeleteTastingFail
+export type TDispatchDeleteBeverage =
+    | IDeleteBeverageSuccess
+    | IDeleteBeverageFail
 
 // Action types
-const URL = 'http://localhost:8000/api/tastings/'
-export const DELETE_TASTING_SUCCESS = 'DELETE_TASTING_SUCESS'
-export const DELETE_TASTING_FAIL = 'DELETE_TASTING_FAIL'
+const URL = 'http://localhost:8000/api/beverages/'
+export const DELETE_BEVERAGE_SUCCESS = 'DELETE_BEVERAGE_SUCESS'
+export const DELETE_BEVERAGE_FAIL = 'DELETE_BEVERAGE_FAIL'
 
 // Action
-export default function deleteTasting(access: string | null, id: string) {
-    return async (dispatch: Dispatch<TDispatchDeleteTasting>) => {
+export default function deleteBeverage(access: string | null, id: string) {
+    return async (dispatch: Dispatch<TDispatchDeleteBeverage>) => {
         try {
             const config = {
                 headers: {
@@ -33,13 +35,13 @@ export default function deleteTasting(access: string | null, id: string) {
             await axios.delete(URL + id + '/', config)
 
             dispatch({
-                type: DELETE_TASTING_SUCCESS,
+                type: DELETE_BEVERAGE_SUCCESS,
             })
 
             alert('The data was deleted!')
         } catch (error) {
             dispatch({
-                type: DELETE_TASTING_FAIL,
+                type: DELETE_BEVERAGE_FAIL,
                 payload: 'Error while deleting the data. Try again.',
             })
 

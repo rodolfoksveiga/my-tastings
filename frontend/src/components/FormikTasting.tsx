@@ -21,7 +21,6 @@ import { ITastingForm } from './CreateTasting'
 import { TRootState } from '../reducers/rootReducer'
 import { IBeverage, TBeverages } from './BeveragesList'
 
-
 // Types and interfaces
 interface ITastingFormikProps {
     initialFormData: ITastingForm
@@ -29,52 +28,51 @@ interface ITastingFormikProps {
     handleSubmit: Function
 }
 
-
 // Global variables
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     submitButtons: {
         marginTop: theme.spacing(2),
         marginBottom: theme.spacing(2),
-        color: theme.palette.common.black
+        color: theme.palette.common.black,
     },
     saveButton: {
         '&:hover': {
             color: theme.palette.success.main,
-            borderColor: theme.palette.success.main
-        }
+            borderColor: theme.palette.success.main,
+        },
     },
     resetButton: {
         '&:hover': {
             color: theme.palette.warning.main,
-            borderColor: theme.palette.warning.main
-        }
-    }
+            borderColor: theme.palette.warning.main,
+        },
+    },
 }))
-
 
 // Main component
 export function FormikTasting({
     initialFormData,
     beverages,
-    handleSubmit
+    handleSubmit,
 }: ITastingFormikProps) {
     const classes = useStyles()
 
     const FormSchema = Yup.object().shape({
-        name: Yup.string()
-            .required('You must define a name for your tasting.')
+        name: Yup.string().required('You must define a name for your tasting.'),
     })
 
     let initialBeverage: IBeverage | undefined = undefined
     if (beverages) {
-        initialBeverage = beverages.find(item => item.id === initialFormData.beverage)
+        initialBeverage = beverages.find(
+            (item) => item.id === initialFormData.beverage
+        )
     }
 
     return (
         <div>
             <Formik
                 initialValues={initialFormData}
-                onSubmit={form => {
+                onSubmit={(form) => {
                     form.name = form.name.trim()
                     form.beverage = numberOrNull(Number(form.beverage))
                     form.color = stringOrNull(form.color)
@@ -85,37 +83,55 @@ export function FormikTasting({
                 }}
                 validationSchema={FormSchema}
             >
-                {({setFieldValue, dirty, isValid}) => {
-                    return(
-                        (beverages) && (
-                            <Form autoComplete='off'>
-                                <RegularInputField input='name' inputLabel='Name' />
+                {({ setFieldValue, dirty, isValid }) => {
+                    return (
+                        beverages && (
+                            <Form autoComplete="off">
+                                <RegularInputField
+                                    input="name"
+                                    inputLabel="Name"
+                                />
                                 <Autocomplete
                                     freeSolo
                                     value={initialBeverage}
                                     options={beverages}
-                                    getOptionLabel={option => option.name}
+                                    getOptionLabel={(option) => option.name}
                                     onChange={(e, value) => {
                                         setFieldValue(
                                             'beverage',
-                                            value !== null && typeof value !== 'string' ? value.id : null
+                                            value !== null &&
+                                                typeof value !== 'string'
+                                                ? value.id
+                                                : null
                                         )
                                     }}
-                                    renderInput={params => (
+                                    renderInput={(params) => (
                                         <TextField
                                             {...params}
                                             label={'Beverage'}
-                                            variant='outlined'
-                                            margin='dense'
+                                            variant="outlined"
+                                            margin="dense"
                                             fullWidth
                                         />
                                     )}
                                 />
-                                <RegularInputField input='color' inputLabel='Color' />
-                                <RegularInputField input='appearance' inputLabel='Appearance' />
-                                <RegularInputField input='aroma' inputLabel='Aroma' />
-                                <RegularInputField input='finish' inputLabel='Finish' />
-                                <Typography className='text-center mt-2'>
+                                <RegularInputField
+                                    input="color"
+                                    inputLabel="Color"
+                                />
+                                <RegularInputField
+                                    input="appearance"
+                                    inputLabel="Appearance"
+                                />
+                                <RegularInputField
+                                    input="aroma"
+                                    inputLabel="Aroma"
+                                />
+                                <RegularInputField
+                                    input="finish"
+                                    inputLabel="Finish"
+                                />
+                                <Typography className="text-center mt-2">
                                     Rating
                                 </Typography>
                                 <Slider
@@ -124,14 +140,17 @@ export function FormikTasting({
                                     min={0}
                                     max={10}
                                     step={1}
-                                    valueLabelDisplay='auto'
+                                    valueLabelDisplay="auto"
                                 />
                                 <Grid item>
-                                    <ButtonGroup className={classes.submitButtons} fullWidth>
+                                    <ButtonGroup
+                                        className={classes.submitButtons}
+                                        fullWidth
+                                    >
                                         <Button
                                             className={classes.saveButton}
-                                            type='submit'
-                                            variant='outlined'
+                                            type="submit"
+                                            variant="outlined"
                                             disabled={!dirty || !isValid}
                                             startIcon={<SaveOutlinedIcon />}
                                         >
@@ -139,16 +158,20 @@ export function FormikTasting({
                                         </Button>
                                         <Button
                                             className={classes.resetButton}
-                                            type='reset'
-                                            variant='outlined'
+                                            type="reset"
+                                            variant="outlined"
                                             disabled={!dirty}
                                             startIcon={
-                                                initialFormData.id
-                                                ? <HistoryOutlinedIcon />
-                                                : <ClearAllOutlinedIcon />
+                                                initialFormData.id ? (
+                                                    <HistoryOutlinedIcon />
+                                                ) : (
+                                                    <ClearAllOutlinedIcon />
+                                                )
                                             }
                                         >
-                                            {initialFormData.id ? 'Reset' : 'Clear'}
+                                            {initialFormData.id
+                                                ? 'Reset'
+                                                : 'Clear'}
                                         </Button>
                                     </ButtonGroup>
                                 </Grid>
@@ -161,10 +184,9 @@ export function FormikTasting({
     )
 }
 
-
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
-    beverages: state.beverages.data
+    beverages: state.beverages.data,
 })
 
 export default connect(mapStateToProps)(FormikTasting)
