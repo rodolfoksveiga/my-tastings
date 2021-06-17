@@ -52,18 +52,8 @@ export function FormikCategory({
 }: ICategoryFormikProps) {
     const classes = useStyles()
 
-    // FIX HERE!
-    const names = categories
-        ? '^((?!' +
-          categories.map((categorie) => categorie.name).join('|') +
-          ')).*$'
-        : '.'
-    const regex = new RegExp(names)
     const FormSchema = Yup.object().shape({
-        name: Yup.string()
-            .trim()
-            .matches(regex, 'Category already exist. Try another name.')
-            .required('You must define a category name.'),
+        name: Yup.string().trim().required('You must define a category name.'),
     })
 
     return (

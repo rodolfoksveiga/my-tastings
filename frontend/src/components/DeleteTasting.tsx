@@ -54,4 +54,4 @@ const mapStateToProps = (state: TRootState) => ({
     accessToken: state.authUser.accessToken,
 })
 
-export default connect(mapStateToProps, { deleteBeverage })(DeleteBeverage)
+export default connect(mapStateToProps, { deleteTasting })(DeleteTasting)

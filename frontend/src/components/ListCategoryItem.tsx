@@ -7,9 +7,8 @@ import ListIconSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import IconButton from '@material-ui/core/IconButton'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
 
-import DeleteTasting from './DeleteTasting'
+import DeleteCategory from './DeleteCategory'
 import { ICategory } from './CategoriesList'
-
 
 // Types and interfaces
 interface IListCategoryItemProps {
@@ -17,33 +16,31 @@ interface IListCategoryItemProps {
     updateTriggerReload: Function
 }
 
-
 // Global variables
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         listItem: {
             marginLeft: theme.spacing(1),
-            marginRight: theme.spacing(8)
+            marginRight: theme.spacing(8),
         },
         detailIcon: {
             '&:hover': {
-                color: theme.palette.warning.main
-            }
-        }
+                color: theme.palette.warning.main,
+            },
+        },
     })
 )
 
-
 // Component
-export default function ListCategoryItem({ category, updateTriggerReload }: IListCategoryItemProps) {
+export default function ListCategoryItem({
+    category,
+    updateTriggerReload,
+}: IListCategoryItemProps) {
     const classes = useStyles()
 
     return (
         <div>
-            <ListItem
-                className={classes.listItem}
-                divider={true}
-            >
+            <ListItem className={classes.listItem} divider={true}>
                 <InsertDriveFileOutlinedIcon />
                 <ListItemText primary={category.name} />
                 <ListIconSecondaryAction>
@@ -53,7 +50,7 @@ export default function ListCategoryItem({ category, updateTriggerReload }: ILis
                     >
                         <EditOutlinedIcon />
                     </IconButton>
-                    <DeleteTasting
+                    <DeleteCategory
                         id={category.id}
                         updateTriggerReload={updateTriggerReload}
                     />

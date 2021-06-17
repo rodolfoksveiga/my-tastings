@@ -4,15 +4,15 @@ import IconButton from '@material-ui/core/IconButton'
 import DeleteOutlined from '@material-ui/icons/DeleteOutlined'
 
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import deleteBeverage from '../actions/deleteBeverage'
+import deleteProducer from '../actions/deleteProducer'
 import { TRootState } from '../reducers/rootReducer'
 
 // Types and interfaces
-interface IDeleteBeverageProps {
+interface IDeleteProducerProps {
     accessToken: string | null
     id: number
     updateTriggerReload: Function
-    deleteBeverage: Function
+    deleteProducer: Function
 }
 
 // Global variables
@@ -27,17 +27,17 @@ const useStyles = makeStyles((theme: Theme) =>
 )
 
 // Main component
-export function DeleteBeverage({
+export function DeleteProducer({
     accessToken,
     id,
     updateTriggerReload,
-    deleteBeverage,
-}: IDeleteBeverageProps) {
+    deleteProducer,
+}: IDeleteProducerProps) {
     const classes = useStyles()
 
     function handleDelete() {
-        if (window.confirm('Are you sure you want to delete this Beverage?')) {
-            deleteBeverage(accessToken, id)
+        if (window.confirm('Are you sure you want to delete this Producer?')) {
+            deleteProducer(accessToken, id)
             updateTriggerReload()
         }
     }
@@ -54,4 +54,4 @@ const mapStateToProps = (state: TRootState) => ({
     accessToken: state.authUser.accessToken,
 })
 
-export default connect(mapStateToProps, { deleteBeverage })(DeleteBeverage)
+export default connect(mapStateToProps, { deleteProducer })(DeleteProducer)

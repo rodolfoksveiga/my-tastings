@@ -36,7 +36,7 @@ export default function deleteTasting(access: string | null, id: string) {
                 type: DELETE_TASTING_SUCCESS,
             })
 
-            alert('The data was deleted!')
+            alert('The Tasting  was deleted!')
         } catch (error) {
             dispatch({
                 type: DELETE_TASTING_FAIL,

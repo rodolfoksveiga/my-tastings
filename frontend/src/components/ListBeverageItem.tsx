@@ -9,16 +9,14 @@ import ListIconSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import IconButton from '@material-ui/core/IconButton'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
 
-import DeleteTasting from './DeleteTasting'
+import DeleteBeverage from './DeleteBeverage'
 import { IBeverage } from './BeveragesList'
-
 
 // Types and interfaces
 interface IListBeverageItemProps {
     beverage: IBeverage
     updateTriggerReload: Function
 }
-
 
 // Global variables
 const useStyles = makeStyles((theme: Theme) =>
@@ -27,20 +25,22 @@ const useStyles = makeStyles((theme: Theme) =>
             marginLeft: theme.spacing(1),
             marginRight: theme.spacing(8),
             '&:hover': {
-                color: theme.palette.primary.main
-            }
+                color: theme.palette.primary.main,
+            },
         },
         detailIcon: {
             '&:hover': {
-                color: theme.palette.warning.main
-            }
-        }
+                color: theme.palette.warning.main,
+            },
+        },
     })
 )
 
-
 // Component
-export default function ListBeverageItem({ beverage, updateTriggerReload }: IListBeverageItemProps) {
+export default function ListBeverageItem({
+    beverage,
+    updateTriggerReload,
+}: IListBeverageItemProps) {
     const classes = useStyles()
 
     return (
@@ -61,7 +61,7 @@ export default function ListBeverageItem({ beverage, updateTriggerReload }: ILis
                     >
                         <EditOutlinedIcon />
                     </IconButton>
-                    <DeleteTasting
+                    <DeleteBeverage
                         id={beverage.id}
                         updateTriggerReload={updateTriggerReload}
                     />

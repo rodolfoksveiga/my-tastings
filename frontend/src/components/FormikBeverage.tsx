@@ -20,7 +20,6 @@ import { TBeverages } from './BeveragesList'
 import { IProducer, TProducers } from './ProducersList'
 import { ICategory, TCategories } from './CategoriesList'
 
-
 // Types and interfaces
 interface IBeverageFormikProps {
     initialFormData: IBeverageForm
@@ -30,26 +29,25 @@ interface IBeverageFormikProps {
     handleSubmit: Function
 }
 
-
 // Global variables
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     submitButtons: {
         marginTop: theme.spacing(2),
         marginBottom: theme.spacing(2),
-        color: theme.palette.common.black
+        color: theme.palette.common.black,
     },
     saveButton: {
         '&:hover': {
             color: theme.palette.success.main,
-            borderColor: theme.palette.success.main
-        }
+            borderColor: theme.palette.success.main,
+        },
     },
     resetButton: {
         '&:hover': {
             color: theme.palette.warning.main,
-            borderColor: theme.palette.warning.main
-        }
-    }
+            borderColor: theme.palette.warning.main,
+        },
+    },
 }))
 
 export function stringOrNull(value: string | null) {
@@ -60,27 +58,18 @@ export function numberOrNull(value: number | string | null) {
     return value === 0 || value === null ? null : value
 }
 
-
 // Main component
 export function FormikBeverage({
     initialFormData,
     beverages,
     producers,
     categories,
-    handleSubmit
+    handleSubmit,
 }: IBeverageFormikProps) {
     const classes = useStyles()
 
-    // FIX HERE!
-    const names = beverages ?
-        '^((?!' + beverages.map(beverage => beverage.name).join('|') + ')).*$' :
-        '.'
-    const regex = new RegExp(names)
     const FormSchema = Yup.object().shape({
-        name: Yup.string()
-            .trim()
-            .matches(regex, 'Beverage already exist. Try another name.')
-            .required('You must define a beverage name.'),
+        name: Yup.string().trim().required('You must define a beverage name.'),
         year: Yup.number()
             .min(0, 'Minimum value exceeded.')
             .max(2021, 'Maximum value exceeded.'),
@@ -98,7 +87,7 @@ export function FormikBeverage({
             .test(
                 'maxDigitsAfterDecimal',
                 'Max. 2 decimals allowed.',
-                (n) => Number.isInteger(n && n * (10 ** 2)) || n !== 0
+                (n) => Number.isInteger(n && n * 10 ** 2) || n !== 0
             ),
         price: Yup.number()
             .min(0, 'Minimum value exceeded.')
@@ -106,22 +95,26 @@ export function FormikBeverage({
             .test(
                 'maxDigitsAfterDecimal',
                 'Max. 2 decimals allowed.',
-                (n) => Number.isInteger(n && n * (10 ** 2)) || n !== 0
-            )
+                (n) => Number.isInteger(n && n * 10 ** 2) || n !== 0
+            ),
     })
 
     let initialProducer: IProducer | undefined = undefined
     let initialCategory: ICategory | undefined = undefined
     if (beverages && producers && categories) {
-        initialProducer = producers.find(item => item.id === initialFormData.producer)
-        initialCategory = categories.find(item => item.id === initialFormData.category)
+        initialProducer = producers.find(
+            (item) => item.id === initialFormData.producer
+        )
+        initialCategory = categories.find(
+            (item) => item.id === initialFormData.category
+        )
     }
 
     return (
         <div>
             <Formik
                 initialValues={initialFormData}
-                onSubmit={form => {
+                onSubmit={(form) => {
                     form.name = form.name.trim()
                     form.category = numberOrNull(Number(form.category))
                     form.producer = numberOrNull(Number(form.producer))
@@ -135,65 +128,101 @@ export function FormikBeverage({
                 }}
                 validationSchema={FormSchema}
             >
-                {({setFieldValue, dirty, isValid}) => {
-                    return(
-                        (beverages && producers && categories) && (
-                            <Form autoComplete='off'>
-                                <RegularInputField input='name' inputLabel='Name' />
+                {({ setFieldValue, dirty, isValid }) => {
+                    return (
+                        beverages &&
+                        producers &&
+                        categories && (
+                            <Form autoComplete="off">
+                                <RegularInputField
+                                    input="name"
+                                    inputLabel="Name"
+                                />
                                 <Autocomplete
                                     freeSolo
                                     value={initialProducer}
                                     options={producers}
-                                    getOptionLabel={option => option.name}
+                                    getOptionLabel={(option) => option.name}
                                     onChange={(e, value) => {
                                         setFieldValue(
                                             'producer',
-                                            value !== null && typeof value !== 'string' ? value.id : null
+                                            value !== null &&
+                                                typeof value !== 'string'
+                                                ? value.id
+                                                : null
                                         )
                                     }}
-                                    renderInput={params => (
+                                    renderInput={(params) => (
                                         <TextField
                                             {...params}
                                             label={'Producer'}
-                                            variant='outlined'
-                                            margin='dense'
+                                            variant="outlined"
+                                            margin="dense"
                                             fullWidth
-                                            />
+                                        />
                                     )}
                                 />
                                 <Autocomplete
                                     freeSolo
                                     value={initialCategory}
                                     options={categories}
-                                    getOptionLabel={option => option.name}
+                                    getOptionLabel={(option) => option.name}
                                     onChange={(e, value) => {
                                         setFieldValue(
                                             'category',
-                                            value !== null && typeof value !== 'string' ? value.id : null
+                                            value !== null &&
+                                                typeof value !== 'string'
+                                                ? value.id
+                                                : null
                                         )
                                     }}
-                                    renderInput={params => (
+                                    renderInput={(params) => (
                                         <TextField
                                             {...params}
                                             label={'Category'}
-                                            variant='outlined'
-                                            margin='dense'
+                                            variant="outlined"
+                                            margin="dense"
                                             fullWidth
-                                            />
+                                        />
                                     )}
                                 />
-                                <RegularInputField input='classification' inputLabel='Classification' />
-                                <RegularInputField input='base' inputLabel='Base' />
-                                <RegularInputField input='year' inputLabel='Year' type='number' />
-                                <RegularInputField input='volume' inputLabel='Volume (mL)' type='number' />
-                                <RegularInputField input='degree' inputLabel='Percentage of alcohol (%)' type='let' />
-                                <RegularInputField input='price' inputLabel='Price ($)' type='let' />
+                                <RegularInputField
+                                    input="classification"
+                                    inputLabel="Classification"
+                                />
+                                <RegularInputField
+                                    input="base"
+                                    inputLabel="Base"
+                                />
+                                <RegularInputField
+                                    input="year"
+                                    inputLabel="Year"
+                                    type="number"
+                                />
+                                <RegularInputField
+                                    input="volume"
+                                    inputLabel="Volume (mL)"
+                                    type="number"
+                                />
+                                <RegularInputField
+                                    input="degree"
+                                    inputLabel="Percentage of alcohol (%)"
+                                    type="let"
+                                />
+                                <RegularInputField
+                                    input="price"
+                                    inputLabel="Price ($)"
+                                    type="let"
+                                />
                                 <Grid item>
-                                    <ButtonGroup className={classes.submitButtons} fullWidth>
+                                    <ButtonGroup
+                                        className={classes.submitButtons}
+                                        fullWidth
+                                    >
                                         <Button
                                             className={classes.saveButton}
-                                            type='submit'
-                                            variant='outlined'
+                                            type="submit"
+                                            variant="outlined"
                                             disabled={!dirty || !isValid}
                                             startIcon={<SaveOutlinedIcon />}
                                         >
@@ -201,16 +230,20 @@ export function FormikBeverage({
                                         </Button>
                                         <Button
                                             className={classes.resetButton}
-                                            type='reset'
-                                            variant='outlined'
+                                            type="reset"
+                                            variant="outlined"
                                             disabled={!dirty}
                                             startIcon={
-                                                initialFormData.id
-                                                ? <HistoryOutlinedIcon />
-                                                : <ClearAllOutlinedIcon />
+                                                initialFormData.id ? (
+                                                    <HistoryOutlinedIcon />
+                                                ) : (
+                                                    <ClearAllOutlinedIcon />
+                                                )
                                             }
                                         >
-                                            {initialFormData.id ? 'Reset' : 'Clear'}
+                                            {initialFormData.id
+                                                ? 'Reset'
+                                                : 'Clear'}
                                         </Button>
                                     </ButtonGroup>
                                 </Grid>
@@ -223,13 +256,11 @@ export function FormikBeverage({
     )
 }
 
-
-
 // Connect to Redux
 const mapStateToProps = (state: TRootState) => ({
     beverages: state.beverages.data,
     producers: state.producers.data,
-    categories: state.categories.data
+    categories: state.categories.data,
 })
 
 export default connect(mapStateToProps)(FormikBeverage)

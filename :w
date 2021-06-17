@@ -53,8 +53,22 @@ export function FormikProducer({
 }: IProducerFormikProps) {
     const classes = useStyles()
 
+    // FIX HERE!
+    const names = producers
+        ? producers
+              .map((producer) => {
+                  return (
+                      '^(' + producer.name + '.+|(?!' + producer.name + ').*)$'
+                  )
+              })
+              .join('|')
+        : '.'
+    const regex = new RegExp(names)
     const FormSchema = Yup.object().shape({
-        name: Yup.string().trim().required('You must define a producer name.'),
+        name: Yup.string()
+            .trim()
+            .matches(regex, 'Producer already exist. Try another name.')
+            .required('You must define a producer name.'),
     })
 
     return (

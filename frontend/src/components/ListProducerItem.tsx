@@ -9,16 +9,14 @@ import ListIconSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import IconButton from '@material-ui/core/IconButton'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined'
 
-import DeleteTasting from './DeleteTasting'
+import DeleteProducer from './DeleteProducer'
 import { IProducer } from './ProducersList'
-
 
 // Types and interfaces
 interface IListProducerItemProps {
     producer: IProducer
     updateTriggerReload: Function
 }
-
 
 // Global variables
 const useStyles = makeStyles((theme: Theme) =>
@@ -27,22 +25,24 @@ const useStyles = makeStyles((theme: Theme) =>
             marginLeft: theme.spacing(1),
             marginRight: theme.spacing(8),
             '&:hover': {
-                color: theme.palette.primary.main
-            }
+                color: theme.palette.primary.main,
+            },
         },
         detailIcon: {
             '&:hover': {
-                color: theme.palette.warning.main
-            }
-        }
+                color: theme.palette.warning.main,
+            },
+        },
     })
 )
 
-
 // Component
-export default function ListProducerItem({ producer, updateTriggerReload }: IListProducerItemProps) {
+export default function ListProducerItem({
+    producer,
+    updateTriggerReload,
+}: IListProducerItemProps) {
     const classes = useStyles()
-    
+
     return (
         <div>
             <ListItem
@@ -61,7 +61,7 @@ export default function ListProducerItem({ producer, updateTriggerReload }: ILis
                     >
                         <EditOutlinedIcon />
                     </IconButton>
-                    <DeleteTasting
+                    <DeleteProducer
                         id={producer.id}
                         updateTriggerReload={updateTriggerReload}
                     />

@@ -96,7 +96,7 @@ export function FormikTasting({
                                     value={initialBeverage}
                                     options={beverages}
                                     getOptionLabel={(option) => option.name}
-                                    onChange={(e, value) => {
+                                    onChange={(event, value) => {
                                         setFieldValue(
                                             'beverage',
                                             value !== null &&
@@ -141,6 +141,9 @@ export function FormikTasting({
                                     max={10}
                                     step={1}
                                     valueLabelDisplay="auto"
+                                    onChange={(event, value) => {
+                                        setFieldValue('rating', value)
+                                    }}
                                 />
                                 <Grid item>
                                     <ButtonGroup

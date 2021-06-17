@@ -38,7 +38,7 @@ export default function deleteBeverage(access: string | null, id: string) {
                 type: DELETE_BEVERAGE_SUCCESS,
             })
 
-            alert('The data was deleted!')
+            alert('The Beverage was deleted!')
         } catch (error) {
             dispatch({
                 type: DELETE_BEVERAGE_FAIL,
